@@ -1,0 +1,30 @@
+version: '3.9'
+services:
+  frontend:
+    container_name: app-front-dev
+    image: app-front-dev
+    build: ./ArtShop-frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - type: bind
+        source: ./ArtShop-frontend
+        target: /app
+      - type: volume
+        target: /app/node_modules
+
+  backend:
+      container_name: app-back-dev
+      image: app-backend-dev
+      build:
+        context: ./ArtShop-backend
+      ports:
+        - "8000:8000"
+      depends_on:
+        - mysql
+
+  mysql:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
