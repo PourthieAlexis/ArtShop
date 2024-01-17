@@ -15,7 +15,6 @@ class AppFixtures extends Fixture
 {
     private $hashPassword;
 
-    // Injectez le service d'encodage de mot de passe dans le constructeur
     public function __construct(UserPasswordHasherInterface $hashPassword)
     {
         $this->hashPassword = $hashPassword;
