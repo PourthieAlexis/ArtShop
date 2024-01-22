@@ -1,23 +1,70 @@
-html
+body
 {
-    align-content: center;
-}
+    display:block;
+    text-align: center;
+    align-self: stretch;
+    justify-content: center;
+    justify-self: stretch;
+    
 
+}
+header.Menu-header
+{
+    display: block;
+    justify-content: space-between;
+    text-align: left;
+    
+}
+.Menu-bouton-container{
+    display: flex;
+    justify-content: center;
+    
+}
 p{
     text-align: left;
 }
-
+.Menu-bouton
+{
+    align-self: stretch;
+    border-left: none;
+    border-right: none;
+    border-top:none;
+    border-bottom: none;
+    background: none;
+    width : 200px;
+}
+.Menu-bouton:hover
+{
+    border-bottom:1px solid black;
+    
+}
 button
 {
     border-color: rgb(0, 0, 0);
-    width : 300px;
+    
     margin-bottom: 10px;
 }
 button.b1{
     background-color: black;
     color: white;
+    width : 500px;
 }
 button.b2{
     background-color: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
+    width : 500px;
+}
+.connexion-header{
+    font-size: x-large;
+}
+.connexionForm{
+    font-size: x-large;
+}
+form{
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
+image{
+    justify-self: left;
 }

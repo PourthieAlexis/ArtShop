@@ -3,6 +3,7 @@ import './Connexion.css';
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import styled from 'styled-components';
+
 function Connexion() {
     const [loading, setLoading] = useState(false);
     const validateSchema = Yup.object().shape({
@@ -27,15 +28,23 @@ function Connexion() {
   });
 
   return (
-    <div className="Connexion">
-      <header className="Connexion-header">
-        <h3>Connexion</h3>
-        <h4>Lorem Ipsum</h4>
-      </header>
-
+    <div className="connexion">
+        <header className="Menu-header">
+            <tr><image>Boup</image></tr>
+            <tr className="Menu-bouton-container">
+                <button className="Menu-bouton">Sign Up</button>
+                <button className="Menu-bouton">Login</button>
+            </tr> 
+        </header>
+        
+        <header className="connexion-header">
+            <h2>Connexion</h2>
+            <h4>Lorem Ipsum</h4>
+        </header>
+        
       <main>
         <form className="connexionForm" onSubmit={formik.handleSubmit}>
-            <p>Mail* </p>
+            <p className='form-p'>Mail* </p>
           <StyledInput
             label="Mail"
             type={"email"}
@@ -44,7 +53,7 @@ function Connexion() {
             value={formik.values.email}
             
           />
-          <p>Mot de passe * </p>
+          <p className='form-p'>Mot de passe * </p>
           <StyledInput
             label="Mot de passe"
             type={"password"}
@@ -67,7 +76,8 @@ function Connexion() {
   );
 }
 const StyledInput = styled.input`
-    width : 300px;
+    width : 500px;
+    height : 25px;
     margin-bottom: 10px;
 `;
 export default Connexion;
