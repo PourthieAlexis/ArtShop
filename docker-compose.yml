@@ -12,19 +12,48 @@ services:
         target: /app
       - type: volume
         target: /app/node_modules
-
+    networks:
+      - dev
   backend:
-      container_name: app-back-dev
-      image: app-backend-dev
-      build:
-        context: ./ArtShop-backend
-      ports:
-        - "8000:8000"
-      depends_on:
-        - mysql
-
+    container_name: app-back-dev
+    image: app-backend-dev
+    build:
+      context: ./ArtShop-backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql
+    env_file:
+      - ./ArtShop-backend/.env.local
+    networks:
+      - dev
+    links:
+      - mysql
   mysql:
     image: mysql:latest
     restart: always
+    hostname: mysql
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: artshop
+    ports:
+      - '3307:3306'
+    networks:
+      - dev
+    volumes:
+      - ./ArtShop-backend/var:/var/www/var
+      - ./ArtShop-backend/tools/docker/mysql:/var/lib/mysql
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8080
+    environment:
+      ADMINER_DEFAULT_SERVER: mysql
+      ADMINER_DESIGN: pepa-linha
+    depends_on:
+      - mysql
+    networks:
+      - dev
+networks:
+  dev:
