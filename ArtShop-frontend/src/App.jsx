@@ -1,13 +1,10 @@
-import { useState } from "react";
-import "./App.css";
-import "./Components/Connexion/Connexion";
-function App() {
-  const [count, setCount] = useState(0);
 
+import "./App.css";
+import Connexion from "./Components/Connexion/Connexion";
+function App() {
   return (
     <>
       <div>
-        Allo
         <Connexion/>
       </div>
     </>

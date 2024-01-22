@@ -1,0 +1,23 @@
+html
+{
+    align-content: center;
+}
+
+p{
+    text-align: left;
+}
+
+button
+{
+    border-color: rgb(0, 0, 0);
+    width : 300px;
+    margin-bottom: 10px;
+}
+button.b1{
+    background-color: black;
+    color: white;
+}
+button.b2{
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+}
