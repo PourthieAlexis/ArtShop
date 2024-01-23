@@ -36,7 +36,6 @@ RUN mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
 
 # Generate autoloading files and assets
 RUN composer dump-autoload --optimize
-RUN php bin/console doctrine:database:create --no-interaction || true
-RUN php bin/console doctrine:migrations:migrate --no-interaction || true
+RUN php bin/console assets:install --symlink
 
 CMD symfony server:start --no-tls
