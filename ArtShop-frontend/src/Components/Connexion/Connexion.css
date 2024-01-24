@@ -9,25 +9,25 @@ body
     
 
 }
-header.Menu-header
+.menu-header
 {
     display: block;
     justify-content: space-between;
     text-align: left;
     
 }
-.Menu-bouton-container{
+.menu-bouton-container{
     display: flex;
     justify-content: center;
     
 }
-p{
+.form-p{
     text-align: left;
 }
 p.para-header{
     text-align: center;
 }
-.Menu-bouton
+.menu-bouton
 {
     align-self: stretch;
     border-left: none;
@@ -35,28 +35,39 @@ p.para-header{
     border-top:none;
     border-bottom: none;
     background: none;
-    width : 200px;
+    width : 15rem;
+    font-size: larger;
 }
-.Menu-bouton:hover
+.menu-bouton.login{
+    border-bottom:0.15rem solid black;
+}
+.menu-bouton.signup:hover
 {
-    border-bottom:2px solid black;
+    
+    border-bottom:0.15rem solid black;
+    
+}
+.menu-bouton.signup:hover + .login
+{
+    
+    border-bottom: none;
     
 }
 button
 {
     border-color: rgb(0, 0, 0);
     
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
 }
 button.b1{
     background-color: black;
     color: white;
-    width : 500px;
+    width : 31.5rem;
 }
 button.b2{
     background-color: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
-    width : 500px;
+    width : 31.5rem;
 }
 .connexion-header{
     font-size: x-large;
@@ -72,7 +83,7 @@ form{
 image{
     justify-self: left;
     font-size:xx-large;
-    margin:50px;
+    margin:1rem;
 }
 div.bcontent{
     display: flex;

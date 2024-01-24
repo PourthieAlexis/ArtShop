@@ -29,20 +29,20 @@ function Connexion() {
 
   return (
     <div className="connexion">
-        <header className="Menu-header">
+        <div className="menu-header">
             <tr><image><b>Logo</b></image></tr>
-            <tr className="Menu-bouton-container">
-                <button className="Menu-bouton">Sign Up</button>
-                <button className="Menu-bouton">Login</button>
+            <tr className="menu-bouton-container">
+                <button className="menu-bouton signup">Sign Up</button>
+                <button className="menu-bouton login">Login</button>
             </tr> 
-        </header>
+        </div>
         
-        <header className="connexion-header">
+        <div className="connexion-header">
             <h2>Connexion</h2>
             <p className='para-header'>Lorem Ipsum</p>
-        </header>
+        </div>
         
-      <main>
+      <section>
         <form className="connexionForm" onSubmit={formik.handleSubmit}>
             <p className='form-p'>Mail* </p>
           <StyledInput
@@ -53,7 +53,7 @@ function Connexion() {
             value={formik.values.email}
             
           />
-          <p className='form-p'>Mot de passe * </p>
+          <p className='form-p'>Mot de passe* </p>
           <StyledInput
             label="Mot de passe"
             type={"password"}
@@ -75,12 +75,12 @@ function Connexion() {
             </div>
           </button>
         </form>
-      </main>
+      </section>
     </div>
   );
 }
 const StyledInput = styled.input`
-    width : 500px;
-    height : 50px;
+    width : 31rem;
+    height : 2.5rem;
 `;
 export default Connexion;
