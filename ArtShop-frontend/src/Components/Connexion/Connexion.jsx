@@ -71,7 +71,7 @@ function Connexion() {
           <button className="b2" disabled={loading} type={"submit"}>
             <div className='bcontent'>
             <img className="logoGoogle" src="./src/assets/G_icon_16_16.png"></img>
-            {loading ? "Loading..." : "Se connecter avec Google"}
+            {loading ? "Loading..." : " Se connecter avec Google"}
             </div>
           </button>
         </form>
