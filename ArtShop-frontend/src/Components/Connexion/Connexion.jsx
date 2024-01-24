@@ -30,7 +30,7 @@ function Connexion() {
   return (
     <div className="connexion">
         <header className="Menu-header">
-            <tr><image>Boup</image></tr>
+            <tr><image><b>Logo</b></image></tr>
             <tr className="Menu-bouton-container">
                 <button className="Menu-bouton">Sign Up</button>
                 <button className="Menu-bouton">Login</button>
@@ -39,7 +39,7 @@ function Connexion() {
         
         <header className="connexion-header">
             <h2>Connexion</h2>
-            <h4>Lorem Ipsum</h4>
+            <p className='para-header'>Lorem Ipsum</p>
         </header>
         
       <main>
@@ -77,7 +77,6 @@ function Connexion() {
 }
 const StyledInput = styled.input`
     width : 500px;
-    height : 25px;
-    margin-bottom: 10px;
+    height : 50px;
 `;
 export default Connexion;

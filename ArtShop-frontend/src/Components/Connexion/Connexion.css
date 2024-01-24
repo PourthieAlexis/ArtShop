@@ -6,6 +6,7 @@ body
     justify-content: center;
     justify-self: stretch;
     
+    
 
 }
 header.Menu-header
@@ -22,6 +23,9 @@ header.Menu-header
 }
 p{
     text-align: left;
+}
+p.para-header{
+    text-align: center;
 }
 .Menu-bouton
 {
@@ -67,4 +71,6 @@ form{
 }
 image{
     justify-self: left;
+    font-size:xx-large;
+    margin:50px;
 }
