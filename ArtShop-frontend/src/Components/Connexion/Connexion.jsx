@@ -50,8 +50,7 @@ function Connexion() {
             type={"email"}
             name="email"
             onChange={formik.handleChange}
-            value={formik.values.email}
-            
+            value={formik.values.email} 
           />
           <p className='form-p'>Mot de passe* </p>
           <StyledInput
@@ -60,7 +59,6 @@ function Connexion() {
             name="password"
             onChange={formik.handleChange}
             value={formik.values.password}
-            
           />
           
           <br/>
