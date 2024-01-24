@@ -68,6 +68,7 @@ function Connexion() {
           </button>
           <br/>
           <button className="b2" disabled={loading} type={"submit"}>
+            <img src="./google-icone-symbole-png-logo-noir.png"></img>
             {loading ? "Loading..." : "Se connecter avec Google"}
           </button>
         </form>
