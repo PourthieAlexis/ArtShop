@@ -62,14 +62,17 @@ function Connexion() {
             value={formik.values.password}
             
           />
+          
           <br/>
           <button className="b1" disabled={loading} type={"submit"}>
             {loading ? "Loading..." : "Se connecter"}
           </button>
           <br/>
           <button className="b2" disabled={loading} type={"submit"}>
-            <img src="./google-icone-symbole-png-logo-noir.png"></img>
+            <div className='bcontent'>
+            <img className="logoGoogle" src="./src/assets/G_icon_16_16.png"></img>
             {loading ? "Loading..." : "Se connecter avec Google"}
+            </div>
           </button>
         </form>
       </main>

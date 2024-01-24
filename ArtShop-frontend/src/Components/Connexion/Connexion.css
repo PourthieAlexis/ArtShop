@@ -74,3 +74,8 @@ image{
     font-size:xx-large;
     margin:50px;
 }
+div.bcontent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
