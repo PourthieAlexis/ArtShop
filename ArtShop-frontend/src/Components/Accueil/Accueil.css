@@ -1,4 +1,102 @@
+.accueil{
+    display: block;
+}
 section{
     display: flex;
     justify-content: center;
+}
+.section1{
+    background-image: url("../src/assets/G_icon_16_16.png");
+    background-size:auto;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    background-size: auto;
+}
+.searchdiv{
+    background-color: blue;
+}
+.tagList{
+    display: flex;
+}
+.section2{
+    display: block;
+    justify-self: stretch;
+}
+.resultList{
+    display:flex;
+    flex-direction: column;
+}
+.commentaireproduit{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 3rem;
+    margin-right: 3rem;
+}
+.nombreproduit{
+    display: flex;
+}
+p{
+    text-align:center;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+.titreListe{
+    margin-left: 4rem;
+}
+.detailProduit{
+    text-align: inherit;
+    margin-left: 0rem;
+    margin-right: 0rem;
+    font-size:small;
+    
+}
+.resultOutputzone{
+    display: block;
+    
+}
+.imageProduit{
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    width: 15rem;
+    height: 15rem;
+    background-color: lightgrey;
+}
+
+.produit{
+    display:block;
+    text-align: left;
+    align-items: center;
+    align-content: space-evenly;
+    margin-top: 1rem;
+    border:0.2rem solid black;
+    width: 15rem;
+    padding: 0rem;
+    
+}
+.ligneProduit{
+    display: flex;
+    justify-content: space-evenly;
+}
+footer{
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+}
+
+.footer-bouton{
+    background: none;
+    border: none;
+}
+.social{
+    border: 1px solid blue;
+    border-radius: 50%;
+}
+.footer-legal{
+    display: flex;
+    border-top: 0.1rem solid black;
+    justify-content: center;
+}
+.footerlink{
+    display: flex;
 }
