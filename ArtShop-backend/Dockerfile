@@ -38,4 +38,7 @@ RUN mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
 RUN composer dump-autoload --optimize
 RUN php bin/console assets:install --symlink
 
+# Generate keys LexikJWTAuthenticationBundle
+RUN php bin/console lexik:jwt:generate-keypair
+
 CMD symfony server:start --no-tls

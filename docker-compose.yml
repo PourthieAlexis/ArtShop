@@ -36,6 +36,12 @@ services:
       - dev
     depends_on:
       - db
+    volumes:
+      - type: bind  
+        source: ./ArtShop-backend
+        target: /var/www/html
+      - type: volume
+        target: /var/www/html/vendor
   adminer:
     image: adminer
     restart: always
