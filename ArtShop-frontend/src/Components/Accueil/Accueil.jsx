@@ -129,15 +129,15 @@ function Accueil()
               </td>
               
               <td>
-                  <button className="footer-bouton social fb1">a</button>
-                  <button className="footer-bouton social fb2">b</button>
-                  <button className="footer-bouton social fb3">c</button>
-                  <button className="footer-bouton social fb4">d</button>
-                  <button className="footer-bouton social fb5">e</button>
+                  <button className="footer-bouton social fb1"><img className='imageSocial' src='./src/assets/facebook.png'></img></button>
+                  <button className="footer-bouton social fb2"><img className='imageSocial' src='./src/assets/instagram.png'></img></button>
+                  <button className="footer-bouton social fb3"><img className='imageSocial' src='./src/assets/X.png'></img></button>
+                  <button className="footer-bouton social fb4"><img className='imageSocial' src='./src/assets/linkedin.png'></img></button>
+                  <button className="footer-bouton social fb5"><img className='imageSocial' src='./src/assets/youtube.png'></img></button>
               </td>
               </tr>
               <tr className='footer-legal'>
-                <p>Made in 2024</p> <a className="footerlink" href="https://google.fr/">privacy policy</a> <a className="footerlink" href="">terms of service</a> <a className="footerlink" href="">cookies setting</a>
+                <p>Made in 2024. All rights reserved to us</p> <a className="footerlink" href="https://google.fr/">privacy policy</a> <a className="footerlink" href="">terms of service</a> <a className="footerlink" href="">cookies setting</a>
               </tr>
             </div>
           </footer>
