@@ -29,15 +29,27 @@ function Accueil()
           <section className='section1'>
             <div className='searchDiv'>
                 <form className="connexionForm" onSubmit={formik.handleSubmit}>
-                  <StyledInput
-                    label="Search"
-                    type={"string"}
-                    name="Search"
-                    onChange={formik.handleChange}
-                    value={formik.values.search}
-                  />
-                  <br/>
-                  <button className="searchFilter" disabled={loading} type={"submit"}>Filters</button>
+                  <div>
+                    <StyledInput
+                      className='searchbar'
+                      label="Search"
+                      type={"string"}
+                      name="Search"
+                      
+                      onChange={formik.handleChange}
+                      value={formik.values.search}
+                    />
+                  </div>
+                  <div className='searchButton'>
+                    <button className="searchFilter" disabled={loading} type={"submit"}>Filters</button>
+                    <select className="searchOrder" disabled={loading} type={"submit"}> 
+                      <option>Sort By</option>
+                      <option>Date</option>
+                      <option>Name</option>
+                      <option>Genre</option>
+                      <option>Format</option>
+                    </select>
+                  </div>
                 </form>
             </div>
           </section>

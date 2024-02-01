@@ -1,0 +1,34 @@
+.general-header{
+    display: block;
+    justify-content: center;
+    text-align: left;
+    padding-bottom: 0.5rem;
+    border-bottom: 0.15rem solid black;
+}
+.header-container{
+    display: flex;
+    justify-content: space-between;
+}
+td{
+    display: block;
+}
+.logo{
+    padding-right: 8rem;
+    font-size: x-large;
+}
+.mainbutton{
+    align-self: stretch;
+    border-left: none;
+    border-right: none;
+    border-top:none;
+    border-bottom: none;
+    background: none;
+}
+.mainbutton.mb3:hover{
+    background: slategray;
+}
+.compte{
+    background: black;
+    color: white;
+    margin-right: 3rem;
+}

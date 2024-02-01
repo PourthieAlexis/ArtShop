@@ -8,16 +8,24 @@ section{
 .section1{
     background-image: url("../src/assets/G_icon_16_16.png");
     background-size:auto;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     background-position-x: center;
     background-position-y: center;
     background-size: auto;
+    block-size:20rem;
+    align-items: center;
+    display: flex;
+    justify-content: left;
+    
 }
 .searchdiv{
+    display: flex;
     background-color: blue;
+    margin-left: 10rem;
 }
 .tagList{
     display: flex;
+    margin-left:10rem;
 }
 .section2{
     display: block;
@@ -30,8 +38,8 @@ section{
 .commentaireproduit{
     display: flex;
     justify-content: space-between;
-    margin-left: 3rem;
-    margin-right: 3rem;
+    margin-left: 10rem;
+    margin-right: 11.4rem;
 }
 .nombreproduit{
     display: flex;
@@ -42,7 +50,7 @@ p{
     margin-right: 1rem;
 }
 .titreListe{
-    margin-left: 4rem;
+    margin-left: 11rem;
 }
 .detailProduit{
     text-align: inherit;
@@ -111,4 +119,18 @@ footer{
     width: 2rem;
     margin-left: -1rem;
     margin-top: -0.8rem;
+}
+
+.searchbar{
+    width: 90rem !important;
+}
+.searchOrder{
+    margin-right: -4rem;
+}
+.searchButton{
+    display: flex;
+    justify-content: space-between;
+}
+.connexionForm{
+    margin-left: 10rem;
 }

@@ -1,12 +1,12 @@
 
 import "./App.css";
-import Menuheader from "./Components/menuheader/menuheader";
+import Header from "./Components/header/header";
 import Accueil from "./Components/Accueil/Accueil";
 function App() {
   return (
     <>
       <div>
-          <Menuheader/>
+          <Header/>
           <Accueil/>
       </div>
     </>
