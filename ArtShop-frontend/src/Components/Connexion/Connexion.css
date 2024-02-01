@@ -1,0 +1,92 @@
+body
+{
+    display:block;
+    text-align: center;
+    align-self: stretch;
+    justify-content: center;
+    justify-self: stretch;
+    
+    
+
+}
+.menu-header
+{
+    display: block;
+    justify-content: space-between;
+    text-align: left;
+    
+}
+.menu-bouton-container{
+    display: flex;
+    justify-content: center;
+    
+}
+.form-p{
+    text-align: left;
+}
+p.para-header{
+    text-align: center;
+}
+.menu-bouton
+{
+    align-self: stretch;
+    border-left: none;
+    border-right: none;
+    border-top:none;
+    border-bottom: none;
+    background: none;
+    width : 15rem;
+    font-size: larger;
+}
+.menu-bouton.login{
+    border-bottom:0.15rem solid black;
+}
+.menu-bouton.signup:hover
+{
+    
+    border-bottom:0.15rem solid black;
+    
+}
+.menu-bouton.signup:hover + .login
+{
+    
+    border-bottom: none;
+    
+}
+button
+{
+    border-color: rgb(0, 0, 0);
+    
+    margin-bottom: 1rem;
+}
+button.b1{
+    background-color: black;
+    color: white;
+    width : 31.5rem;
+}
+button.b2{
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    width : 31.5rem;
+}
+.connexion-header{
+    font-size: x-large;
+}
+.connexionForm{
+    font-size: x-large;
+}
+form{
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
+image{
+    justify-self: left;
+    font-size:xx-large;
+    margin:1rem;
+}
+div.bcontent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
