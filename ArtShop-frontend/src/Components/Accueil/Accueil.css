@@ -1,9 +1,13 @@
 .accueil{
     display: block;
 }
+
 section{
     display: flex;
     justify-content: center;
+}
+body{
+    margin: 0rem;
 }
 .section1{
     background-image: url("../src/assets/G_icon_16_16.png");
@@ -15,7 +19,8 @@ section{
     block-size:20rem;
     align-items: center;
     display: flex;
-    justify-content: left;
+    justify-content: center;
+    background-color: grey;
     
 }
 .searchdiv{
@@ -123,6 +128,7 @@ footer{
 
 .searchbar{
     width: 90rem !important;
+    height: 1.5rem !important;
 }
 .searchOrder{
     margin-right: -4rem;
@@ -130,7 +136,4 @@ footer{
 .searchButton{
     display: flex;
     justify-content: space-between;
-}
-.connexionForm{
-    margin-left: 10rem;
 }

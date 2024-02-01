@@ -8,19 +8,22 @@ function Accueil()
 {
     const [loading, setLoading] = useState(false);
     const validateSchema = Yup.object().shape({search: Yup.string()});
+
     const formik = useFormik({
         initialValues: {
           search: "",
           filter: "",
         },
         validationSchema: validateSchema,
+        
         onSubmit: (values, { resetForm }) => {
           console.log(values);
+          console.log(formik.handleChange);
           setLoading(true);
           setTimeout(() => {
             setLoading(false);
             resetForm();
-          }, 1000 * 2);
+          }, 2000);
         },
       });
     
@@ -33,8 +36,8 @@ function Accueil()
                     <StyledInput
                       className='searchbar'
                       label="Search"
-                      type={"string"}
-                      name="Search"
+                      type="text"
+                      name="search"
                       
                       onChange={formik.handleChange}
                       value={formik.values.search}
@@ -47,7 +50,7 @@ function Accueil()
                       <option>Date</option>
                       <option>Name</option>
                       <option>Genre</option>
-                      <option>Format</option>
+                      <option>Type</option>
                     </select>
                   </div>
                 </form>
@@ -59,68 +62,69 @@ function Accueil()
                   <p>tag</p><p>tag</p><p>tag</p>
             </div>
             <div className='resultList'>
-              <td>
+              <ul>
                 <h2 className='titreListe'>Product List</h2>
-              </td>
-              <td className='commentaireproduit'>
-                <p>lorem ipsum dolore ym das arhtung</p>  
-                <td className='nombreproduit'>
-                  <p>montre actuellement 0 produits sur 100</p> <button>Voir tout</button>
-                </td>
-              </td>
+              </ul>
+              
               <div className='resultOutputzone'>
-                <tr className='ligneProduit'>
-                  <td className='produit'>
+              <ul className='commentaireproduit'>
+                <p>lorem ipsum dolore ym das arhtung</p>  
+                <ul className='nombreproduit'>
+                  <p>montre actuellement 0 produits sur 100</p> <button>Voir tout</button>
+                </ul>
+              </ul>
+                <li className='ligneProduit'>
+                  <ul className='produit'>
                   <img className="imageProduit" src="./src/assets/G_icon_16_16.png"></img>
                   <h4 className='nomProduit'>NomProduit</h4>
                   <p className='detailProduit'>Lorem Ipsum</p>
                   <h3 className='prixProduit'>50$</h3>
-                </td>
-                <td className='produit'>
+                </ul>
+                <ul className='produit'>
                   <img className="imageProduit" src="./src/assets/G_icon_16_16.png"></img>
                   <h4 className='nomProduit'>NomProduit</h4>
                   <p className='detailProduit'>Lorem Ipsum</p>
                   <h3 className='prixProduit'>50$</h3>
-                </td>
-                <td className='produit'>
+                </ul>
+                <ul className='produit'>
                   <img className="imageProduit" src="./src/assets/G_icon_16_16.png"></img>
                   <h4 className='nomProduit'>NomProduit</h4>
                   <p className='detailProduit'>Lorem Ipsum</p>
                   <h3 className='prixProduit'>50$</h3>
-                </td>
-                <td className='produit'>
+                </ul>
+                <ul className='produit'>
                   <img className="imageProduit" src="./src/assets/G_icon_16_16.png"></img>
                   <h4 className='nomProduit'>NomProduit</h4>
                   <p className='detailProduit'>Lorem Ipsum</p>
                   <h3 className='prixProduit'>50$</h3>
-                </td>
-                </tr>
-                <tr className='ligneProduit'>
-                  <td className='produit'>
+                </ul>
+                </li>
+                <li className='ligneProduit'>
+                  <ul className='produit'>
                   <img className="imageProduit" src="./src/assets/G_icon_16_16.png"></img>
                   <h4 className='nomProduit'>NomProduit</h4>
                   <p className='detailProduit'>Lorem Ipsum</p>
                   <h3 className='prixProduit'>50$</h3>
-                </td>
-                <td className='produit'>
+                </ul>
+                <ul className='produit'>
                   <img className="imageProduit" src="./src/assets/G_icon_16_16.png"></img>
                   <h4 className='nomProduit'>NomProduit</h4>
                   <p className='detailProduit'>Lorem Ipsum</p>
                   <h3 className='prixProduit'>50$</h3>
-                </td>
-                <td className='produit'>
+                </ul>
+                <ul className='produit'>
                   <img className="imageProduit" src="./src/assets/G_icon_16_16.png"></img>
                   <h4 className='nomProduit'>NomProduit</h4>
                   <p className='detailProduit'>Lorem Ipsum</p>
                   <h3 className='prixProduit'>50$</h3>
-                </td>
-                <td className='produit'>
+                </ul>
+                <ul className='produit'>
                   <img className="imageProduit" src="./src/assets/G_icon_16_16.png"></img>
                   <h4 className='nomProduit'>NomProduit</h4>
                   <p className='detailProduit'>Lorem Ipsum</p>
                   <h3 className='prixProduit'>50$</h3>
-                </td>
-                </tr>
+                </ul>
+                </li>
               </div>
 
             </div>
@@ -129,28 +133,28 @@ function Accueil()
           <footer>
             <div className="general-header">
               
-              <tr className="header-container">
+              <li className="header-container">
               <image className='logo'><b>Logo</b></image>
 
-              <td>
+              <ul>
                   <button className="footer-bouton fb1">bouton 1</button>
                   <button className="footer-bouton fb2">bouton 2</button>
                   <button className="footer-bouton fb3">bouton 3</button>
                   <button className="footer-bouton fb4">bouton 4</button>
                   <button className="footer-bouton fb5">bouton 5</button>
-              </td>
+              </ul>
               
-              <td>
+              <ul>
                   <button className="footer-bouton social fb1"><img className='imageSocial' src='./src/assets/facebook.png'></img></button>
                   <button className="footer-bouton social fb2"><img className='imageSocial' src='./src/assets/instagram.png'></img></button>
                   <button className="footer-bouton social fb3"><img className='imageSocial' src='./src/assets/X.png'></img></button>
                   <button className="footer-bouton social fb4"><img className='imageSocial' src='./src/assets/linkedin.png'></img></button>
                   <button className="footer-bouton social fb5"><img className='imageSocial' src='./src/assets/youtube.png'></img></button>
-              </td>
-              </tr>
-              <tr className='footer-legal'>
+              </ul>
+              </li>
+              <li className='footer-legal'>
                 <p>Made in 2024. All rights reserved to us</p> <a className="footerlink" href="https://google.fr/">privacy policy</a> <a className="footerlink" href="">terms of service</a> <a className="footerlink" href="">cookies setting</a>
-              </tr>
+              </li>
             </div>
           </footer>
         </div>

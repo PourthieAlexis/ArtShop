@@ -4,16 +4,16 @@ function Header()
 
     return(
     <div className="general-header">
-        <tr className="header-container">
-            <td>
+        <li className="header-container">
+            <ul>
                 <button className="header-bouton mainbutton mb1">bouton 1</button>
                 <button className="header-bouton mainbutton mb2">bouton 2</button>
                 <button className="header-bouton mainbutton mb3">bouton 3</button>
-            </td>
+            </ul>
             <image className='logo'><b>Logo</b></image>
 
             <button className="header-bouton compte">Compte</button>
-        </tr>
+        </li>
     </div>
     );
 }

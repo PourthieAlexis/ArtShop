@@ -47,7 +47,7 @@ function Connexion() {
             <p className='form-p'>Mail* </p>
           <StyledInput
             label="Mail"
-            type={"email"}
+            type="email"
             name="email"
             onChange={formik.handleChange}
             value={formik.values.email} 
@@ -55,7 +55,7 @@ function Connexion() {
           <p className='form-p'>Mot de passe* </p>
           <StyledInput
             label="Mot de passe"
-            type={"password"}
+            type="password"
             name="password"
             onChange={formik.handleChange}
             value={formik.values.password}
