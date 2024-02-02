@@ -2,17 +2,16 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import styled from "styled-components";
 import UserInitialValues from "../formik/initialValues/UserInitialValues";
-import LoginYup from "../formik/yup/SignUpYup";
+import RegisterYup from "../formik/yup/SignUpYup";
 import { register } from "../../api/backend/account";
 
 const SignUp = () => {
     const [loading, setLoading] = useState(false);
     const [errorLog, setErrorLog] = useState(false);
 
-
     const formik = useFormik({
         initialValues: UserInitialValues,
-        validationSchema: LoginYup,
+        validationSchema: RegisterYup,
         onSubmit: (values) => {
             register(values)
                 .then((res) => {
@@ -91,7 +90,6 @@ const TitleContainer = styled.div`
 
 const ErrorText = styled.p`
     color: red;
-    margin-top: 1rem;
 `;
 
 const Title = styled.p`
