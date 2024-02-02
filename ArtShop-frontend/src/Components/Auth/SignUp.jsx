@@ -20,7 +20,16 @@ const SignUp = () => {
                         console.log("Inscription réussie", res.data);
                     }
                 })
-                .catch((e) => console.log(e));
+                .catch((error) => {
+                    setLoading(false);
+                    if (error.response) {
+                        setErrorLog(error.response.data.message);
+                    } else if (error.request) {
+                        setErrorLog("Pas de réponse du serveur. Veuillez réessayer.");
+                    } else {
+                        setErrorLog("Une erreur s'est produite. Veuillez réessayer.");
+                    }
+                });
         },
     });
 
@@ -30,6 +39,7 @@ const SignUp = () => {
                 <Title>Sign Up</Title>
                 <Text>Lorem ipsum dolor sit amet</Text>
             </TitleContainer>
+            <ErrorText>{errorLog}</ErrorText>
             <Form onSubmit={formik.handleSubmit}>
                 <p className='form-p'>Name* </p>
                 <StyledInput
@@ -39,6 +49,8 @@ const SignUp = () => {
                     onChange={formik.handleChange}
                     value={formik.values.name}
                 />
+                {formik.touched.name && formik.errors.name && <ErrorText>{formik.errors.name}</ErrorText>}
+
                 <p className='form-p'>Mail* </p>
                 <StyledInput
                     label="Mail"
@@ -47,6 +59,8 @@ const SignUp = () => {
                     onChange={formik.handleChange}
                     value={formik.values.email}
                 />
+                {formik.touched.email && formik.errors.email && <ErrorText>{formik.errors.email}</ErrorText>}
+
                 <p className='form-p'>Mot de passe* </p>
                 <StyledInput
                     label="Mot de passe"
@@ -54,8 +68,8 @@ const SignUp = () => {
                     name="password"
                     onChange={formik.handleChange}
                     value={formik.values.password}
-
                 />
+                {formik.touched.password && formik.errors.password && <ErrorText>{formik.errors.password}</ErrorText>}
 
                 <Button disabled={loading} type={"submit"} value="Se connecter" />
                 <ButtonGoogle disabled={loading} type={"submit"}>
@@ -74,6 +88,11 @@ const TitleContainer = styled.div`
   align-items: center;
   font-size: large;
 `
+
+const ErrorText = styled.p`
+    color: red;
+    margin-top: 1rem;
+`;
 
 const Title = styled.p`
   font-size: 2rem;
