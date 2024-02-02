@@ -20,13 +20,14 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\Length(
-        min: 10,
+        min: 12,
         minMessage: "L'email doit contenir au moins {{ limit }} caractères.",
     )]
-    #[Assert\Email(
-        message: '{{ value }} n\'est pas une email valide',
-    )]
     #[Assert\NotBlank(message: "L'email est obligatoire")]
+    #[Assert\Regex(
+        pattern: '/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g',
+        message: "L'email n'est pas valide",
+    )]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -37,12 +38,15 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     #[Assert\Length(
-        min: 6,
+        min: 12,
         minMessage: "Le mot de passe doit contenir au moins {{ limit }} caractères.",
     )]
     #[Assert\NotBlank(message: "Le mot de passe est obligatoire")]
+    #[Assert\Regex(
+        pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/',
+        message: 'Doit contenir au moins une lettre minuscule, majuscule, un chiffre, un caractère spécial et une longueur de 12 caractères',
+    )]
     private ?string $password = null;
-
     #[ORM\Column(length: 50)]
     private ?string $address = null;
 
