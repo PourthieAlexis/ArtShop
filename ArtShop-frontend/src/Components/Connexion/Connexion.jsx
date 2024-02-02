@@ -28,7 +28,7 @@ function Connexion() {
   });
 
   return (
-    <div className="connexion">
+    <section className="connexion">
         <div className="menu-header">
             <tr><image><b>Logo</b></image></tr>
             <tr className="menu-bouton-container">
@@ -42,7 +42,6 @@ function Connexion() {
             <p className='para-header'>Lorem Ipsum</p>
         </div>
         
-      <section>
         <form className="connexionForm" onSubmit={formik.handleSubmit}>
             <p className='form-p'>Mail* </p>
           <StyledInput
@@ -75,8 +74,7 @@ function Connexion() {
             </div>
           </button>
         </form>
-      </section>
-    </div>
+    </section>
   );
 }
 const StyledInput = styled.input`
