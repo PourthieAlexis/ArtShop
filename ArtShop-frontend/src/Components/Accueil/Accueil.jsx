@@ -136,7 +136,7 @@ function Accueil()
               
               <li className="footer-container">
                 <ul>
-                  <image className='logo'><b>Logo</b></image>
+                  <img className='logo' src="./src/assets/logo.png"></img>
                 </ul>
               
               <ul>

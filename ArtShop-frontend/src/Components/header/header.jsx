@@ -10,7 +10,7 @@ function Header()
                 <button className="header-bouton mainbutton mb2">bouton 2</button>
                 <button className="header-bouton mainbutton mb3">bouton 3</button>
             </ul>
-            <image className='logo'><b>Logo</b></image>
+            <img className='logo' src="./src/assets/logo.png"></img>
 
             <button className="header-bouton compte">Compte</button>
         </li>

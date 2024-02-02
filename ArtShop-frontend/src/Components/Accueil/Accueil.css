@@ -10,12 +10,12 @@ body{
     margin: 0rem;
 }
 .section1{
-    background-image: url("../src/assets/G_icon_16_16.png");
+    background-image: url("../src/assets/banniere.png");
     background-size:auto;
-    background-repeat: repeat;
+    background-repeat: no-repeat;
     background-position-x: center;
     background-position-y: center;
-    background-size: auto;
+    background-size: cover;
     block-size:20rem;
     align-items: center;
     display: flex;
@@ -135,7 +135,10 @@ footer{
     margin-left: -1rem;
     margin-top: -0.8rem;
 }
-
+.logo{
+    height: 5rem;
+    width: 6rem;
+}
 .searchbar{
     width: 90rem !important;
     height: 1.5rem !important;
