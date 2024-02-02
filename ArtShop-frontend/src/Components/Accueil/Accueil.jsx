@@ -58,12 +58,14 @@ function Accueil()
           </section>
 
           <div className='section2'>
-            <div className='tagList'>
-                  <p>tag</p><p>tag</p><p>tag</p>
-            </div>
+            
             <div className='resultList'>
+              
               <ul>
-                <h2 className='titreListe'>Product List</h2>
+                <div className='tagList'>
+                  <p>tag</p><p>tag</p><p>tag</p>
+                </div>
+                <h1 className='titreListe'>Product List</h1>
               </ul>
               
               <div className='resultOutputzone'>
@@ -126,34 +128,35 @@ function Accueil()
                 </ul>
                 </li>
               </div>
-
             </div>
           </div>
 
           <footer>
-            <div className="general-header">
+            <div className="general-footer">
               
-              <li className="header-container">
-              <image className='logo'><b>Logo</b></image>
-
+              <li className="footer-container">
+                <ul>
+                  <image className='logo'><b>Logo</b></image>
+                </ul>
+              
               <ul>
-                  <button className="footer-bouton fb1">bouton 1</button>
-                  <button className="footer-bouton fb2">bouton 2</button>
-                  <button className="footer-bouton fb3">bouton 3</button>
-                  <button className="footer-bouton fb4">bouton 4</button>
-                  <button className="footer-bouton fb5">bouton 5</button>
+                  <button className="footer-bouton fb1"><b>bouton 1</b></button>
+                  <button className="footer-bouton fb2"><b>bouton 2</b></button>
+                  <button className="footer-bouton fb3"><b>bouton 3</b></button>
+                  <button className="footer-bouton fb4"><b>bouton 4</b></button>
+                  <button className="footer-bouton fb5"><b>bouton 5</b></button>
               </ul>
               
               <ul>
                   <button className="footer-bouton social fb1"><img className='imageSocial' src='./src/assets/facebook.png'></img></button>
-                  <button className="footer-bouton social fb2"><img className='imageSocial' src='./src/assets/instagram.png'></img></button>
-                  <button className="footer-bouton social fb3"><img className='imageSocial' src='./src/assets/X.png'></img></button>
+                  <button className="footer-bouton social fb2"><img className='imageSocial' src='./src/assets/insta.png'></img></button>
+                  <button className="footer-bouton social fb3"><img className='imageSocial' src='./src/assets/logoX.png'></img></button>
                   <button className="footer-bouton social fb4"><img className='imageSocial' src='./src/assets/linkedin.png'></img></button>
                   <button className="footer-bouton social fb5"><img className='imageSocial' src='./src/assets/youtube.png'></img></button>
               </ul>
               </li>
               <li className='footer-legal'>
-                <p>Made in 2024. All rights reserved to us</p> <a className="footerlink" href="https://google.fr/">privacy policy</a> <a className="footerlink" href="">terms of service</a> <a className="footerlink" href="">cookies setting</a>
+                <p>Made in 2024. All rights reserved.</p> <a className="footerlink" href="https://google.fr/">privacy policy</a> <a className="footerlink" href="">terms of service</a> <a className="footerlink" href="">cookies setting</a>
               </li>
             </div>
           </footer>

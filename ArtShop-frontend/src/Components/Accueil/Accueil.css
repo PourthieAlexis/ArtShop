@@ -30,7 +30,8 @@ body{
 }
 .tagList{
     display: flex;
-    margin-left:10rem;
+    margin-left:8rem;
+    margin-top: 3rem;
 }
 .section2{
     display: block;
@@ -43,19 +44,19 @@ body{
 .commentaireproduit{
     display: flex;
     justify-content: space-between;
-    margin-left: 10rem;
-    margin-right: 11.4rem;
+    padding:0rem;
 }
 .nombreproduit{
     display: flex;
 }
 p{
     text-align:center;
-    margin-left: 1rem;
+    margin-left: 0rem;
     margin-right: 1rem;
 }
 .titreListe{
-    margin-left: 11rem;
+    margin-left: 7.5rem;
+    margin-top: 0rem;
 }
 .detailProduit{
     text-align: inherit;
@@ -66,15 +67,17 @@ p{
 }
 .resultOutputzone{
     display: block;
+    margin-left: 10rem;
+    margin-right: 10rem;
     
 }
 .imageProduit{
     display: flex;
-    margin-left: auto;
-    margin-right: auto;
-    width: 15rem;
-    height: 15rem;
+    margin-left: inherit;
+    margin-right: inherit;
     background-color: lightgrey;
+    object-fit: scale-down;
+    width: inherit;
 }
 
 .produit{
@@ -83,20 +86,26 @@ p{
     align-items: center;
     align-content: space-evenly;
     margin-top: 1rem;
-    border:0.2rem solid black;
-    width: 15rem;
+    
+    width: 20rem;
     padding: 0rem;
     
 }
 .ligneProduit{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 footer{
     margin-top: 5rem;
     margin-bottom: 5rem;
 }
-
+.footer-container{
+    margin-left: 1rem;
+    margin-right: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .footer-bouton{
     background: none;
     border: none;
@@ -111,6 +120,7 @@ footer{
     display: flex;
     border-top: 0.1rem solid black;
     justify-content: center;
+    margin-top: 3rem;
 }
 .footerlink{
     display: flex;
@@ -132,8 +142,17 @@ footer{
 }
 .searchOrder{
     margin-right: -4rem;
+    background: none;
+    border: none;
 }
 .searchButton{
     display: flex;
     justify-content: space-between;
+}
+.general-footer{
+    display: block;
+    justify-content: center;
+    text-align: left;
+    padding-bottom: 0.5rem;
+
 }
