@@ -7,7 +7,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - type: bind  
+      - type: bind
         source: ./ArtShop-frontend
         target: /app
       - type: volume
@@ -32,16 +32,17 @@ services:
       - "8000:8000"
     env_file:
       - ./ArtShop-backend/.env.local
-    networks:
-      - dev
+    restart: always
     depends_on:
       - db
     volumes:
-      - type: bind  
+      - type: bind
         source: ./ArtShop-backend
         target: /var/www/html
       - type: volume
         target: /var/www/html/vendor
+    networks:
+      - dev
   adminer:
     image: adminer
     restart: always

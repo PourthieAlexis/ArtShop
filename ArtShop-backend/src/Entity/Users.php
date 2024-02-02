@@ -66,7 +66,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $orders;
 
     #[ORM\Column]
-    private ?bool $isActive = null;
+    private ?bool $isActive = false;
 
     public function __construct()
     {
