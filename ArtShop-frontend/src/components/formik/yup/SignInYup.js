@@ -1,7 +1,6 @@
 import * as Yup from "yup";
 
-const RegisterYup = Yup.object().shape({
-    name: Yup.string().required("Le nom est obligatoire"),
+const LoginYup = Yup.object().shape({
     email: Yup.string()
         .email("L'email n'est pas valide")
         .required("L'email est obligatoire"),
@@ -10,4 +9,4 @@ const RegisterYup = Yup.object().shape({
 });
 
 
-export default RegisterYup;
+export default LoginYup;

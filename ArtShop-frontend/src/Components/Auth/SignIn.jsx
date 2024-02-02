@@ -1,30 +1,35 @@
 import { useFormik } from "formik";
 import { useState } from "react";
 import styled from "styled-components";
-import * as Yup from "yup";
+import LoginYup from "../formik/yup/SignInYup";
+import UserInitialValues from "../formik/initialValues/UserInitialValues";
+import { authenticate } from "../../api/backend/account";
 
 const SignUp = () => {
     const [loading, setLoading] = useState(false);
-
-    const validateSchema = Yup.object().shape({
-        email: Yup.string().email("Please enter a valid email").required("This field is required"),
-        password: Yup.string().required("This field is required"),
-    });
+    const [errorLog, setErrorLog] = useState(false);
 
     const formik = useFormik({
-        initialValues: {
-            email: "",
-            password: "",
-        },
-
-        validationSchema: validateSchema,
-        onSubmit: (values, { resetForm }) => {
-            console.log(values);
-            setLoading(true);
-            setTimeout(() => {
-                setLoading(false);
-                resetForm();
-            }, 1000 * 2);
+        initialValues: UserInitialValues,
+        validationSchema: LoginYup,
+        onSubmit: (values) => {
+            authenticate(values)
+                .then((res) => {
+                    if (res.status === 200) {
+                        console.log("Connexion réussie", res.data);
+                    }
+                })
+                .catch((error) => {
+                    setLoading(false);
+                    if (error.response) {
+                        setErrorLog(error.response.data.message);
+                        console.log(error.response)
+                    } else if (error.request) {
+                        setErrorLog("Pas de réponse du serveur. Veuillez réessayer.");
+                    } else {
+                        setErrorLog("Une erreur s'est produite. Veuillez réessayer.");
+                    }
+                });
         },
     });
 
@@ -35,6 +40,7 @@ const SignUp = () => {
                 <Title>Sign In</Title>
                 <Text>Lorem, ipsum dolor sit</Text>
             </TitleContainer>
+            <ErrorText>{errorLog}</ErrorText>
             <Form onSubmit={formik.handleSubmit}>
                 <p className='form-p'>Mail* </p>
                 <StyledInput
@@ -44,6 +50,8 @@ const SignUp = () => {
                     onChange={formik.handleChange}
                     value={formik.values.email}
                 />
+                {formik.touched.email && formik.errors.email && <ErrorText>{formik.errors.email}</ErrorText>}
+
                 <p className='form-p'>Mot de passe* </p>
                 <StyledInput
                     label="Mot de passe"
@@ -53,6 +61,8 @@ const SignUp = () => {
                     value={formik.values.password}
 
                 />
+                {formik.touched.password && formik.errors.password && <ErrorText>{formik.errors.password}</ErrorText>}
+
                 <Button disabled={loading} type={"submit"} value={loading ? "Loading..." : "Se connecter"} />
                 <ButtonGoogle disabled={loading} type={"submit"}>
                     <img className="logoGoogle" src="./src/assets/googleIcon.png"></img>
@@ -63,6 +73,11 @@ const SignUp = () => {
     )
 }
 
+
+const ErrorText = styled.p`
+    color: red;
+    margin-top: 1rem;
+`;
 
 const TitleContainer = styled.div`
   display: flex;

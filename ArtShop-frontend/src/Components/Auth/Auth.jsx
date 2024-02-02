@@ -37,7 +37,8 @@ const Auth = () => {
 
 const AuthSection = styled.section`
   width: 100%;
-  height:100vh;
+  height:100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -55,7 +56,7 @@ const Logo = styled.div`
 
 const FormAuth = styled.div`
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   align-items: center;
 `
 

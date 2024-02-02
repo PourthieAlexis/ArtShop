@@ -1,7 +1,7 @@
 
-import styled,{createGlobalStyle} from "styled-components";
+import { createGlobalStyle } from "styled-components";
 import "./App.css";
-import Auth from "./Components/Auth/Auth";
+import Auth from "./components/Auth/Auth";
 
 const GlobalStyle = createGlobalStyle`
   body {  
@@ -13,10 +13,10 @@ const GlobalStyle = createGlobalStyle`
 `;
 function App() {
   return (
-      <div>
-        <GlobalStyle/>
-        <Auth />
-      </div>
+    <div>
+      <GlobalStyle />
+      <Auth />
+    </div>
   );
 }
 
