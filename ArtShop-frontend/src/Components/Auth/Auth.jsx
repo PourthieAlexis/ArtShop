@@ -2,9 +2,10 @@ import styled from 'styled-components';
 import { useState } from "react";
 import SignUp from "./SignUp";
 import SignIn from "./SignIn";
+import PropTypes from 'prop-types';
 
-const Auth = () => {
-  const [isSignUp, setIsSignUp] = useState(true);
+const Auth = ({ page }) => {
+  const [isSignUp, setIsSignUp] = useState(page === "Register" ? true : false);
 
   const toggleForm = (isSignUp) => {
     setIsSignUp(isSignUp);
@@ -34,6 +35,11 @@ const Auth = () => {
     </>
   )
 }
+
+Auth.propTypes = {
+  page: PropTypes.string.isRequired,
+};
+
 
 const AuthSection = styled.section`
   width: 100%;
