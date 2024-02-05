@@ -26,6 +26,8 @@ ArtShop est une application web basée sur Symfony et React, créée pour la ven
 
 L'application sera disponible à l'adresse : `http://localhost:3000`
 Le serveur sera disponible à l'adresse : `http://localhost:8000`
+L'adminer pour l'interface de la base de donnée : `http://localhost:8081`
+
 
 ## Auteurs
 
