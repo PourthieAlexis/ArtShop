@@ -8,3 +8,4 @@ export function authenticate(values) {
 export function register(values) {
     return apiBackEnd.post(URL_BACK_REGISTER, values);
 }
+

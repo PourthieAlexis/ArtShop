@@ -2,7 +2,7 @@
 import { createGlobalStyle } from "styled-components";
 import "./App.css";
 import Auth from "./components/Auth/Auth";
-
+import Accueil from "./Components/Accueil/Accueil";
 const GlobalStyle = createGlobalStyle`
   body {  
     margin: 0;
@@ -15,7 +15,7 @@ function App() {
   return (
     <div>
       <GlobalStyle />
-      <Auth />
+      <Accueil />
     </div>
   );
 }

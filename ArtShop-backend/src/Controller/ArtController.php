@@ -9,20 +9,19 @@ use App\Repository\ArtsRepository;
 
 class ArtController extends AbstractController
 {
-    #[Route('/art', name: 'app_art')]
+    #[Route('/api/art', name: 'app_art')]
     public function index(ArtsRepository $artRepo): JsonResponse
     {
         $arts = $artRepo->findAll();
         
         $encodedArts = [];
-
         foreach ($arts as $art) 
         {
             $encodedArts[] = [
                 'id' => $art->getId(),
-                'users_id' => $art->getUsers(),
+                'users_id' => $art->getUsers()->getId(),
                 'Title' => $art->getTitle(),
-                'categories_id'=> $art->getCategories(),
+                'categories_id'=> $art->getCategories()->getId(),
                 'description'=> $art->getDescription(),
                 'price'	=> $art->getPrice(),
                 'stock'	=> $art->getStock(),
@@ -30,6 +29,7 @@ class ArtController extends AbstractController
                 // Ajoutez ici d'autres propriétés que vous souhaitez inclure
             ];
         }
-        return new JsonResponse($encodedArts);
+
+        return new JsonResponse($encodedArts, 200);
     }
 }
