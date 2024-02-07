@@ -11,6 +11,7 @@ services:
         source: ./ArtShop-frontend
         target: /app
       - type: volume
+        source: node_modules_volume
         target: /app/node_modules
     networks:
       - dev
@@ -21,6 +22,8 @@ services:
     environment:
       MYSQL_DATABASE: artshop
       MYSQL_ROOT_PASSWORD: 123
+    volumes:
+      - db_data:/var/lib/mysql
     networks:
       - dev
   backend:
@@ -40,6 +43,7 @@ services:
         source: ./ArtShop-backend
         target: /var/www/html
       - type: volume
+        source: vendor_volume
         target: /var/www/html/vendor
     networks:
       - dev
@@ -57,3 +61,9 @@ services:
       - dev
 networks:
   dev:
+
+
+volumes:
+  db_data:
+  node_modules_volume:
+  vendor_volume:

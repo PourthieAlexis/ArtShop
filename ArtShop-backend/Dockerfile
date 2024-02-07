@@ -41,4 +41,4 @@ RUN php bin/console assets:install --symlink
 # Generate keys LexikJWTAuthenticationBundle
 RUN php bin/console lexik:jwt:generate-keypair
 
-CMD symfony server:start --no-tls
+CMD symfony server:stop && symfony server:start --no-tls
