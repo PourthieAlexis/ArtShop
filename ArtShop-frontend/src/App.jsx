@@ -1,7 +1,8 @@
 
 import { createGlobalStyle } from "styled-components";
+import { BrowserRouter } from "react-router-dom";
+import Routes from "./routes/Routes";
 import "./App.css";
-import Auth from "./components/Auth/Auth";
 
 const GlobalStyle = createGlobalStyle`
   body {  
@@ -13,10 +14,12 @@ const GlobalStyle = createGlobalStyle`
 `;
 function App() {
   return (
-    <div>
-      <GlobalStyle />
-      <Auth />
-    </div>
+    <BrowserRouter>
+      <main>
+        <GlobalStyle />
+        <Routes />
+      </main>
+    </BrowserRouter>
   );
 }
 
