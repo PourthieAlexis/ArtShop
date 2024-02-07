@@ -4,10 +4,17 @@ import styled from "styled-components";
 import LoginYup from "../formik/yup/SignInYup";
 import UserInitialValues from "../formik/initialValues/UserInitialValues";
 import { authenticate } from "../../api/backend/account";
+import { useDispatch, useSelector } from "react-redux";
+import { signIn } from "../../reducers/authenticationSlice";
+import { selectUser } from './../../reducers/authenticationSlice';
+
 
 const SignUp = () => {
     const [loading, setLoading] = useState(false);
     const [errorLog, setErrorLog] = useState(false);
+    const user = useSelector(selectUser);
+
+    const dispatch = useDispatch();
 
     const formik = useFormik({
         initialValues: UserInitialValues,
@@ -16,7 +23,8 @@ const SignUp = () => {
             authenticate(values)
                 .then((res) => {
                     if (res.status === 200) {
-                        console.log("Connexion réussie", res.data);
+                        dispatch(signIn(res.data.token));
+                        console.log(user);
                     }
                 })
                 .catch((error) => {
