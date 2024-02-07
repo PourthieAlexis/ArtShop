@@ -4,14 +4,17 @@ namespace App\Entity;
 
 use App\Repository\OrdersRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: OrdersRepository::class)]
 class Orders
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
+    private ?Uuid $id;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $orderDate = null;
@@ -29,7 +32,7 @@ class Orders
     #[ORM\ManyToOne(inversedBy: 'orders')]
     private ?Carts $carts = null;
 
-    public function getId(): ?int
+    public function getId(): ?Uuid
     {
         return $this->id;
     }
