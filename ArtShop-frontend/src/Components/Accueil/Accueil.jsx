@@ -4,43 +4,78 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import styled from 'styled-components';
 import { listArt } from "../../api/backend/art";
-function Accueil()
-{
-  useEffect(() => {
-    listArt()
-                .then((res) => {
-                  console.log(res.data);
-                })
-                .catch((error) => {
-                    console.log(error.data)
-    })
-  });
-    const [art, loadArt] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const validateSchema = Yup.object().shape({search: Yup.string()});
+import axios from "axios";
 
-    const formik = useFormik({
-        initialValues: {
-          search: "",
-          filter: "",
-        },
-        validationSchema: validateSchema,
-        
-        onSubmit: (values, { resetForm }) => {
-          console.log(values);
-          console.log(formik.handleChange);
-          setLoading(true);
-          setTimeout(() => {
-            setLoading(false);
-            resetForm();
-          }, 2000);
-        },
-      });
+let loadcheck = true;
+let arrayArt = [];
+
+function modulo(i){
+  if (i%4 == 0){
+    return true;
+  }
+}
+const Accueil = () =>
+{
+  const [art, setArt] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const validateSchema = Yup.object().shape({search: Yup.string()});
+
+  const formik = useFormik({
+      initialValues: {
+        search: "",
+        filter: "",
+      },
+      validationSchema: validateSchema,
+      
+      onSubmit: (values, { resetForm }) => {
+        console.log(values);
+        console.log(formik.handleChange);
+        setLoading(true);
+        setTimeout(() => {
+          setLoading(false);
+          resetForm();
+        }, 2000);
+      },
+    });
+  
+  useEffect( () => {
     
-      return (
-        <div className="accueil">
-          <section className='section1'>
+      listArt()
+      .then(response => {
+        
+        setArt(response.data);
+        
+        
+      })
+      .catch(err => {
+        console.error(err.data);
+      })
+  },[])
+  
+  while(loadcheck === true){
+    if(art[0] !== undefined )
+    {
+        art.forEach(piece => {
+          arrayArt.push([piece.image,piece.title,piece.description,piece.price]);
+        });
+        console.log(arrayArt);
+      }
+      else 
+      {
+        return null;
+      }
+      loadcheck = false;  
+    }
+    
+    
+  return(
+    <>
+      
+        <div className="accueil"> 
+           
+         <section className='section1'>
             <div className='searchDiv'>
+            
                 <form className="connexionForm" onSubmit={formik.handleSubmit}>
                   <div>
                     <StyledInput
@@ -82,10 +117,10 @@ function Accueil()
               <ul className='commentaireproduit'>
                 <p>lorem ipsum dolore ym das arhtung</p>  
                 <ul className='nombreproduit'>
-                  <p>montre actuellement 0 produits sur 100</p> <button>Voir tout</button>
+                  <p>montre actuellement {arrayArt.length} produits sur 100</p> <button>Voir tout</button>
                 </ul>
               </ul>
-                <li className='ligneProduit'>
+                {/* <li className='ligneProduit'>
                   <ul className='produit'>
                   <img className="imageProduit" src="./src/assets/G_icon_16_16.png"></img>
                   <h4 className='nomProduit'></h4>
@@ -136,12 +171,27 @@ function Accueil()
                   <p className='detailProduit'>Lorem Ipsum</p>
                   <h3 className='prixProduit'>50$</h3>
                 </ul>
+                </li> */}
+                <li className='ligneProduit'>
+                
+
+                {arrayArt.map((item, i) => 
+                (
+                  
+                    <ul className='produit' key={i}>
+                    <img className="imageProduit" src={item[0]} alt="Produit" />
+                    <h4 className="nomProduit">{item[1]}</h4>
+                    <p className="detailProduit">{item[2]}</p>
+                    <h3 className="prixProduit">{item[3]}$</h3>
+                  </ul>
+                  
+                ))}
                 </li>
               </div>
             </div>
           </section>
 
-          <footer>
+           <footer>
             <div className="general-footer">
               
               <li className="footer-container">
@@ -171,10 +221,13 @@ function Accueil()
             </div>
           </footer>
         </div>
-      );
-    }
+
+        </>
+    )
+}
 const StyledInput = styled.input`
 width : 31rem;
 height : 2.5rem;
 `;
 export default Accueil;
+ 

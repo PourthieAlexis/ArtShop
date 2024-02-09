@@ -20,7 +20,7 @@ class ArtController extends AbstractController
             $encodedArts[] = [
                 'id' => $art->getId(),
                 'users_id' => $art->getUsers()->getId(),
-                'Title' => $art->getTitle(),
+                'title' => $art->getTitle(),
                 'categories_id'=> $art->getCategories()->getId(),
                 'description'=> $art->getDescription(),
                 'price'	=> $art->getPrice(),
