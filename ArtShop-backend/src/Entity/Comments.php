@@ -6,6 +6,7 @@ use App\Repository\CommentsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CommentsRepository::class)]
 class Comments
@@ -14,13 +15,16 @@ class Comments
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
+    #[Groups(["art"])]
     private ?Uuid $id;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["art"])]
     private ?string $message = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["art"])]
     private ?Users $users = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
