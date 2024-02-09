@@ -1,8 +1,8 @@
 import { useFormik } from "formik";
 import { useState } from "react";
 import styled from "styled-components";
-import LoginYup from "../formik/yup/SignInYup";
-import UserInitialValues from "../formik/initialValues/UserInitialValues";
+import LoginYup from "../../formik/yup/SignInYup";
+import UserInitialValues from "../../formik/initialValues/UserInitialValues";
 import { authenticate } from "../../api/backend/account";
 import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../../reducers/authenticationSlice";
