@@ -20,7 +20,7 @@ class ArtController extends AbstractController
     }
 
     /**
-     * Get the details of an art
+     * Retrieve the details of an artwork.
      *
      * @param string $uuid
      * @param ArtsRepository $artsRepo
