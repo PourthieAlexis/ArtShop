@@ -9,7 +9,7 @@ import axios from "axios";
 let loadcheck = true;
 let arrayArt = [];
 const regEx = /\$|\,|\;|\.|\+|\ /g ;
-
+ 
 const Accueil = () =>
 {
   const [art, setArt] = useState([]);
@@ -50,7 +50,10 @@ const Accueil = () =>
   },[])
   
   while(loadcheck === true && art[0] !== undefined){
-    art.forEach(piece => {arrayArt.push([piece.image,piece.title,piece.description,piece.price]);});
+    console.log(art)
+    art.forEach(piece => {arrayArt.push([piece.image,piece.title,piece.description,piece.price, piece.categories_id]);});
+    
+    console.log(arrayArt)
     loadcheck = false;
   }
 
@@ -72,12 +75,13 @@ const Accueil = () =>
                 </div>
                 <div className='searchButton'>
                   <button className="searchFilter" disabled={loading} type={"submit"}>Filters</button>
-                  <select className="searchOrder" disabled={loading} type={"submit"}> 
-                    <option>Sort By</option>
-                    <option>Date</option>
-                    <option>Name</option>
-                    <option>Genre</option>
-                    <option>Type</option>
+                  <select className="searchOrder" disabled={loading} onChange={""}> 
+                    <option type = {"Submit"} value = "0">filter By</option>
+                    <option type = {"Submit"} value = "1">Painting</option>
+                    <option type = {"Submit"} value = "2">Sculpture</option>
+                    <option type = {"Submit"} value = "3">Photo</option>
+                    <option type = {"Submit"} value = "4">Contemporain</option>
+                    <option type = {"Submit"} value = "5">Numérique</option>
                   </select>
                 </div>
               </form>
@@ -89,8 +93,7 @@ const Accueil = () =>
             <ul>
               <div className='tagList'>
                 {
-                  searchInit.length !== 0 ? (
-                    searchInit.map(elem => (<p className='tag'>{elem}</p>))):(null)
+                  searchInit.map(elem => (<p className='tag'>{elem}</p>))
                 }
                 
               </div>
@@ -104,8 +107,16 @@ const Accueil = () =>
                 </ul>
               </ul>
               <li className='ligneProduit'>
-                {arrayArt.map((item, i) => 
-                (
+                {
+                /*
+                1- peinture {arrayArt.filter(arrayArt => arrayArt.categories_id === 1)}
+                2- Sculpture {arrayArt.filter(arrayArt => arrayArt.categories_id === 2)}
+                3- Photo {arrayArt.filter(arrayArt => arrayArt.categories_id === 3)}
+                4- Contemporain {arrayArt.filter(arrayArt => arrayArt.categories_id === 4)}
+                5- Numérique {arrayArt.filter(arrayArt => arrayArt.categories_id === 5)}
+                */
+                arrayArt.map((item, i) => 
+                ( 
                   <ul className='produit' key={i}>
                     <img className="imageProduit" src={item[0]} alt="Produit" />
                     <h4 className="nomProduit">{item[1]}</h4>

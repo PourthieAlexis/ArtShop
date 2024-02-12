@@ -192,4 +192,10 @@ class Arts
 
         return $this;
     }
+
+    public function filtering(int $categorieId): JsonResponse
+    {
+        $request-> query("SELECT * FROM `arts` WHERE `categories_id` = $categorieId");
+        
+    }
 }
