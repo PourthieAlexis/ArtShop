@@ -34,6 +34,11 @@ RUN composer install --no-scripts --no-autoloader
 RUN wget https://get.symfony.com/cli/installer -O - | bash
 RUN mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
 
+# Install Symfony Runtime
+RUN export COMPOSER_ALLOW_SUPERUSER=1 \
+    && composer require symfony/runtime
+
+
 # Generate autoloading files and assets
 RUN composer dump-autoload --optimize
 RUN php bin/console assets:install --symlink

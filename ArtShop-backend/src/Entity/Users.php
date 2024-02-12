@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
 class Users implements UserInterface, PasswordAuthenticatedUserInterface
@@ -19,6 +20,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
+    #[Groups(["art"])]
     private ?Uuid $id;
 
     #[ORM\Column(length: 180, unique: true)]
@@ -31,6 +33,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         pattern: '/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g',
         message: "L'email n'est pas valide",
     )]
+    #[Groups(["art"])]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -51,12 +54,13 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $password = null;
     #[ORM\Column(length: 50)]
+    #[Groups(["art"])]
     private ?string $address = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(["art"])]
     #[Assert\NotBlank(message: "Le nom est obligatoire")]
     private ?string $name = null;
-
     #[ORM\OneToMany(mappedBy: 'Users', targetEntity: Arts::class)]
     private Collection $arts;
 

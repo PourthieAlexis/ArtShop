@@ -1,8 +1,8 @@
 import { useFormik } from "formik";
 import { useState } from "react";
 import styled from "styled-components";
-import UserInitialValues from "../formik/initialValues/UserInitialValues";
-import RegisterYup from "../formik/yup/SignUpYup";
+import UserInitialValues from "../../formik/initialValues/UserInitialValues";
+import RegisterYup from "../../formik/yup/SignUpYup";
 import { register } from "../../api/backend/account";
 
 const SignUp = () => {

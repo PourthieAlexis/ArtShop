@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ArtsRepository::class)]
 class Arts
@@ -17,31 +18,40 @@ class Arts
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
+    #[Groups(["art"])]
     private ?Uuid $id;
 
     #[ORM\Column(length: 50)]
+    #[Groups(["art"])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(["art"])]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Groups(["art"])]
     private ?float $price = null;
 
     #[ORM\Column]
+    #[Groups(["art"])]
     private ?int $stock = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["art"])]
     private ?string $image = null;
 
     #[ORM\ManyToOne(inversedBy: 'arts')]
+    #[Groups(["art"])]
     private ?Users $Users = null;
 
     #[ORM\ManyToOne(inversedBy: 'arts')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["art"])]
     private ?Categories $categories = null;
 
     #[ORM\OneToMany(mappedBy: 'arts', targetEntity: Comments::class, orphanRemoval: true)]
+    #[Groups(["art"])]
     private Collection $comments;
 
     #[ORM\ManyToMany(targetEntity: Carts::class, inversedBy: 'arts')]
