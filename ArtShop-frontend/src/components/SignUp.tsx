@@ -1,18 +1,19 @@
 import { useFormik } from "formik";
 import { useState } from "react";
 import styled from "styled-components";
-import UserInitialValues from "../../formik/initialValues/UserInitialValues";
-import RegisterYup from "../../formik/yup/SignUpYup";
-import { register } from "../../api/backend/account";
+import UserInitialValues from "../formik/initialValues/UserInitialValues";
+import RegisterYup from "../formik/yup/SignUpYup";
+import { register } from "../api/backend/account";
 
-const SignUp = () => {
+const SignUp: React.FC = () => {
     const [loading, setLoading] = useState(false);
-    const [errorLog, setErrorLog] = useState(false);
+    const [errorLog, setErrorLog] = useState<string | null>(null);
 
     const formik = useFormik({
         initialValues: UserInitialValues,
         validationSchema: RegisterYup,
         onSubmit: (values) => {
+            setLoading(true);
             register(values)
                 .then((res) => {
                     if (res.status === 201) {
@@ -38,11 +39,10 @@ const SignUp = () => {
                 <Title>Sign Up</Title>
                 <Text>Lorem ipsum dolor sit amet</Text>
             </TitleContainer>
-            <ErrorText>{errorLog}</ErrorText>
+            {errorLog && <ErrorText>{errorLog}</ErrorText>}
             <Form onSubmit={formik.handleSubmit}>
                 <p className='form-p'>Name* </p>
                 <StyledInput
-                    label="Name"
                     type={"text"}
                     name="name"
                     onChange={formik.handleChange}
@@ -52,7 +52,6 @@ const SignUp = () => {
 
                 <p className='form-p'>Mail* </p>
                 <StyledInput
-                    label="Mail"
                     type={"email"}
                     name="email"
                     onChange={formik.handleChange}
@@ -62,7 +61,6 @@ const SignUp = () => {
 
                 <p className='form-p'>Mot de passe* </p>
                 <StyledInput
-                    label="Mot de passe"
                     type={"password"}
                     name="password"
                     onChange={formik.handleChange}
@@ -72,46 +70,45 @@ const SignUp = () => {
 
                 <Button disabled={loading} type={"submit"} value="Se connecter" />
                 <ButtonGoogle disabled={loading} type={"submit"}>
-                    <img src="./src/assets/googleIcon.png" />
+                    <img src="./src/assets/googleIcon.png" alt="Google Icon" />
                     Se connecter avec Google
                 </ButtonGoogle>
             </Form>
         </>
-    )
-}
-
-
-const TitleContainer = styled.div`
-  display: flex;
-  flex-direction:column;
-  align-items: center;
-  font-size: large;
-`
+    );
+};
 
 const ErrorText = styled.p`
     color: red;
 `;
 
+const TitleContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: large;
+`;
+
 const Title = styled.p`
-  font-size: 2rem;
-  font-weight: 600;
-  margin: 2rem;
-`
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 2rem;
+`;
 
 const Text = styled.p`
-  margin: 0;
-`
+    margin: 0;
+`;
 
 const StyledInput = styled.input`
-    width : 100%;
-    height : 2.5rem;
+    width: 100%;
+    height: 2.5rem;
 `;
 
 const Form = styled.form`
     width: 100%;
     display: flex;
     flex-direction: column;
-`
+`;
 
 const Button = styled.input`
     background-color: #000000;
@@ -120,7 +117,7 @@ const Button = styled.input`
     margin-top: 2rem;
     margin-bottom: 2rem;
     cursor: pointer;
-`
+`;
 
 const ButtonGoogle = styled.button`
     height: 3rem;
@@ -128,6 +125,6 @@ const ButtonGoogle = styled.button`
     justify-content: center;
     align-items: center;
     cursor: pointer;
-`
+`;
 
-export default SignUp
+export default SignUp;

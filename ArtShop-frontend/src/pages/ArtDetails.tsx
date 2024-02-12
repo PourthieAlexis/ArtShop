@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import Comment from './Comment';
-import Dropdown from './Dropdown';
+import Comment from '../components/Comment';
+import Dropdown from '../components/Dropdown';
 
-const ArtDetails = () => {
+const ArtDetails: React.FC = () => {
     return (
         <PageContainer>
             <DetailsContainer>
@@ -47,16 +47,14 @@ const ArtDetails = () => {
                 <InputCommentSubmit type='submit' />
             </CommentContainer>
         </PageContainer>
-    )
+    );
 }
 
 const PageContainer = styled.section`
     padding: 4rem;
     min-height: 100vh;
     height: 100%;
-`
-
-
+`;
 
 const ImageContainer = styled.div`
     position: relative;
@@ -65,17 +63,16 @@ const ImageContainer = styled.div`
     flex-wrap: wrap;
     align-content: start;
     gap: 1rem;
-`
+`;
 
 const Image = styled.img`
     width: 100%;
-`
-
+`;
 
 const DetailsContainer = styled.div`
     display: flex;
     gap: 2rem;
-`
+`;
 
 const Title = styled.div`
     font-weight: 700;
@@ -86,57 +83,56 @@ const Title = styled.div`
         margin: 0;
         font-size: 2rem;
     }
-`
+`;
 
 const Price = styled.div`
     font-weight: 700;
     font-size: 2rem;
-`
+`;
 
 const RateStar = styled.div`
-`
+`;
 
 const InputQuantity = styled.input`
     width: 4rem;
     height: 2rem;
-`
+`;
 
 const InputSubmit = styled.input`
     background-color: #000000;
     color: white;
     height: 3rem;
     cursor: pointer;
-`
+`;
 
 const DetailsContent = styled.div`
     display: flex;
     flex-direction: column;
     width: 50%;
     gap: 1rem;
-`
+`;
 
 const Details = styled.div`
     border-top: 1px solid black;
     border-bottom: 1px solid black;
     padding: 1rem;
-`
+`;
 
 const TitleDetails = styled.p`
     font-weight: 700;
     font-size: 1rem;
-`
+`;
 
 const InputComment = styled.input`
     padding:1rem;
     width: 80%;
-`
+`;
 
 const InputCommentSubmit = styled.input`
     margin-left: -4rem;
     width: 4rem;
     height: 3rem;
- `
-
+ `;
 
 const CommentContainer = styled.div`
     box-sizing: border-box;
@@ -145,6 +141,6 @@ const CommentContainer = styled.div`
     align-items:center;
     margin-top: 2rem;
     gap: 1rem;
-`
+`;
 
-export default ArtDetails
+export default ArtDetails;
