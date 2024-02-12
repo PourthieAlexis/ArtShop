@@ -19,7 +19,15 @@ class ArtController extends AbstractController
         ]);
     }
 
-    #[Route('/api/detail-art/{uuid}', name: 'api_art_details')]
+    /**
+     * Get the details of an art
+     *
+     * @param string $uuid
+     * @param ArtsRepository $artsRepo
+     * @param SerializerInterface $serializer
+     * @return JsonResponse
+     */
+    #[Route('/api/details-art/{uuid}', name: 'api_art_details', methods: 'GET')]
     public function detailsArt(string $uuid, ArtsRepository $artsRepo, SerializerInterface $serializer): JsonResponse
     {
         $art = $artsRepo->find($uuid);
