@@ -84,7 +84,7 @@ p{
 .produit{
     display: flex;
     text-align: left;
-    align-items: center;
+    align-items: left;
     align-content: space-evenly;
     margin-top: 1rem;
     width: 20rem;
@@ -97,46 +97,7 @@ p{
     justify-content: space-between;
     flex-wrap:wrap;
 }
-footer{
-    margin-top: 5rem;
-    margin-bottom: 5rem;
-}
-.footer-container{
-    margin-left: 1rem;
-    margin-right: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.footer-bouton{
-    background: none;
-    border: none;
-}
-.social{
-    border-radius: 50%;
-    max-width: 2rem;
-    max-height: 2rem;
-    margin-left: 1rem;
-}
-.footer-legal{
-    display: flex;
-    border-top: 0.1rem solid black;
-    justify-content: center;
-    margin-top: 3rem;
-}
-.footerlink{
-    display: flex;
-    align-items: center;
-    color: black;
-    margin-right: 1rem;
-    text-decoration: underline;
-}
-.imageSocial{
-    height: 2rem;
-    width: 2rem;
-    margin-left: -1rem;
-    margin-top: -0.8rem;
-}
+
 .logo{
     height: 5rem;
     width: 6rem;
@@ -154,10 +115,8 @@ footer{
     display: flex;
     justify-content: space-between;
 }
-.general-footer{
-    display: block;
-    justify-content: center;
-    text-align: left;
-    padding-bottom: 0.5rem;
-
+.tag{
+    border-radius: 0.5rem;
+    background-color: red;
+    padding: 0.2rem;
 }
