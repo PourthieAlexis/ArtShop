@@ -1,15 +1,19 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { getPayloadToken, isTokenValid, setToken } from '../services/tokenServices';
 
-/**
- * initial state: {
- *  - isAuthenticated:  check if the user is already authenticated when openning the Application
- *  - token: the token of the user
- *  - user: the user data
- * }
- */
-const initialState = {
+interface User {
+    email: string;
+    roles: string[];
+}
+
+interface AuthState {
+    isAuthenticated: boolean;
+    token: string | null;
+    user: User | null;
+}
+
+const initialState: AuthState = {
     isAuthenticated: false,
     token: null,
     user: null,
@@ -19,11 +23,11 @@ export const authenticationSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        signIn: (state, action) => {
+        signIn: (state, action: PayloadAction<string>) => {
             const token = action.payload;
             state.token = token;
             const claims = getPayloadToken(token);
-            const user = {
+            const user: User = {
                 email: claims.email,
                 roles: claims.roles,
             };
@@ -41,10 +45,10 @@ export const authenticationSlice = createSlice({
 
 export const { signIn, signOut } = authenticationSlice.actions;
 
-export const selectIsLogged = (state) => state.auth.isAuthenticated;
-export const selectUser = (state) => state.auth.user;
-export const selectToken = (state) => state.auth.token;
-export const selectHasRole = (state, roles) => {
+export const selectIsLogged = (state: { auth: AuthState }) => state.auth.isAuthenticated;
+export const selectUser = (state: { auth: AuthState }) => state.auth.user;
+export const selectToken = (state: { auth: AuthState }) => state.auth.token;
+export const selectHasRole = (state: { auth: AuthState }, roles: string[]) => {
     if (!roles || roles.length === 0) return true;
     const user = state.auth.user;
     if (!user) return false;

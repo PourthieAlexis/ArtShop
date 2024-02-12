@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { FaChevronCircleDown } from "react-icons/fa";
 
+interface DropdownProps {
+    $isOpen: boolean;
+}
 
-const Dropdown = () => {
+const Dropdown: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleDropdown = () => {
@@ -30,7 +33,6 @@ const fadeIn = keyframes`
         opacity: 0;
         transform: translateY(-1rem);
         display: none;
-
     }
     to {
         opacity: 1;
@@ -82,7 +84,7 @@ const DropdownButton = styled.button`
     }
 `;
 
-const ChevronIcon = styled(FaChevronCircleDown)`
+const ChevronIcon = styled(FaChevronCircleDown) < DropdownProps > `
     font-size: 1.5rem;
     transition: transform 0.5s ease;
     ${(props) =>
@@ -92,7 +94,7 @@ const ChevronIcon = styled(FaChevronCircleDown)`
         `}
 `;
 
-const DropdownList = styled.div`
+const DropdownList = styled.div < DropdownProps > `
     display: flex;
     opacity: ${(props) => (props.$isOpen ? 1 : 0)};
     flex-wrap: wrap;

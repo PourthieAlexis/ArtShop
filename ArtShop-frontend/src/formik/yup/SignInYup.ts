@@ -8,5 +8,4 @@ const LoginYup = Yup.object().shape({
         .required("Le mot de passe est obligatoire"),
 });
 
-
 export default LoginYup;

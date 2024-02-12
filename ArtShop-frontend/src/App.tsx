@@ -1,7 +1,7 @@
-
-import { createGlobalStyle } from "styled-components";
+import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import Routes from "./routes/Routes";
+import { createGlobalStyle } from "styled-components";
 import "./App.css";
 
 const GlobalStyle = createGlobalStyle`
@@ -10,10 +10,10 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     font-family: sans-serif;
-}
-
+  }
 `;
-function App() {
+
+const App: React.FC = () => {
   return (
     <BrowserRouter>
       <main>
@@ -22,6 +22,6 @@ function App() {
       </main>
     </BrowserRouter>
   );
-}
+};
 
 export default App;
