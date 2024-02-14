@@ -23,7 +23,6 @@ footer{
     display: flex;
     border-top: 0.1rem solid black;
     justify-content: center;
-    margin-top: 3rem;
 }
 .footerlink{
     display: flex;
@@ -35,7 +34,7 @@ footer{
 .imageSocial{
     height: 2rem;
     width: 2rem;
-    margin-left: -1rem;
+    margin-left: -0.2rem;
     margin-top: -0.8rem;
 }
 .general-footer{

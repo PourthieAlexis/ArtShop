@@ -1,4 +1,7 @@
-import './footer.css'
+import './footer.css';
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import styled from 'styled-components';
 function Footer()
 {
     return(
@@ -16,11 +19,11 @@ function Footer()
                         <button className="footer-bouton fb5"><b>bouton 5</b></button>
                     </ul>
                     <ul>
-                        <button className="footer-bouton social fb1"><img className='imageSocial' src='./src/assets/facebook.png'></img></button>
-                        <button className="footer-bouton social fb2"><img className='imageSocial' src='./src/assets/insta.png'></img></button>
-                        <button className="footer-bouton social fb3"><img className='imageSocial' src='./src/assets/logoX.png'></img></button>
-                        <button className="footer-bouton social fb4"><img className='imageSocial' src='./src/assets/linkedin.png'></img></button>
-                        <button className="footer-bouton social fb5"><img className='imageSocial' src='./src/assets/youtube.png'></img></button>
+                        <a id="fbouton" className="footer-bouton social fb1" href='https://facebook.com'><img className='imageSocial' src='./src/assets/facebook.png'></img></a>
+                        <a id="instabouton" className="footer-bouton social fb2" href="https://instagram.com"><img className='imageSocial' src='./src/assets/insta.png'></img></a>
+                        <a id="Xbouton" className="footer-bouton social fb3" href="https://twitter.com"><img className='imageSocial' src='./src/assets/logoX.png'></img></a>
+                        <a id="linkbouton" className="footer-bouton social fb4" href="https://linkedin.com"><img className='imageSocial' src='./src/assets/linkedin.png'></img></a>
+                        <a id="ytbouton" className="footer-bouton social fb5" href="https://youtube.com"><img className='imageSocial' src='./src/assets/youtube.png'></img></a>
                     </ul>
                 </li>
                 <li className='footer-legal'>
