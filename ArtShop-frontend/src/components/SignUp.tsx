@@ -4,32 +4,24 @@ import styled from "styled-components";
 import UserInitialValues from "../formik/initialValues/UserInitialValues";
 import RegisterYup from "../formik/yup/SignUpYup";
 import { register } from "../api/backend/account";
+import { useMutation } from "@tanstack/react-query";
 
 const SignUp: React.FC = () => {
-    const [loading, setLoading] = useState(false);
     const [errorLog, setErrorLog] = useState<string | null>(null);
+    const { mutate } = useMutation({ mutationFn: register });
 
     const formik = useFormik({
         initialValues: UserInitialValues,
         validationSchema: RegisterYup,
         onSubmit: (values) => {
-            setLoading(true);
-            register(values)
-                .then((res) => {
-                    if (res.status === 201) {
-                        console.log("Inscription réussie", res.data);
-                    }
-                })
-                .catch((error) => {
-                    setLoading(false);
-                    if (error.response) {
-                        setErrorLog(error.response.data.message);
-                    } else if (error.request) {
-                        setErrorLog("Pas de réponse du serveur. Veuillez réessayer.");
-                    } else {
-                        setErrorLog("Une erreur s'est produite. Veuillez réessayer.");
-                    }
-                });
+            mutate(values, {
+                onSuccess(data) {
+                    console.log("Inscription réussie", data.data);
+                },
+                onError(error) {
+                    setErrorLog(error.message);
+                },
+            })
         },
     });
 
@@ -68,8 +60,8 @@ const SignUp: React.FC = () => {
                 />
                 {formik.touched.password && formik.errors.password && <ErrorText>{formik.errors.password}</ErrorText>}
 
-                <Button disabled={loading} type={"submit"} value="Se connecter" />
-                <ButtonGoogle disabled={loading} type={"submit"}>
+                <Button type={"submit"} value="Se connecter" />
+                <ButtonGoogle type={"submit"}>
                     <img src="./src/assets/googleIcon.png" alt="Google Icon" />
                     Se connecter avec Google
                 </ButtonGoogle>
