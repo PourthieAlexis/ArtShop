@@ -6,34 +6,27 @@ import UserInitialValues from "../formik/initialValues/UserInitialValues";
 import { authenticate } from "../api/backend/account";
 import { useDispatch } from "react-redux";
 import { signIn } from "../reducers/authenticationSlice";
+import { useMutation } from "@tanstack/react-query";
 
 const SignUp: React.FC = () => {
-    const [loading, setLoading] = useState(false);
     const [errorLog, setErrorLog] = useState<string | null>(null);
     const dispatch = useDispatch();
+    const { mutate } = useMutation({ mutationFn: authenticate });
 
     const formik = useFormik({
         initialValues: UserInitialValues,
         validationSchema: LoginYup,
-        onSubmit: (values) => {
-            setLoading(true);
-            authenticate(values)
-                .then((res) => {
-                    if (res.status === 200) {
-                        dispatch(signIn(res.data.token));
-                    }
-                })
-                .catch((error) => {
-                    setLoading(false);
-                    if (error.response) {
-                        setErrorLog(error.response.data.message);
-                    } else if (error.request) {
-                        setErrorLog("Pas de réponse du serveur. Veuillez réessayer.");
-                    } else {
-                        setErrorLog("Une erreur s'est produite. Veuillez réessayer.");
-                    }
-                });
-        },
+        onSubmit: async (values) => {
+            mutate(values, {
+                onSuccess(data) {
+                    dispatch(signIn(data.data.token));
+                    console.log(data.data.token);
+                },
+                onError(error) {
+                    setErrorLog(error.message);
+                },
+            })
+        }
     });
 
     return (
@@ -62,10 +55,10 @@ const SignUp: React.FC = () => {
                 />
                 {formik.touched.password && formik.errors.password && <ErrorText>{formik.errors.password}</ErrorText>}
 
-                <Button disabled={loading} type={"submit"} value={loading ? "Loading..." : "Se connecter"} />
-                <ButtonGoogle disabled={loading} type={"submit"}>
+                <Button type={"submit"} value="Se connecter" />
+                <ButtonGoogle type={"submit"}>
                     <img className="logoGoogle" src="./src/assets/googleIcon.png" alt="Google Icon" />
-                    {loading ? "Loading..." : " Se connecter avec Google"}
+                    Se connecter avec Google
                 </ButtonGoogle>
             </Form>
         </>

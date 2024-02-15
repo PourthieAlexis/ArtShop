@@ -3,6 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import Routes from "./routes/Routes";
 import { createGlobalStyle } from "styled-components";
 import "./App.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const GlobalStyle = createGlobalStyle`
   body {  
@@ -13,12 +14,17 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const queryClient = new QueryClient()
+
+
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <main>
-        <GlobalStyle />
-        <Routes />
+        <QueryClientProvider client={queryClient}>
+          <GlobalStyle />
+          <Routes />
+        </QueryClientProvider>
       </main>
     </BrowserRouter>
   );

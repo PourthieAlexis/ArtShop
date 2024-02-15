@@ -43,7 +43,7 @@ class Arts
 
     #[ORM\ManyToOne(inversedBy: 'arts')]
     #[Groups(["art"])]
-    private ?Users $Users = null;
+    private ?Users $users = null;
 
     #[ORM\ManyToOne(inversedBy: 'arts')]
     #[ORM\JoinColumn(nullable: false)]
@@ -130,12 +130,12 @@ class Arts
 
     public function getUsers(): ?Users
     {
-        return $this->Users;
+        return $this->users;
     }
 
-    public function setUsers(?Users $Users): static
+    public function setUsers(?Users $users): static
     {
-        $this->Users = $Users;
+        $this->Users = $users;
 
         return $this;
     }
