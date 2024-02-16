@@ -4,10 +4,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import styled from 'styled-components';
 import { listArt } from "../../api/backend/art";
-import axios from "axios";
+import { filterArt } from '../../api/backend/category';
 
-
-let loadcheck = true;
 let arrayArt = [];
 const regEx = /\$|\,|\;|\.|\+|\ /g ;
 
@@ -18,19 +16,10 @@ const Accueil = () =>
   const [searchInit, setSearch] = useState([]);
   const validateSchema = Yup.object().shape({search: Yup.string()});
 
-  const getInitialState = () => {
-    const value = "0";
-    return value;
-  };
+  
 
-  const [filter, setFilter] = useState(getInitialState);
+  const [filter, setFilter] = useState([]);
 
-  const handleChange = (e) => {
-    setFilter(e.target.value);
-    arrayArt.length = 0;
-    loadcheck = true;
-    location.reload(document.getElementById('result'));
-  };
 
   const formik = useFormik({
       initialValues: {
@@ -53,25 +42,29 @@ const Accueil = () =>
     });
   
   useEffect( () => {
-    
+      
       listArt()
       .then(response => {
-        
         setArt(response.data);
         
       })
       .catch(err => {
         console.error(err.data);
       })
+      
+      filterArt().then(
+        response =>{
+          setFilter(response.data);
+          
+        }
+      )
+      .catch(err =>{
+        console.error(err.data);
+      })
+
+      
   },[])
-  
-  while(loadcheck === true && art[0] !== undefined){
-    art.forEach(piece => {arrayArt.push([piece.image,piece.title,piece.description,piece.price, piece.categories_id]);});
-    
-    console.log(arrayArt)
-    loadcheck = false;
-  }
-  
+
   return(
     <>
       <div className="accueil">   
@@ -90,13 +83,13 @@ const Accueil = () =>
                 </div>
                 <div className='searchButton'>
                   <button className="searchFilter" disabled={loading} type={"submit"}>Filters</button>
-                  <select className="searchOrder" value = {filter} onChange={handleChange}> 
+                  <select className="searchOrder" defaultValue={0}>
                     <option value = "0">filter By</option>
-                    <option value = "1">Painting</option>
-                    <option value = "2">Sculpture</option>
-                    <option value = "3">Photo</option>
-                    <option value = "4">Contemporain</option>
-                    <option value = "5">Numérique</option>
+                    {
+                      filter && filter.map((item) => 
+                        (<option key={item.id} value={item.id}>{item.name}</option>
+                      ))
+                    }
                   </select>
                 </div>
               </form>
@@ -108,7 +101,7 @@ const Accueil = () =>
             <ul>
               <div className='tagList'>
                 {
-                  searchInit.map(elem => (<p className='tag'>{elem}</p>))
+                  searchInit.map(elem => (<p key={elem} className='tag'>{elem}</p>))
                 }
                 
               </div>
@@ -123,22 +116,41 @@ const Accueil = () =>
               </ul>
               <li id = "result" className='ligneProduit'>
                 {
-                /*
-                1- peinture {arrayArt.filter(arrayArt => arrayArt.categories_id === 1)}
-                2- Sculpture {arrayArt.filter(arrayArt => arrayArt.categories_id === 2)}
-                3- Photo {arrayArt.filter(arrayArt => arrayArt.categories_id === 3)}
-                4- Contemporain {arrayArt.filter(arrayArt => arrayArt.categories_id === 4)}
-                5- Numérique {arrayArt.filter(arrayArt => arrayArt.categories_id === 5)}
-                */
-                arrayArt.map((item, i) => 
-                (
-                  <ul className='produit' key={i}>
-                    <img className="imageProduit" src={item[0]} alt="Produit" />
-                    <h4 className="nomProduit">{item[1]}</h4>
-                    <p className="detailProduit">{item[2]}</p>
-                    <h3 className="prixProduit">{item[3]}$</h3>
-                  </ul>
-                ))}
+                  
+                  art && art.map((item2, i) => 
+                  {
+                    let n = 1;
+                    if (document.getElementsByClassName("searchOrder").item(0).value == 0){
+                      return(
+                        <ul className='produit' key={i}>
+                        <img className="imageProduit" src={item2.image} alt="Produit" />
+                        <h4 className="nomProduit">{item2.title}</h4>
+                        <p className="detailProduit">{item2.description}</p>
+                        <h3 className="prixProduit">{item2.price} $</h3>
+                        </ul>
+                      )
+                    }
+                    else {
+                      filter && filter.forEach(cat => {
+                        if (cat.id == document.getElementsByClassName("searchOrder").item(0).value)
+                        {n= cat.id-1;}
+                      })
+
+                      try {
+                        return filter && (filter[n].id == item2.categories_id) ?
+                        (<ul className='produit' key={i}>
+                      <img className="imageProduit" src={item2.image} alt="Produit" />
+                      <h4 className="nomProduit">{item2.title}</h4>
+                      <p className="detailProduit">{item2.description}</p>
+                      <h3 className="prixProduit">{item2.price} $</h3>
+                      </ul>
+                        ): null
+                      } catch (error) {
+                        console.log("loading");
+                      }
+                    }
+                  })
+                }
               </li>
             </div>
           </div>
