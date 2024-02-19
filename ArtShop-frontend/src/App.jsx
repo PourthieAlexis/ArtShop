@@ -5,6 +5,7 @@ import Auth from "./Components/Auth/Auth";
 import Accueil from "./Components/Accueil/Accueil";
 import Footer from "./Components/Footer/footer";
 import Header from "./Components/Header/header";
+import Profil from "./Components/Profil/Profil";
 const GlobalStyle = createGlobalStyle`
   body {  
     margin: 0;

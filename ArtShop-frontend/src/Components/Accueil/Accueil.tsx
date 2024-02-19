@@ -4,7 +4,6 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import styled from 'styled-components';
 import { listArt } from "../../api/backend/art";
-import axios from "axios";
 import { filterArt } from '../../api/backend/category';
 import React from "react";
 
@@ -25,26 +24,27 @@ interface FilterItem {
 const regEx = /\$|\,|\;|\.|\+|\ /g;
 
 const Accueil : React.FC = () => {
+
+  const [artOriginal, setArtOriginal] = useState<ArtItem[]>([]);
   const [art, setArt] = useState<ArtItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchInit, setSearch] = useState<string[]>([]);
   const validateSchema = Yup.object().shape({ search: Yup.string() });
-  let copy = art;
-  const handleChange = (event) => {
-    setArt(copy);
-    console.log("Avant")
-
-    let temp = copy;
-    setArt(temp.filter( (value) => {
-      return event.target.value == value.categories_id;
-    }));
-    copy = art;
-    console.log("Après")
-    console.log(copy)
-    console.log(temp)
-  }
-
   const [filter, setFilter] = useState<FilterItem[]>([]);
+  const copy = [...artOriginal];
+
+  const handleChange = (event) => {
+    if (event.target.value == 0) {
+      setArt(copy);
+    }
+    else{
+      setArt(copy);
+    
+      const temp = copy.filter((value) => {return event.target.value == value.categories_id;});
+      setArt(temp);
+    }
+    
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -69,6 +69,7 @@ const Accueil : React.FC = () => {
     listArt()
       .then(response => {
         setArt(response.data);
+        setArtOriginal(response.data);
       })
       .catch(err => {
         console.error(err.data);
@@ -133,11 +134,11 @@ const Accueil : React.FC = () => {
               <li id="result" className='ligneProduit'>
                 {
                   art && art.map((item2, i) => {
-                    
+                    let ref = "localhost:3000/"+item2.id;
                     return (
                       <ul className='produit' key={i}>
                         <img className="imageProduit" src={item2.image} alt="Produit" />
-                        <h4 className="nomProduit">{item2.title}</h4>
+                        <h4 className="nomProduit" url = {ref} >{item2.title}</h4>
                         <p className="detailProduit">{item2.description}</p>
                         <h3 className="prixProduit">{item2.price} $</h3>
                       </ul>

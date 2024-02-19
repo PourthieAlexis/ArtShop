@@ -11,11 +11,11 @@ function Footer()
                     <img className='logo logo-footer' src="./src/assets/logo.png"></img>
                     </ul>
                     <ul>
-                        <button className="footer-bouton fb1"><b>bouton 1</b></button>
-                        <button className="footer-bouton fb2"><b>bouton 2</b></button>
-                        <button className="footer-bouton fb3"><b>bouton 3</b></button>
-                        <button className="footer-bouton fb4"><b>bouton 4</b></button>
-                        <button className="footer-bouton fb5"><b>bouton 5</b></button>
+                        <a href = "https://google.fr/" className="footer-bouton fb1"><b>bouton 1</b></a>
+                        <a href = "" className="footer-bouton fb2"><b>bouton 2</b></a>
+                        <a href= "" className="footer-bouton fb3"><b>bouton 3</b></a>
+                        <a href= "" className="footer-bouton fb4"><b>bouton 4</b></a>
+                        <a href= "" className="footer-bouton fb5"><b>bouton 5</b></a>
                     </ul>
                     <ul>
                         <a id="fbouton" className="footer-bouton social fb1" href='https://facebook.com'><img className='imageSocial' src='./src/assets/facebook.png'></img></a>
