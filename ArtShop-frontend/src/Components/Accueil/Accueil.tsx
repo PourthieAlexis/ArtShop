@@ -138,9 +138,10 @@ const Accueil : React.FC = () => {
                     return (
                       <ul className='produit' key={i}>
                         <img className="imageProduit" src={item2.image} alt="Produit" />
-                        <h4 className="nomProduit" url = {ref} >{item2.title}</h4>
+                        <h4 className="nomProduit" >{item2.title}</h4>
                         <p className="detailProduit">{item2.description}</p>
                         <h3 className="prixProduit">{item2.price} $</h3>
+                        <a href = {ref}>Voir la page de l'oeuvre</a>
                       </ul>
                     )
                     }
