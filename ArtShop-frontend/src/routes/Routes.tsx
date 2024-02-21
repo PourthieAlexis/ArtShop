@@ -2,7 +2,7 @@ import { Route, Routes as RoutesContainer } from "react-router-dom";
 import React from "react";
 
 import * as URL from "../constants/urls/urlFrontend";
-import HomeView from "../pages/Accueil";
+import HomeView from "../pages/Accueil/Accueil";
 import AuthView from "../pages/Auth";
 import ArtDetails from "../pages/ArtDetails";
 

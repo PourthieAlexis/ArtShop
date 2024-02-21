@@ -1,0 +1,121 @@
+.accueil{
+    display: block;
+}
+
+section{
+    display: flex;
+    justify-content: center;
+}
+body{
+    margin: 0rem;
+}
+.section1{
+    background-image: url("../src/assets/banniere.png");
+    background-size:auto;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    background-size: cover;
+    block-size:20rem;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    background-color: grey;
+    
+}
+.searchdiv{
+    display: flex;
+    background-color: blue;
+    margin-left: 10rem;
+}
+.tagList{
+    display: flex;
+    margin-left:8rem;
+    margin-top: 3rem;
+}
+.section2{
+    display: block;
+    justify-self: stretch;
+}
+.resultList{
+    display:flex;
+    flex-direction: column;
+}
+.commentaireproduit{
+    display: flex;
+    justify-content: space-between;
+    padding:0rem;
+}
+.nombreproduit{
+    display: flex;
+}
+p{
+    text-align:center;
+    margin-left: 0rem;
+    margin-right: 1rem;
+}
+.titreListe{
+    margin-left: 7.5rem;
+    margin-top: 0rem;
+}
+.detailProduit{
+    text-align: inherit;
+    margin-left: 0rem;
+    margin-right: 0rem;
+    font-size:small;
+    
+}
+.resultOutputzone{
+    display: flex;
+    margin-left: 10rem;
+    margin-right: 10rem;
+    flex-direction: column;
+    
+}
+.imageProduit{
+    display: flex;
+    margin-left: inherit;
+    margin-right: inherit;
+    background-color: lightgrey;
+    object-fit: scale-down;
+    width: inherit;
+}
+
+.produit{
+    display: flex;
+    text-align: left;
+    align-items: left;
+    align-content: space-evenly;
+    margin-top: 1rem;
+    width: 20rem;
+    padding: 0rem;
+    flex-direction: column;
+    
+}
+.ligneProduit{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap:wrap;
+}
+
+.logo{
+    height: 5rem;
+    width: 6rem;
+}
+.searchbar{
+    width: 90rem !important;
+    height: 1.5rem !important;
+}
+.searchOrder{
+    margin-right: -4rem;
+    background: none;
+    border: none;
+}
+.searchButton{
+    display: flex;
+    justify-content: space-between;
+}
+.tag{
+    border-radius: 0.5rem;
+    padding: 0.2rem;
+}

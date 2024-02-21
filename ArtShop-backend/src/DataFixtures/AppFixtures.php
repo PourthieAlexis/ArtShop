@@ -35,7 +35,7 @@ class AppFixtures extends Fixture
             $user = new Users();
             $user->setName($faker->userName);
             $user->setEmail($faker->email);
-            $user->setAddress($faker->address);
+            $user->setAddress("adresse 1");
             $user->setPassword($this->hashPassword->hashPassword($user, '12345'));
             $manager->persist($user);
             $users[] = $user;
@@ -53,7 +53,7 @@ class AppFixtures extends Fixture
         // Création d'œuvres d'art
         foreach ($data['data'] as $artworkData) {
             $artwork = new Arts();
-            $artwork->setTitle($artworkData['title']);
+            $artwork->setTitle('title');
             $artwork->setDescription($faker->paragraph(3));
             $artwork->setPrice($faker->randomNumber(5));
             $artwork->setStock($faker->numberBetween(1, 20));
