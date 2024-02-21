@@ -8,8 +8,9 @@ use App\Entity\Comments;
 use App\Entity\Users;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Faker;
+use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use GuzzleHttp\Client;
 
 class AppFixtures extends Fixture
 {
@@ -22,7 +23,11 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $faker = Faker\Factory::create('fr_FR');
+        $faker = Factory::create('fr_FR');
+
+        $client = new Client();
+        $response = $client->request('GET', 'https://api.artic.edu/api/v1/artworks?fields=id,title,image_id');
+        $data = json_decode($response->getBody()->getContents(), true);
 
         // Création d'utilisateurs
         $users = [];
@@ -46,24 +51,20 @@ class AppFixtures extends Fixture
         }
 
         // Création d'œuvres d'art
-        $artworks = [];
-        foreach ($categories as $category) {
-            for ($i = 0; $i < 2; $i++) {
-                $artwork = new Arts();
-                $artwork->setTitle($faker->sentence(3));
-                $artwork->setDescription($faker->paragraph(3));
-                $artwork->setPrice($faker->randomNumber(5));
-                $artwork->setStock($faker->numberBetween(1, 20));
-                $artwork->setImage($faker->imageUrl(400, 300, 'artwork'));
-                $artwork->setUsers($faker->randomElement($users));
-                $artwork->setCategories($category);
-                $manager->persist($artwork);
-                $artworks[] = $artwork;
-            }
+        foreach ($data['data'] as $artworkData) {
+            $artwork = new Arts();
+            $artwork->setTitle($artworkData['title']);
+            $artwork->setDescription($faker->paragraph(3));
+            $artwork->setPrice($faker->randomNumber(5));
+            $artwork->setStock($faker->numberBetween(1, 20));
+            $artwork->setImage('https://www.artic.edu/iiif/2/' . $artworkData['image_id'] . '/full/843,/0/default.jpg');
+            $artwork->setUsers($faker->randomElement($users));
+            $artwork->setCategories($faker->randomElement($categories));
+            $manager->persist($artwork);
         }
 
         // Création de commentaires
-        foreach ($artworks as $artwork) {
+        foreach ($manager->getRepository(Arts::class)->findAll() as $artwork) {
             for ($j = 0; $j < 3; $j++) {
                 $comment = new Comments();
                 $comment->setMessage($faker->sentence(4));
