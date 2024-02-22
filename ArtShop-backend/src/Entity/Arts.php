@@ -135,7 +135,7 @@ class Arts
 
     public function setUsers(?Users $users): static
     {
-        $this->Users = $users;
+        $this->users = $users;
 
         return $this;
     }

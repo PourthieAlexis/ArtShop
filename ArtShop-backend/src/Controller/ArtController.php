@@ -40,5 +40,22 @@ class ArtController extends AbstractController
 
         return new JsonResponse($serializedArt, 200, [], true);
     }
+    /**
+     * Retrieve all arts and their content
+     *
+     * @param ArtsRepository $artRepo
+     * @return JsonResponse
+     */
+    #[Route('/api/list_art', name: 'list_art')]
+    public function listArt(ArtsRepository $artRepo, SerializerInterface $serializer): JsonResponse
+    {
+        $arts = $artRepo->findAll();
+        foreach ($arts as $art) {
 
+            $serializedArt[] = json_decode($serializer->serialize($art, 'json', ['groups' => 'art']), true);
+           
+        }
+        
+        return new JsonResponse($serializedArt, 200, []);
+    }
 }

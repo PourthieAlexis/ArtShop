@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { listArt } from "../../api/backend/art";
 import { filterArt } from '../../api/backend/category';
 import React from "react";
-
+import { useNavigate } from 'react-router-dom';
 interface ArtItem {
   id: number;
   title: string;
@@ -31,21 +31,24 @@ const Accueil : React.FC = () => {
   const [searchInit, setSearch] = useState<string[]>([]);
   const validateSchema = Yup.object().shape({ search: Yup.string() });
   const [filter, setFilter] = useState<FilterItem[]>([]);
+  const navigate = useNavigate();
   const copy = [...artOriginal];
 
   const handleChange = (event) => {
     if (event.target.value == 0) {
       setArt(copy);
+      
     }
     else{
       setArt(copy);
-    
-      const temp = copy.filter((value) => {return event.target.value == value.categories_id;});
+      
+      
+      const temp = copy.filter((value) => {
+        return event.target.value == value.categories.id;});
       setArt(temp);
     }
-    
   }
-
+  
   const formik = useFormik({
     initialValues: {
       search: "",
@@ -67,6 +70,7 @@ const Accueil : React.FC = () => {
   useEffect(() => {
     listArt()
       .then(response => {
+        
         setArt(response.data);
         setArtOriginal(response.data);
       })
@@ -77,6 +81,7 @@ const Accueil : React.FC = () => {
     filterArt().then(
       response => {
         setFilter(response.data);
+        
       }
     )
       .catch(err => {
@@ -127,24 +132,29 @@ const Accueil : React.FC = () => {
               <ul className='commentaireproduit'>
                 <p>lorem ipsum dolore ym das arhtung</p>
                 <ul className='nombreproduit'>
-                  <p>montre actuellement {0} produits sur {art.length}</p> <button>Voir tout</button>
+                  <p>montre actuellement {art.length} produits sur {copy.length}</p> <button>Voir tout</button>
                 </ul>
               </ul>
               <li id="result" className='ligneProduit'>
                 {
-                  art && art.map((item2, i) => {
-                    let ref = "localhost:3000/"+item2.id;
+                  
+                  art && art.map((item, i) => {
+                    
+                    const handleClickButton =() => {
+                      navigate("/art-detail/"+item.id, { replace: true });
+                    }
                     return (
                       <ul className='produit' key={i}>
-                        <img className="imageProduit" src={item2.image} alt="Produit" />
-                        <h4 className="nomProduit" >{item2.title}</h4>
-                        <p className="detailProduit">{item2.description}</p>
-                        <h3 className="prixProduit">{item2.price} $</h3>
-                        <a href = {ref}>Voir la page de l'oeuvre</a>
+                        <img className="imageProduit" src={item.image} alt="Produit" />
+                        <h4 className="nomProduit" >{item.title}</h4>
+                        <p className="detailProduit">{item.description}</p>
+                        <h3 className="prixProduit">{item.price} $</h3>
+                        <button onClick = {handleClickButton}>Voir la page de l'oeuvre</button>
                       </ul>
                     )
                     }
                   )
+                  
                 }
               </li>
             </div>
