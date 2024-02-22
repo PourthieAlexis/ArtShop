@@ -21,7 +21,7 @@ class Arts
     #[Groups(["art"])]
     private ?Uuid $id;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 255)]
     #[Groups(["art"])]
     private ?string $title = null;
 
@@ -135,7 +135,7 @@ class Arts
 
     public function setUsers(?Users $users): static
     {
-        $this->Users = $users;
+        $this->users = $users;
 
         return $this;
     }

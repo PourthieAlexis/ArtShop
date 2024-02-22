@@ -1,30 +1,58 @@
 import styled from "styled-components";
 
-const Comment: React.FC = () => {
+interface CommentProps {
+    image: string;
+    username: string;
+    content: string
+}
+
+const Comment: React.FC<CommentProps> = ({ image, username, content }) => {
     return (
         <CommentCard>
-            <Title>
-                Username Here
-            </Title>
-            <CommentContent>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda,
-                distinctio expedita iusto vero, minima id omnis veritatis a commodi,
-                facere inventore! Tempore, maiores libero adipisci repellat saepe itaque rerum! Quas.
-            </CommentContent>
-            <Time>5 minutes</Time>
+            <ProfilPictureContainer>
+                <ProfilPicture src={image} alt="profilPicture" />
+            </ProfilPictureContainer>
+            <CommentContainer>
+                <Title>
+                    {username}
+                </Title>
+                <CommentContent>
+                    {content}
+                </CommentContent>
+                <Time>5 minutes</Time>
+            </CommentContainer>
         </CommentCard>
     );
 }
 
 const CommentCard = styled.div`
+    display: flex;
     border: 2px solid black;
     padding: 1rem;
     width: 80%;
 `;
 
+const ProfilPictureContainer = styled.div`
+    display: flex;
+    align-items: center;
+    padding-right: 1rem;
+`
+const ProfilPicture = styled.img`
+    border-radius:50%;
+`;
+
+const CommentContainer = styled.div`
+display: flex;
+flex-direction:column;
+    width:80%;
+    height: 100%;
+`;
+
 const Title = styled.p`
     width: 80%;
-    height: 2rem;
+    margin: 0;
+    margin-bottom: 2rem;
+    font-size: 24px;
 `;
 
 const CommentContent = styled.p`

@@ -79,6 +79,10 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $isActive = false;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["art"])]
+    private ?string $profilePicture = null;
+
     public function __construct()
     {
         $this->arts = new ArrayCollection();
@@ -340,6 +344,18 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsActive(bool $isActive): static
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function getProfilePicture(): ?string
+    {
+        return $this->profilePicture;
+    }
+
+    public function setProfilePicture(?string $profilePicture): static
+    {
+        $this->profilePicture = $profilePicture;
 
         return $this;
     }

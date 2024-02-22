@@ -3,11 +3,15 @@ import styled, { css, keyframes } from 'styled-components';
 import { FaChevronCircleDown } from "react-icons/fa";
 
 interface DropdownProps {
+    image: string
+}
+
+interface DropdownListProps {
     $isOpen: boolean;
 }
 
-const Dropdown: React.FC = () => {
-    const [isOpen, setIsOpen] = useState(false);
+const Dropdown: React.FC<DropdownProps> = ({ image }) => {
+    const [isOpen, setIsOpen] = useState(true);
 
     const toggleDropdown = () => {
         setIsOpen(prev => !prev);
@@ -19,10 +23,10 @@ const Dropdown: React.FC = () => {
                 <ChevronIcon $isOpen={isOpen} />
             </DropdownButton>
             <DropdownList $isOpen={isOpen}>
-                <MiniImage src="https://placehold.co/600x400" alt="placeholder" />
-                <MiniImage src="https://placehold.co/600x400" alt="placeholder" />
-                <MiniImage src="https://placehold.co/600x400" alt="placeholder" />
-                <MiniImage src="https://placehold.co/600x400" alt="placeholder" />
+                <MiniImage src={image} alt="placeholder" />
+                <MiniImage src={image} alt="placeholder" />
+                <MiniImage src={image} alt="placeholder" />
+                <MiniImage src={image} alt="placeholder" />
             </DropdownList>
         </DropdownContainer>
     );
@@ -84,7 +88,7 @@ const DropdownButton = styled.button`
     }
 `;
 
-const ChevronIcon = styled(FaChevronCircleDown) < DropdownProps > `
+const ChevronIcon = styled(FaChevronCircleDown) <DropdownListProps> `
     font-size: 1.5rem;
     transition: transform 0.5s ease;
     ${(props) =>
@@ -94,12 +98,11 @@ const ChevronIcon = styled(FaChevronCircleDown) < DropdownProps > `
         `}
 `;
 
-const DropdownList = styled.div < DropdownProps > `
+const DropdownList = styled.div <DropdownListProps> `
     display: flex;
     opacity: ${(props) => (props.$isOpen ? 1 : 0)};
     flex-wrap: wrap;
     gap: 1rem;
-    justify-content: end;
     animation: ${(props) => (props.$isOpen ? fadeIn : fadeOut)} 0.5s ease-in-out forwards;
 `;
 
