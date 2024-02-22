@@ -53,7 +53,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         message: 'Doit contenir au moins une lettre minuscule, majuscule, un chiffre, un caractère spécial et une longueur de 12 caractères',
     )]
     private ?string $password = null;
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 255)]
     #[Groups(["art"])]
     private ?string $address = null;
 
@@ -78,6 +78,10 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?bool $isActive = false;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["art"])]
+    private ?string $profilePicture = null;
 
     public function __construct()
     {
@@ -340,6 +344,18 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsActive(bool $isActive): static
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function getProfilePicture(): ?string
+    {
+        return $this->profilePicture;
+    }
+
+    public function setProfilePicture(?string $profilePicture): static
+    {
+        $this->profilePicture = $profilePicture;
 
         return $this;
     }

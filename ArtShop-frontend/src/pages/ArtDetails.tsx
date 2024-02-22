@@ -4,6 +4,19 @@ import Dropdown from '../components/Dropdown';
 import { useQuery } from '@tanstack/react-query';
 import { fetchArtDetails } from '../api/backend/art';
 import { useParams } from 'react-router-dom';
+import PrimaryInput from '../components/PrimaryInput';
+import SecondaryInput from '../components/SecondaryInput';
+import NumberInput from '../components/NumberInput';
+import ArtworksByArtist from '../components/ArtworksByArtist';
+
+interface Comment {
+    id: number;
+    users: {
+        profilePicture: string;
+        name: string;
+    };
+    message: string;
+}
 
 const ArtDetails: React.FC = () => {
     const { uuid } = useParams<{ uuid: string }>();
@@ -17,26 +30,24 @@ const ArtDetails: React.FC = () => {
         <PageContainer>
             <DetailsContainer>
                 <ImageContainer>
-                    <Image src="https://placehold.co/600x400" alt="placeholder" />
-                    <Dropdown />
+                    <Image src={data.data.image} alt="placeholder" />
+                    <Dropdown image={data.data.image} />
                 </ImageContainer>
                 <DetailsContent>
                     <Title>
-                        <h1>Product Name</h1>
-                        <Price>55€</Price>
+                        <h1>{data.data.title}</h1>
+                        <Price>{data.data.price}€</Price>
                     </Title>
                     <RateStar>⭐⭐⭐⭐⭐</RateStar>
                     <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Eligendi quaerat dolorum illum provident aliquam officiis architecto
-                        laudantium quo et deserunt velit sapiente cum nesciunt, laborum culpa dolorem fuga, consequatur officia.
+                        {data.data.description}
                     </p>
                     <label htmlFor="quantity">
                         Quantité
                     </label>
-                    <InputQuantity type="number" defaultValue={1} />
-                    <InputSubmit type="submit" value="Ajouter au panier" />
-
+                    <NumberInput type="number" defaultValue={1} />
+                    <PrimaryInput type='button' value='Add To Cart' />
+                    <SecondaryInput type='button' value='Buy Now' />
                     <Details>
                         <TitleDetails>
                             Détails
@@ -47,14 +58,23 @@ const ArtDetails: React.FC = () => {
                             soluta nulla suscipit eaque obcaecati ipsa? Labore, corporis.
                         </p>
                     </Details>
+                    <ArtistDetails>
+                        <Artist>
+                            <ArtistPicture src={data.data.users.profilePicture} alt="Artist profile picture"></ArtistPicture>
+                            <TitleDetails>
+                                {data.data.users.name}
+                            </TitleDetails>
+                        </Artist>
+                    </ArtistDetails>
                 </DetailsContent>
             </DetailsContainer >
+            <ArtworksByArtist image={data.data.image} />
             <CommentContainer>
-                <Comment />
-                <Comment />
-                <Comment />
+                {data.data.comments.map((comment: Comment) =>
+                    <Comment image={comment.users.profilePicture} username={comment.users.name} content={comment.message} key={comment.id} />
+                )}
                 <InputComment type='text' />
-                <InputCommentSubmit type='submit' />
+                <SecondaryInput type='button' value='Post' />
             </CommentContainer>
         </PageContainer>
     );
@@ -102,19 +122,6 @@ const Price = styled.div`
 
 const RateStar = styled.div`
 `;
-
-const InputQuantity = styled.input`
-    width: 4rem;
-    height: 2rem;
-`;
-
-const InputSubmit = styled.input`
-    background-color: #000000;
-    color: white;
-    height: 3rem;
-    cursor: pointer;
-`;
-
 const DetailsContent = styled.div`
     display: flex;
     flex-direction: column;
@@ -124,8 +131,23 @@ const DetailsContent = styled.div`
 
 const Details = styled.div`
     border-top: 1px solid black;
-    border-bottom: 1px solid black;
     padding: 1rem;
+`;
+
+const ArtistDetails = styled.div`
+    border-top: 1px solid black;
+`;
+
+const ArtistPicture = styled.img`
+    width: 2rem;
+    height: 2rem;
+    border-radius:50%;
+    padding: 0 1rem;
+`
+
+const Artist = styled.div`
+    display: flex;
+    align-items: center;
 `;
 
 const TitleDetails = styled.p`
@@ -137,12 +159,6 @@ const InputComment = styled.input`
     padding:1rem;
     width: 80%;
 `;
-
-const InputCommentSubmit = styled.input`
-    margin-left: -4rem;
-    width: 4rem;
-    height: 3rem;
- `;
 
 const CommentContainer = styled.div`
     box-sizing: border-box;
