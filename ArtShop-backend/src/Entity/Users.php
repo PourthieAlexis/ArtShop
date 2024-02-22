@@ -53,7 +53,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         message: 'Doit contenir au moins une lettre minuscule, majuscule, un chiffre, un caractère spécial et une longueur de 12 caractères',
     )]
     private ?string $password = null;
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 255)]
     #[Groups(["art"])]
     private ?string $address = null;
 
