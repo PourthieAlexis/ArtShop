@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\ArtsRepository;
+use App\Repository\UsersRepository;
 use App\Entity\Users;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,6 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class LoginController extends AbstractController
 {
@@ -41,4 +44,33 @@ class LoginController extends AbstractController
         return new JsonResponse(['message' => 'User registered successfully'], 201);
     }
 
+     /**
+     * Retrieve the details of an artwork.
+     *
+     * @param string $uuid
+     * @param ArtsRepository $artsRepo
+     * @param SerializerInterface $serializer
+     * @return JsonResponse
+     */
+    #[Route('/api/profile/{uuid}', name: 'app_Profile', methods: ['GET'])]
+    public function getProfile(string $uuid, UsersRepository $usersRepo, ArtsRepository $artsRepo, SerializerInterface $serializer, EntityManagerInterface $entityManager) : JsonResponse
+    {
+        $user = $usersRepo->find($uuid);
+
+        if (!$user) {
+            return $this->json(['error' => 'User not found'], JsonResponse::HTTP_NOT_FOUND);
+
+        }
+        
+        $art = $user->getArts();
+
+        //dd($art);
+        /* if (!$art) {
+            return $this->json(['error' => 'Art not found'], JsonResponse::HTTP_NOT_FOUND);
+        } */
+
+        /* $serializedUser = json_decode($serializer->serialize($user, 'json', ['groups' => 'art']), true); */
+        /* $serializedArt = $serializer->serialize($art, 'json', ['groups' => 'art']); */
+        return new JsonResponse($serializedArt, 200, []);
+    }
 }

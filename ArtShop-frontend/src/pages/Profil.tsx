@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import styled from 'styled-components';
-import { listArt } from "../api/backend/art";
+import { getProfile } from "../api/backend/account";
 import React from "react";
-
-interface ProfilItem {
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+interface ProfileItem {
     id : number;
     firstName : string;
     lastName : string;
@@ -25,66 +26,81 @@ interface ArtItem {
   
 
 const Profil : React.FC = () => {
-    const [art, setArt] = useState<ArtItem[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [searchInit, setSearch] = useState<string[]>([]);
+    const { uuid } = useParams<{ uuid: string }>();
+    
+
+
     const validateSchema = Yup.object().shape({ search: Yup.string() });
-    const regEx = /\$|\,|\;|\.|\+|\ /g;
 
     const formik = useFormik({
         initialValues: {
-        search: "",
-        filter: "",
-        firstName:"Bob",
+        firstName:"Undefined",
+        lastName:"Undefined",
+        userName: "Undefined",
+        adresse: 'Undefined',
+        mail:'Undefined',
+        phoneNumber:'Undefined',
         },
     validationSchema: validateSchema,
 
     onSubmit: (values, { resetForm }) => {
             setTimeout(() => {
-                setLoading(false);
                 resetForm();
             }, 2000);
         },
     });
 
+    const { data, isLoading, isError } = useQuery({ queryKey: ['artDetails', uuid], queryFn: () => getProfile(uuid) });
+    
+    if (isLoading) return <div>Loading...</div>;
+    if (isError) return <div>Error fetching data</div>;
+    console.log(data);
+    
     return (
         <>
             <StyledDiv className='profil'>
+                <form>
                     <StyledDiv className='subDiv'>
                         <StyledOutput name = "firstName">
                             <h4>First Name :</h4>
-                            Bob
+                            {data.data.name}
                         </StyledOutput>
                         <StyledOutput name = "lastName">
-                            <h4>Last Name</h4>
-                            Marlin
+                            <h4>Last Name :</h4>
+                            {formik.values.lastName}
                         </StyledOutput>
                         <StyledOutput name = "userName">
-                            <h4>User Name</h4>
-                            User1
+                            <h4>User Name :</h4>
+                            {formik.values.userName}
                         </StyledOutput>
                         <StyledOutput name = "adresse">
-                            <h4>Address</h4>
-                            Adresse
+                            <h4>Address :</h4>
+                            {formik.values.adresse}
                         </StyledOutput>
                     </StyledDiv>
                     <StyledDiv className='subDiv'>
                         <StyledOutput name = "mail">
                             <h4>Mail</h4>
-                            mail
+                            {formik.values.mail}
                         </StyledOutput>
                         <StyledOutput name = "phoneNumber">
                             <h4>Phone Number</h4>
-                            0754871239
+                            {formik.values.phoneNumber}
                         </StyledOutput>
-                        <p>Changer le mot de passe : <button className="modifier" disabled={loading} type={"submit"}>Modifier</button></p> 
+                            <p className='ligneBouton'>Changer le mot de passe : <button className="modifier" type={"submit"}>Modifier</button></p> 
                     </StyledDiv>
-
-                        <p>1</p>
-                        <p>2</p>
-                        <p>3</p>
+                    <StyledDiv className='subDiv artDiv'>
+                        <h4>Oeuvres</h4>
+                        <ul>
+                            <h3>1</h3>
+                            <h3>2</h3>
+                            <h3>3</h3>
+                        </ul>
+                        
+                    </StyledDiv>
+                </form>
+                    
             </StyledDiv>
-            
         </>
         
     )
@@ -94,22 +110,36 @@ const StyledDiv = styled.div`
     flex-wrap: wrap;
     justify-content: space-around;
     flex-direction: column;
-
+    
     .subDiv{
         display: flex;
         margin-bottom:1rem;
+        margin-left: 12rem;
+        margin-right: 12rem;
         border: 0.1rem solid grey;
         border-left: none;
         border-right: none;
+        border-bottom : none;
         flex-direction: row;
         flex-wrap: wrap;
+        justify-content: flex-start;
+        
+    }
+    .artDiv{
+        display:flex;
+        flex-direction: column !important;
+        align-items:flex-start;
+        border-bottom : 0.1rem solid grey;
+    }
+    h4{
+        color : #3c6b99;
+    }
+    .ligneBouton{
+        padding-top : 1rem;
     }
 `;
 
-const StyledUl = styled.ul`
-    display: flex;
-    justify-content: space-around;
-`;
+
 const StyledOutput =  styled.output`
     display: flex;
     justify-content: center;
@@ -117,5 +147,7 @@ const StyledOutput =  styled.output`
     flex-wrap: wrap;
     flex-basis: 50%;
     align-content: center;
+    align-content: flex-start;
 `;
+
 export default Profil;
