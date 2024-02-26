@@ -23,10 +23,18 @@ const Dropdown: React.FC<DropdownProps> = ({ image }) => {
                 <ChevronIcon $isOpen={isOpen} />
             </DropdownButton>
             <DropdownList $isOpen={isOpen}>
-                <MiniImage src={image} alt="placeholder" />
-                <MiniImage src={image} alt="placeholder" />
-                <MiniImage src={image} alt="placeholder" />
-                <MiniImage src={image} alt="placeholder" />
+                <MiniImageContainer>
+                    <MiniImage src={image} alt="placeholder" />
+                </MiniImageContainer>
+                <MiniImageContainer>
+                    <MiniImage src={image} alt="placeholder" />
+                </MiniImageContainer>
+                <MiniImageContainer>
+                    <MiniImage src={image} alt="placeholder" />
+                </MiniImageContainer>
+                <MiniImageContainer>
+                    <MiniImage src={image} alt="placeholder" />
+                </MiniImageContainer>
             </DropdownList>
         </DropdownContainer>
     );
@@ -106,8 +114,18 @@ const DropdownList = styled.div <DropdownListProps> `
     animation: ${(props) => (props.$isOpen ? fadeIn : fadeOut)} 0.5s ease-in-out forwards;
 `;
 
-const MiniImage = styled.img`
+const MiniImageContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
     width: calc(50% - 0.5rem);
+`;
+
+const MiniImage = styled.img`
+    max-height:15rem;
+    width:80%;
+    object-fit:contain;
 `;
 
 export default Dropdown;

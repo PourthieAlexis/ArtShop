@@ -18,11 +18,11 @@ class Arts
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-    #[Groups(["art"])]
+    #[Groups(["art", "user_arts"])]
     private ?Uuid $id;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["art"])]
+    #[Groups(["art", "user_arts"])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -30,7 +30,7 @@ class Arts
     private ?string $description = null;
 
     #[ORM\Column]
-    #[Groups(["art"])]
+    #[Groups(["art", "user_arts"])]
     private ?float $price = null;
 
     #[ORM\Column]
@@ -38,7 +38,7 @@ class Arts
     private ?int $stock = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["art"])]
+    #[Groups(["art", "user_arts"])]
     private ?string $image = null;
 
     #[ORM\ManyToOne(inversedBy: 'arts')]

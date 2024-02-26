@@ -7,11 +7,13 @@ import { authenticate } from "../api/backend/account";
 import { useDispatch } from "react-redux";
 import { signIn } from "../reducers/authenticationSlice";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 const SignUp: React.FC = () => {
     const [errorLog, setErrorLog] = useState<string | null>(null);
     const dispatch = useDispatch();
     const { mutate } = useMutation({ mutationFn: authenticate });
+    const navigate = useNavigate();
 
     const formik = useFormik({
         initialValues: UserInitialValues,
