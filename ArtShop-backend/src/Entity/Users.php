@@ -37,7 +37,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     #[ORM\Column]
-    private array $roles = [];
+    private array $roles = ['ROLE_USER'];
 
     /**
      * @var string The hashed password
@@ -58,10 +58,11 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $address = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(["art"])]
+    #[Groups(["art", "comment"])]
     #[Assert\NotBlank(message: "Le nom est obligatoire")]
     private ?string $name = null;
-    #[ORM\OneToMany(mappedBy: 'Users', targetEntity: Arts::class)]
+    #[ORM\OneToMany(mappedBy: 'users', targetEntity: Arts::class)]
+    #[Groups(["user_arts"])]
     private Collection $arts;
 
     #[ORM\OneToMany(mappedBy: 'users', targetEntity: Comments::class)]
@@ -80,7 +81,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     private ?bool $isActive = false;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["art"])]
+    #[Groups(["art", "comment"])]
     private ?string $profilePicture = null;
 
     public function __construct()
@@ -125,8 +126,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }

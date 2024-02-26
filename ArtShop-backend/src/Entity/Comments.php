@@ -15,16 +15,16 @@ class Comments
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-    #[Groups(["art"])]
+    #[Groups(["art", "comment"])]
     private ?Uuid $id;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["art"])]
+    #[Groups(["art", "comment"])]
     private ?string $message = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["art"])]
+    #[Groups(["art", "comment"])]
     private ?Users $users = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]

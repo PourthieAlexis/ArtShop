@@ -25,8 +25,7 @@ export function isTokenValid(token: string): boolean {
         const expirationDate: number = payload.exp;
         const login: string = payload.email;
         const dateNow: number = new Date().getTime();
-
-        return !!(token && roles.length > 0 && login && expirationDate > dateNow);
+        return !!(token && roles.length > 0 && login && expirationDate < dateNow);
     } catch {
         return false;
     }

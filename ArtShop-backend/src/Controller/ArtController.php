@@ -27,18 +27,29 @@ class ArtController extends AbstractController
      * @param SerializerInterface $serializer
      * @return JsonResponse
      */
-    #[Route('/api/details-art/{uuid}', name: 'api_art_details', methods: 'GET')]
+    #[Route('/api/details-art/{uuid}', name: 'api_art_details', methods: ['GET'])]
     public function detailsArt(string $uuid, ArtsRepository $artsRepo, SerializerInterface $serializer): JsonResponse
     {
-        $art = $artsRepo->find($uuid);
+        $art = $artsRepo->findOneBy(['id' => $uuid]);
 
         if (!$art) {
             return $this->json(['error' => 'Art not found'], JsonResponse::HTTP_NOT_FOUND);
         }
 
-        $serializedArt = $serializer->serialize($art, 'json', ['groups' => 'art']);
+        $serializedArt = $serializer->serialize($art, 'json', ['groups' => ['art']]);
 
-        return new JsonResponse($serializedArt, 200, [], true);
+        $userArts = $art->getUsers()->getArts()->toArray();
+        $userArtsFiltered = array_filter($userArts, fn($userArt) => $userArt->getId() !== $art->getId());
+        $userArtsArray = array_values($userArtsFiltered);
+
+        $serializedUserArts = $serializer->serialize($userArtsArray, 'json', ['groups' => ['user_arts']]);
+
+        $responseData = [
+            'art' => json_decode($serializedArt, true),
+            'user_arts' => json_decode($serializedUserArts, true)
+        ];
+
+        return new JsonResponse($responseData, JsonResponse::HTTP_OK);
     }
 
 }
