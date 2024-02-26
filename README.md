@@ -29,6 +29,7 @@ ArtShop est une application web basée sur Symfony et React, créée pour la ven
 Accéder au back sur docker `docker exec -it app-backend-dev /bin/bash`
 Accéder au front sur docker `docker exec -it app-front-dev sh`
 
+Pour les prochains démarrages du projet utilisé `docker compose up -d` et fermer le avec `docker compose down`
 
 L'application sera disponible à l'adresse : `http://localhost:3000`
 Le serveur sera disponible à l'adresse : `http://localhost:8000`
