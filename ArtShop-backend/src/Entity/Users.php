@@ -20,7 +20,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-    #[Groups(["art"])]
+    #[Groups(["art","user"])]
     private ?Uuid $id;
 
     #[ORM\Column(length: 180, unique: true)]
@@ -33,7 +33,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         pattern: '/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g',
         message: "L'email n'est pas valide",
     )]
-    #[Groups(["art"])]
+    #[Groups(["art","user"])]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -54,14 +54,15 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $password = null;
     #[ORM\Column(length: 50)]
-    #[Groups(["art"])]
+    #[Groups(["art","user"])]
     private ?string $address = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(["art"])]
+    #[Groups(["art","user"])]
     #[Assert\NotBlank(message: "Le nom est obligatoire")]
     private ?string $name = null;
-    #[ORM\OneToMany(mappedBy: 'Users', targetEntity: Arts::class)]
+    #[ORM\OneToMany(mappedBy: 'users', targetEntity: Arts::class)]
+    #[Groups(["user"])]
     private Collection $arts;
 
     #[ORM\OneToMany(mappedBy: 'users', targetEntity: Comments::class)]
@@ -80,7 +81,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     private ?bool $isActive = false;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["art"])]
+    #[Groups(["user"])]
     private ?string $profilePicture = null;
 
     public function __construct()

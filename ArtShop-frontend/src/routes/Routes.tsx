@@ -6,6 +6,7 @@ import HomeView from "../pages/Accueil/Accueil";
 import AuthView from "../pages/Auth";
 import ArtDetails from "../pages/ArtDetails";
 import Profile from "../pages/Profil";
+import ProfileModif from "../pages/ProfilModif";
 const Routes: React.FC = () => {
     return (
         <RoutesContainer>
@@ -14,6 +15,7 @@ const Routes: React.FC = () => {
             <Route path={URL.URL_REGISTER} element={<AuthView page={"Register"} />} />
             <Route path={URL.URL_DETAILS_ART} element={<ArtDetails />} />
             <Route path={URL.URL_PROFILE} element={<Profile />} />
+            <Route path={URL.URL_MODIFYPROFILE} element={<ProfileModif />} />
         </RoutesContainer>
     );
 };

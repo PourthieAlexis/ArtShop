@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Repository\ArtsRepository;
 use App\Repository\UsersRepository;
 use App\Entity\Users;
 use Doctrine\ORM\EntityManagerInterface;
@@ -53,7 +52,7 @@ class LoginController extends AbstractController
      * @return JsonResponse
      */
     #[Route('/api/profile/{uuid}', name: 'app_Profile', methods: ['GET'])]
-    public function getProfile(string $uuid, UsersRepository $usersRepo, ArtsRepository $artsRepo, SerializerInterface $serializer, EntityManagerInterface $entityManager) : JsonResponse
+    public function getProfile(string $uuid, UsersRepository $usersRepo, SerializerInterface $serializer, EntityManagerInterface $entityManager) : JsonResponse
     {
         $user = $usersRepo->find($uuid);
 
@@ -61,16 +60,8 @@ class LoginController extends AbstractController
             return $this->json(['error' => 'User not found'], JsonResponse::HTTP_NOT_FOUND);
 
         }
-        
-        $art = $user->getArts();
 
-        //dd($art);
-        /* if (!$art) {
-            return $this->json(['error' => 'Art not found'], JsonResponse::HTTP_NOT_FOUND);
-        } */
-
-        /* $serializedUser = json_decode($serializer->serialize($user, 'json', ['groups' => 'art']), true); */
-        /* $serializedArt = $serializer->serialize($art, 'json', ['groups' => 'art']); */
-        return new JsonResponse($serializedArt, 200, []);
+        $serializedUser = json_decode($serializer->serialize($user, 'json', ['groups' => 'user']), true);
+        return new JsonResponse($serializedUser, 200, []);
     }
 }

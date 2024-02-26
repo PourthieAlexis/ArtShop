@@ -24,7 +24,7 @@ interface ArtItem {
   }
   
 
-const Profil : React.FC = () => {
+const ProfilModif : React.FC = () => {
     const { uuid } = useParams<{ uuid: string }>();
     const navigate = useNavigate();
 
@@ -61,32 +61,32 @@ const Profil : React.FC = () => {
             <StyledDiv className='profil'>
                 <form>
                     <StyledDiv className='subDiv'>
-                        <StyledOutput name = "firstName">
+                        <StyledInput name = "firstName">
                             <h4>First Name :</h4>
                             {temp[0]}
-                        </StyledOutput>
-                        <StyledOutput name = "lastName">
+                        </StyledInput>
+                        <StyledInput name = "lastName">
                             <h4>Last Name :</h4>
                             {temp[1]}
-                        </StyledOutput>
-                        <StyledOutput name = "userName">
+                        </StyledInput>
+                        <StyledInput name = "userName">
                             <h4>User Name :</h4>
                             {data.data.name}
-                        </StyledOutput>
-                        <StyledOutput name = "adresse">
+                        </StyledInput>
+                        <StyledInput name = "adresse">
                             <h4>Address :</h4>
                             {data.data.address}
-                        </StyledOutput>
+                        </StyledInput>
                     </StyledDiv>
                     <StyledDiv className='subDiv'>
-                        <StyledOutput name = "mail">
+                        <StyledInput name = "mail">
                             <h4>Mail</h4>
                             {data.data.email}
-                        </StyledOutput>
-                        <StyledOutput name = "phoneNumber">
+                        </StyledInput>
+                        <StyledInput name = "phoneNumber">
                             <h4>Phone Number</h4>
                             {formik.values.phoneNumber}
-                        </StyledOutput>
+                        </StyledInput>
                             <p className='ligneBouton'>Changer le mot de passe : <StyledButton className="modifier" type={"submit"}>Modifier</StyledButton></p> 
                     </StyledDiv>
                     <StyledDiv className='subDiv artDiv'>
@@ -96,17 +96,15 @@ const Profil : React.FC = () => {
                         </ul>
                     </StyledDiv>
                 </form>
-
-                <StyledFooter>
-                    <StyledSignOut onClick={ () => {}}>
-                        Sign Out
-                    </StyledSignOut>
-                    <StyledModif onClick={ () => {/* navigate({"/Profile-modify/"+data.data.id}, { replace: true }) */}}>
-                        modifier le compte
-                    </StyledModif>
-                </StyledFooter>
             </StyledDiv>
-           
+            <StyledFooter>
+                <StyledSignOut >
+                    Sign Out
+                </StyledSignOut>
+                <StyledValidate>
+                    Effectuer les changements
+                </StyledValidate>
+            </StyledFooter>
         </>
         
     )
@@ -116,7 +114,7 @@ const StyledDiv = styled.div`
     flex-wrap: wrap;
     justify-content: space-around;
     flex-direction: column;
-    height: 100%;
+    
     .subDiv{
         display: flex;
         margin-bottom:1rem;
@@ -152,7 +150,7 @@ const StyledDiv = styled.div`
         flex-direction : column;
     }
 `
-const StyledFooter  = styled.div`
+const StyledFooter  = styled.footer`
     display: flex;
     align-items: flex-end;
     justify-content: space-around;
@@ -177,7 +175,7 @@ const StyledSignOut = styled.button`
     border-radius: 0.25rem;
     border : none;
 `
-const StyledModif = styled.button`
+const StyledValidate = styled.button`
     width:12rem;
     height:2.5rem;
     font-weight: bold;
@@ -185,7 +183,7 @@ const StyledModif = styled.button`
     border-radius: 0.25rem;
     border : none;
 `
-const StyledOutput =  styled.output`
+const StyledInput =  styled.input`
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -195,4 +193,4 @@ const StyledOutput =  styled.output`
     align-content: flex-start;
 `;
 
-export default Profil;
+export default ProfilModif;
