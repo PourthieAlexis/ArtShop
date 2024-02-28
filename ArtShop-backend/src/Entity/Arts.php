@@ -18,11 +18,11 @@ class Arts
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-    #[Groups(["art", "user_arts"])]
+    #[Groups(["art", "user_arts", "cart_items"])]
     private ?Uuid $id;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["art", "user_arts"])]
+    #[Groups(["art", "user_arts", "cart_items"])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -30,7 +30,7 @@ class Arts
     private ?string $description = null;
 
     #[ORM\Column]
-    #[Groups(["art", "user_arts"])]
+    #[Groups(["art", "user_arts", "cart_items"])]
     private ?float $price = null;
 
     #[ORM\Column]
@@ -38,7 +38,7 @@ class Arts
     private ?int $stock = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["art", "user_arts"])]
+    #[Groups(["art", "user_arts", "cart_items"])]
     private ?string $image = null;
 
     #[ORM\ManyToOne(inversedBy: 'arts')]
@@ -54,13 +54,14 @@ class Arts
     #[Groups(["art"])]
     private Collection $comments;
 
-    #[ORM\ManyToMany(targetEntity: Carts::class, inversedBy: 'arts')]
-    private Collection $carts;
+    #[ORM\OneToMany(mappedBy: 'art', targetEntity: CartItem::class)]
+    private Collection $cartItems;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->carts = new ArrayCollection();
+        $this->cartItems = new ArrayCollection();
     }
 
     public function getId(): ?Uuid
@@ -183,25 +184,31 @@ class Arts
     }
 
     /**
-     * @return Collection<int, Carts>
+     * @return Collection<int, CartItem>
      */
-    public function getCarts(): Collection
+    public function getCartItems(): Collection
     {
-        return $this->carts;
+        return $this->cartItems;
     }
 
-    public function addCart(Carts $cart): static
+    public function addCartItem(CartItem $cartItem): static
     {
-        if (!$this->carts->contains($cart)) {
-            $this->carts->add($cart);
+        if (!$this->cartItems->contains($cartItem)) {
+            $this->cartItems->add($cartItem);
+            $cartItem->setArt($this);
         }
 
         return $this;
     }
 
-    public function removeCart(Carts $cart): static
+    public function removeCartItem(CartItem $cartItem): static
     {
-        $this->carts->removeElement($cart);
+        if ($this->cartItems->removeElement($cartItem)) {
+            // set the owning side to null (unless already changed)
+            if ($cartItem->getArt() === $this) {
+                $cartItem->setArt(null);
+            }
+        }
 
         return $this;
     }

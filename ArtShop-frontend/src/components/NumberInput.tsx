@@ -1,8 +1,9 @@
+import { Field } from 'formik';
 import React from 'react';
 import styled from 'styled-components';
 
 const NumberInput: React.FC<React.InputHTMLAttributes<HTMLInputElement>> = (props) => {
-    return <StyledInput type="number" {...props} />;
+    return <Field as={StyledInput} type="number" {...props} />;
 };
 
 const StyledInput = styled.input`

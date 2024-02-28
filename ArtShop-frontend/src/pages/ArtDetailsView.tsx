@@ -1,18 +1,35 @@
 import styled from 'styled-components';
 import CommentSection from '../components/CommentSection';
 import Dropdown from '../components/Dropdown';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { fetchArtDetails } from '../api/backend/art';
 import { useParams } from 'react-router-dom';
 import PrimaryInput from '../components/PrimaryInput';
 import SecondaryInput from '../components/SecondaryInput';
 import NumberInput from '../components/NumberInput';
 import ArtworksByArtist from '../components/ArtworksByArtist';
+import { addToCart } from '../api/backend/cart';
+import { selectToken } from '../reducers/authenticationSlice';
+import { useSelector } from 'react-redux';
+import { Field, Form, Formik } from 'formik';
+import AddToCartInitialValues from '../formik/initialValues/AddToCartInitialValues';
+import AddToCartYup from '../formik/yup/AddToCartYup';
 
-const ArtDetails: React.FC = () => {
+const ArtDetailsView: React.FC = () => {
     const { uuid } = useParams<{ uuid: string }>();
+    const token = useSelector(selectToken);
 
     const { data, isLoading, isError } = useQuery({ queryKey: ['artDetails', uuid], queryFn: () => fetchArtDetails(uuid) });
+
+    const { mutate } = useMutation({
+        mutationFn: (values: any) => addToCart(values, token),
+        onSuccess: (data) => {
+            console.log("Art added successfully", data.data);
+        },
+        onError: (error) => {
+            console.error(error.message);
+        },
+    });
 
     if (isLoading) return <div>Loading...</div>;
     if (isError) return <div>Error fetching data</div>;
@@ -32,8 +49,22 @@ const ArtDetails: React.FC = () => {
                     <RateStar>⭐⭐⭐⭐⭐</RateStar>
                     <p>{data.data.art.description}</p>
                     <label htmlFor="quantity">Quantité</label>
-                    <NumberInput type="number" defaultValue={1} />
-                    <PrimaryInput type='button' value='Add To Cart' />
+
+                    <Formik
+                        initialValues={AddToCartInitialValues}
+                        validationSchema={AddToCartYup}
+                        onSubmit={(values, { resetForm }) => {
+                            console.log(values)
+                            mutate({ ...values, art_id: uuid });
+                            resetForm()
+                        }}
+                    >
+                        <AddCartForm>
+                            <NumberInput id="quantity" name="quantity" />
+                            <PrimaryInput type='submit' value='Add To Cart' />
+                        </AddCartForm>
+                    </Formik>
+
                     <SecondaryInput type='button' value='Buy Now' />
                     <Details>
                         <TitleDetails>Détails</TitleDetails>
@@ -94,6 +125,12 @@ const Title = styled.div`
     }
 `;
 
+const AddCartForm = styled(Form)`
+    display: flex;
+    flex-direction: column;
+    gap:1rem
+`;
+
 const Price = styled.div`
     font-weight: 700;
     font-size: 2rem;
@@ -137,4 +174,4 @@ const TitleDetails = styled.p`
 
 
 
-export default ArtDetails;
+export default ArtDetailsView;

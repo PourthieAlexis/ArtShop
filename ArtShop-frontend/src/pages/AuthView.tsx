@@ -7,7 +7,7 @@ interface AuthProps {
   page: string;
 }
 
-const Auth: React.FC<AuthProps> = ({ page }) => {
+const AuthView: React.FC<AuthProps> = ({ page }) => {
   const [isSignUp, setIsSignUp] = useState(page === "Register");
 
   const toggleForm = (isSignUp: boolean) => {
@@ -99,4 +99,4 @@ const Underline = styled.div`
   transition: transform 0.5s ease-in-out, width 0.5s ease-in-out;
 `;
 
-export default Auth;
+export default AuthView;

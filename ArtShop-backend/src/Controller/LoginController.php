@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Carts;
 use App\Entity\Users;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,6 +37,13 @@ class LoginController extends AbstractController
         $user->setPassword($encodedPassword);
 
         $entityManager->persist($user);
+
+
+        $cart = new Carts();
+        $cart->setUsers($user);
+        $entityManager->persist($cart);
+
+
         $entityManager->flush();
 
         return new JsonResponse(['message' => 'User registered successfully'], 201);
