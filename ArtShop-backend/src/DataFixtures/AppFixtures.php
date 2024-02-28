@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Arts;
+use App\Entity\Carts;
 use App\Entity\Categories;
 use App\Entity\Comments;
 use App\Entity\Users;
@@ -83,6 +84,11 @@ class AppFixtures extends Fixture
             }
         }
 
+        foreach ($users as $user) {
+            $cart = new Carts();
+            $cart->setUsers($user);
+            $manager->persist($cart);
+        }
 
         $manager->flush();
     }

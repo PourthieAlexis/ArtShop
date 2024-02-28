@@ -7,9 +7,10 @@ interface InputProps {
     value?: string;
     className?: string;
     placeholder?: string;
+    onClick?: (event: React.MouseEvent<HTMLInputElement>) => void;
 }
 
-const PrimaryInput: React.FC<InputProps> = ({ type = "text", onChange, value, className, placeholder }) => {
+const PrimaryInput: React.FC<InputProps> = ({ type = "text", onChange, value, className, placeholder, onClick }) => {
     return (
         <StyledInput
             type={type}
@@ -17,6 +18,7 @@ const PrimaryInput: React.FC<InputProps> = ({ type = "text", onChange, value, cl
             value={value}
             className={className}
             placeholder={placeholder}
+            onClick={onClick}
         />
     );
 };
