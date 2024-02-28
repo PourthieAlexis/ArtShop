@@ -101,12 +101,11 @@ const Profil : React.FC = () => {
                     <StyledSignOut onClick={ () => {}}>
                         Sign Out
                     </StyledSignOut>
-                    <StyledModif onClick={ () => {/* navigate({"/Profile-modify/"+data.data.id}, { replace: true }) */}}>
+                    <StyledModif onClick={ () => {navigate("/profile-modify/"+data.data.id, { replace: true })}}>
                         modifier le compte
                     </StyledModif>
                 </StyledFooter>
             </StyledDiv>
-           
         </>
         
     )

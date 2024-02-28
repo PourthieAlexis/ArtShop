@@ -38,6 +38,7 @@ security:
     - { path: ^/api/list_art, roles: PUBLIC_ACCESS }
     - { path: ^/api/category, roles: PUBLIC_ACCESS }
     - { path: ^/api/profile/, roles: PUBLIC_ACCESS }
+    - { path: ^/api/profile-modify/, roles: PUBLIC_ACCESS }
     - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:

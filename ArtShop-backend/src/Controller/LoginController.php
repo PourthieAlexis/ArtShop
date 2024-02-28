@@ -43,25 +43,5 @@ class LoginController extends AbstractController
         return new JsonResponse(['message' => 'User registered successfully'], 201);
     }
 
-     /**
-     * Retrieve the details of an artwork.
-     *
-     * @param string $uuid
-     * @param ArtsRepository $artsRepo
-     * @param SerializerInterface $serializer
-     * @return JsonResponse
-     */
-    #[Route('/api/profile/{uuid}', name: 'app_Profile', methods: ['GET'])]
-    public function getProfile(string $uuid, UsersRepository $usersRepo, SerializerInterface $serializer, EntityManagerInterface $entityManager) : JsonResponse
-    {
-        $user = $usersRepo->find($uuid);
 
-        if (!$user) {
-            return $this->json(['error' => 'User not found'], JsonResponse::HTTP_NOT_FOUND);
-
-        }
-
-        $serializedUser = json_decode($serializer->serialize($user, 'json', ['groups' => 'user']), true);
-        return new JsonResponse($serializedUser, 200, []);
-    }
 }

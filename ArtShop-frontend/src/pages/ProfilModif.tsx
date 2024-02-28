@@ -3,7 +3,8 @@ import * as Yup from "yup";
 import styled from 'styled-components';
 import { getProfile } from "../api/backend/account";
 import React from "react";
-import { useParams, useNavigate } from 'react-router-dom';
+
+import { useParams, useNavigate, Form } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 interface ProfileItem {
     id : number;
@@ -28,66 +29,98 @@ const ProfilModif : React.FC = () => {
     const { uuid } = useParams<{ uuid: string }>();
     const navigate = useNavigate();
 
-
     const validateSchema = Yup.object().shape({ search: Yup.string() });
 
     const formik = useFormik({
         initialValues: {
-        firstName:"Undefined",
-        lastName:"Undefined",
-        userName: "Undefined",
-        adresse: 'Undefined',
-        mail:'Undefined',
-        phoneNumber:'Undefined',
+        firstName:"",
+        lastName:"",
+        userName: "",
+        adresse: '',
+        mail: "",
+        phoneNumber: "",
         },
     validationSchema: validateSchema,
 
-    onSubmit: (values, { resetForm }) => {
-            setTimeout(() => {
-                resetForm();
-            }, 2000);
+    onSubmit: (_values) => {
+
+        console.log("formik");
         },
     });
+    function onsubmit(e: React.FormEvent<HTMLInputElement>){
 
+        e.preventDefault();
+        console.log("azee");
+    }
     const { data, isLoading, isError } = useQuery({ queryKey: ['artDetails', uuid], queryFn: () => getProfile(uuid) });
     
     if (isLoading) return <div>Loading...</div>;
     if (isError) return <div>Error fetching data</div>;
     console.log(data);
-    const temp = data.data.name.split(" ");
     
     return (
         <>
             <StyledDiv className='profil'>
-                <form>
-                    <StyledDiv className='subDiv'>
-                        <StyledInput name = "firstName">
-                            <h4>First Name :</h4>
-                            {temp[0]}
-                        </StyledInput>
-                        <StyledInput name = "lastName">
-                            <h4>Last Name :</h4>
-                            {temp[1]}
-                        </StyledInput>
-                        <StyledInput name = "userName">
-                            <h4>User Name :</h4>
-                            {data.data.name}
-                        </StyledInput>
-                        <StyledInput name = "adresse">
-                            <h4>Address :</h4>
-                            {data.data.address}
-                        </StyledInput>
+                <form className="form" onSubmit={onsubmit} method="post">
+                    <StyledDiv className='subDiv grid' >
+                        <StyledDiv className = 'conteneur'>
+                            <h4>First Name</h4>
+                            <StyledInput 
+                                name = "firstName"
+                                value = {formik.values.firstName}
+                                onChange={formik.handleChange}
+                                type="text"
+                            />
+                        </StyledDiv>
+                        <StyledDiv className = 'conteneur'>
+                            <h4>Last Name</h4>
+                            <StyledInput 
+                                name = "lastName"
+                                value = {formik.values.lastName}
+                                onChange={formik.handleChange}
+                                type="text"
+                            />
+                        </StyledDiv>
+                        <StyledDiv className="conteneur">
+                            <h4>User Name</h4>
+                            <StyledInput 
+                                name = "userName"
+                                value = {formik.values.userName}
+                                onChange={formik.handleChange}
+                                type="text"
+                            />
+                        </StyledDiv>
+                        <StyledDiv className="conteneur">
+                        <h4>Address</h4>
+                        <StyledInput 
+                            name = "adresse"
+                            value = {formik.values.adresse}
+                            onChange={formik.handleChange}
+                            type="text"
+                        />
+                        </StyledDiv>
                     </StyledDiv>
-                    <StyledDiv className='subDiv'>
-                        <StyledInput name = "mail">
+                    <StyledDiv className='subDiv grid'>
+                        <StyledDiv className = 'conteneur'>
                             <h4>Mail</h4>
-                            {data.data.email}
-                        </StyledInput>
-                        <StyledInput name = "phoneNumber">
+                            <StyledInput 
+                                name = "mail"
+                                value = {formik.values.mail}
+                                onChange={formik.handleChange}
+                                type="email"
+                            />
+                        </StyledDiv>
+                        <StyledDiv className = 'conteneur'>
                             <h4>Phone Number</h4>
-                            {formik.values.phoneNumber}
-                        </StyledInput>
-                            <p className='ligneBouton'>Changer le mot de passe : <StyledButton className="modifier" type={"submit"}>Modifier</StyledButton></p> 
+                            <StyledInput 
+                                name = "phoneNumber"
+                                value = {formik.values.phoneNumber}
+                                onChange={formik.handleChange}
+                                type="number"
+                            />
+                        </StyledDiv>    
+                        
+                        <p className='ligneBouton'>Changer le mot de passe : <StyledButton className="modifier" type={"submit"} id = "passwordChange">Modifier</StyledButton></p> 
                     </StyledDiv>
                     <StyledDiv className='subDiv artDiv'>
                         <h4>Oeuvres</h4>
@@ -95,18 +128,13 @@ const ProfilModif : React.FC = () => {
                             {data.data.arts.map((art: { id: React.Key | null | undefined; title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }) => (<h3 key = {art.id} onClick={() =>{navigate("/art-detail/"+art.id, { replace: true })}}>{art.title}</h3>))}
                         </ul>
                     </StyledDiv>
+                    <StyledFooter>
+                        <StyledSignOut className = "Deconnexion" type={"submit"} id="signOut">Sign Out</StyledSignOut>
+                        <StyledValidate className = "Valider" type={"submit"} id="validate">Effectuer les changements</StyledValidate>
+                    </StyledFooter>
                 </form>
             </StyledDiv>
-            <StyledFooter>
-                <StyledSignOut >
-                    Sign Out
-                </StyledSignOut>
-                <StyledValidate>
-                    Effectuer les changements
-                </StyledValidate>
-            </StyledFooter>
         </>
-        
     )
 }
 const StyledDiv = styled.div`
@@ -149,6 +177,11 @@ const StyledDiv = styled.div`
         display : flex;
         flex-direction : column;
     }
+
+    .grid{
+        grid-template-columns: repeat(2, 1fr);
+        display: grid;
+    }
 `
 const StyledFooter  = styled.footer`
     display: flex;
@@ -166,6 +199,9 @@ const StyledButton = styled.button`
     .modifier{
         margin-left: 3rem;
     }
+    .modifier&:hover {
+        background-color : lightblue;
+    }
 `
 const StyledSignOut = styled.button`
     width:12rem;
@@ -174,6 +210,9 @@ const StyledSignOut = styled.button`
     background-color : red;
     border-radius: 0.25rem;
     border : none;
+    &:hover {
+        background-color : pink;
+    }
 `
 const StyledValidate = styled.button`
     width:12rem;
@@ -182,8 +221,18 @@ const StyledValidate = styled.button`
     background-color : #F5C754;
     border-radius: 0.25rem;
     border : none;
+    &:hover {
+        background-color : green;
+    }
 `
 const StyledInput =  styled.input`
+    width: 18rem;
+    height: 1.5rem;
+    border-radius: 0.3rem;
+    border-color: lightgrey;
+`;
+
+const StyledOutput =  styled.output`
     display: flex;
     justify-content: center;
     flex-direction: column;
