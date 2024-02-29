@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import styled from 'styled-components';
-import { getProfile } from "../api/backend/account";
+import { getProfile, setProfile } from "../api/backend/account";
 import React from "react";
 
 import { useParams, useNavigate, Form } from 'react-router-dom';
@@ -47,11 +47,34 @@ const ProfilModif : React.FC = () => {
         console.log("formik");
         },
     });
+    const handleButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
+        const buttonId = event.currentTarget.id;
+        // You can now use the buttonId as needed
+        switch (buttonId) {
+            case "passwordChange":
+                console.log("1");
+                break;
+            case "signOut":
+                console.log("2");
+                break;
+            case "validate":
+                setProfile(uuid)
+                console.log("bueno");
+                
+                break;
+            default:
+                break;
+        }
+        return buttonId;
+    };
     function onsubmit(e: React.FormEvent<HTMLInputElement>){
 
         e.preventDefault();
-        console.log("azee");
+        const buttonId = e.currentTarget;
+        console.log(buttonId);
+        
     }
+    
     const { data, isLoading, isError } = useQuery({ queryKey: ['artDetails', uuid], queryFn: () => getProfile(uuid) });
     
     if (isLoading) return <div>Loading...</div>;
@@ -120,7 +143,7 @@ const ProfilModif : React.FC = () => {
                             />
                         </StyledDiv>    
                         
-                        <p className='ligneBouton'>Changer le mot de passe : <StyledButton className="modifier" type={"submit"} id = "passwordChange">Modifier</StyledButton></p> 
+                        <p className='ligneBouton'>Changer le mot de passe : <StyledButton className="modifier" type={"submit"} id = "passwordChange" onClick={handleButtonClick}>Modifier</StyledButton></p> 
                     </StyledDiv>
                     <StyledDiv className='subDiv artDiv'>
                         <h4>Oeuvres</h4>
@@ -129,8 +152,8 @@ const ProfilModif : React.FC = () => {
                         </ul>
                     </StyledDiv>
                     <StyledFooter>
-                        <StyledSignOut className = "Deconnexion" type={"submit"} id="signOut">Sign Out</StyledSignOut>
-                        <StyledValidate className = "Valider" type={"submit"} id="validate">Effectuer les changements</StyledValidate>
+                        <StyledSignOut className = "Deconnexion" type={"submit"} id="signOut" onClick={handleButtonClick}>Sign Out</StyledSignOut>
+                        <StyledValidate className = "Valider" type={"submit"} id="validate" onClick={handleButtonClick}>Effectuer les changements</StyledValidate>
                     </StyledFooter>
                 </form>
             </StyledDiv>
