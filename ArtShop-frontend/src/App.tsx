@@ -7,6 +7,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { getToken, isTokenValid } from "./services/tokenServices";
 import { signIn } from "./reducers/authenticationSlice";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const GlobalStyle = createGlobalStyle`
   body {  
@@ -40,6 +42,7 @@ const App: React.FC = () => {
           <GlobalStyle />
           <Routes />
         </QueryClientProvider>
+        <ToastContainer />
       </Main>
     </BrowserRouter>
   );

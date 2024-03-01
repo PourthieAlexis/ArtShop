@@ -1,17 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SignIn from "../components/SignIn";
 import SignUp from "../components/SignUp";
+import { useNavigate } from "react-router-dom";
+import { URL_LOGIN, URL_REGISTER } from "../constants/urls/urlFrontend";
 
 interface AuthProps {
   page: string;
 }
 
 const AuthView: React.FC<AuthProps> = ({ page }) => {
-  const [isSignUp, setIsSignUp] = useState(page === "Register");
+  const [isSignUp, setIsSignUp] = useState(page === "register");
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    setIsSignUp(page === "register");
+  }, [page]);
 
   const toggleForm = (isSignUp: boolean) => {
     setIsSignUp(isSignUp);
+    navigate(isSignUp ? URL_REGISTER : URL_LOGIN)
   };
 
   return (
