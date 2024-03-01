@@ -30,7 +30,6 @@ const App: React.FC = () => {
   useEffect(() => {
     const token = getToken();
     if (token && isTokenValid(token)) dispatch(signIn(token));
-    console.log(isTokenValid(token))
     setIsLogin(false);
   }, []);
 
