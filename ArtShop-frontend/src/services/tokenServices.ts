@@ -22,11 +22,16 @@ export function isTokenValid(token: string): boolean {
     try {
         const payload: any = getPayloadToken(token);
         const roles: string[] = payload.roles;
-        const expirationDate: number = payload.exp;
+        const expirationDate: number = payload.exp * 1000;
         const login: string = payload.email;
         const dateNow: number = new Date().getTime();
+
+        console.log("Expiration Date:", new Date(expirationDate).toLocaleString());
+
         return !!(token && roles.length > 0 && login && expirationDate > dateNow);
     } catch {
         return false;
     }
 }
+
+
