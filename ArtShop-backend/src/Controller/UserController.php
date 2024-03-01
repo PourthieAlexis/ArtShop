@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -38,23 +37,31 @@ class UserController extends AbstractController
         $serializedUser = json_decode($serializer->serialize($user, 'json', ['groups' => 'user']), true);
         return new JsonResponse($serializedUser, 200, []);
     }
-
+     /**
+     * Modify the infos of the selected user.
+     *
+     * @param string $uuid
+     * @param UsersRepository $UsersRepo
+     * @param EntityManagerInterface $Manager
+     * @param Request $request
+     * @return JsonResponse
+     */
     #[Route('/api/profile-modify/{uuid}', name: 'app_Profile_Modify')]
-    public function setProfile(string $uuid, UsersRepository $usersRepo, ObjectManager $manager) : JsonResponse
+    public function setProfile(string $uuid,UsersRepository $usersRepo, EntityManagerInterface $manager, Request $request) : JsonResponse
     {
         $user = $usersRepo->find($uuid);
-        dd($user);
-        $newName = $request->query->get('firstName')+" "+$request->query->get("lastName");
+        $newName = $request->query->get('firstName');
         $newAddress = $request->query->get('adresse');
-        if ($newName != $data['name'] && $newName != "") {
+        if ($newName != $user->getName() && $newName != "") {
             $user->setName($newName);
         }
-        if ($newAddress != $data['address'] && $newAddress != ""){
-            $user->setName($newAddress);
+        if ($newAddress != $user->getAddress() && $newAddress != ""){
+            $user->setAddress($newAddress);
         }
-        dd($user);
         $manager->persist($user);
         $manager->flush();
+        
+        return new JsonResponse(['message' => 'Success'], 200, []);
     }
 
 }

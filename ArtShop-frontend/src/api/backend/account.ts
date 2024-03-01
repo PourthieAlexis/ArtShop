@@ -13,6 +13,6 @@ export function getProfile(values: any): Promise<any>{
     return apiBackEnd.get(URL_BACK_PROFILE+ values);
 }
 
-export function setProfile(values: any): Promise<any>{
-    return apiBackEnd.post(URL_BACK_PROFILE_MODIFY+ values);
+export function setProfile(uuid: string, values: any): Promise<any>{
+    return apiBackEnd.post(URL_BACK_PROFILE_MODIFY+ uuid, values);
 }

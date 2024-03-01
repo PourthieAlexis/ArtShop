@@ -5,7 +5,7 @@ import { getProfile, setProfile } from "../api/backend/account";
 import React from "react";
 
 import { useParams, useNavigate, Form } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 interface ProfileItem {
     id : number;
     firstName : string;
@@ -30,9 +30,10 @@ const ProfilModif : React.FC = () => {
     const navigate = useNavigate();
 
     const validateSchema = Yup.object().shape({ search: Yup.string() });
-
+    const {mutate} = useMutation({ mutationFn: setProfile });
     const formik = useFormik({
         initialValues: {
+        id : uuid,
         firstName:"",
         lastName:"",
         userName: "",
@@ -42,40 +43,28 @@ const ProfilModif : React.FC = () => {
         },
     validationSchema: validateSchema,
 
-    onSubmit: (_values) => {
-
+    onSubmit: (values) => {
         console.log("formik");
+        console.log(formik.values);
+        mutate({ ...values, uuid: uuid}, {
+            onSuccess(data) {
+                console.log(data.data.token);
+            },
+            onError(error) {
+                console.log(error.message);
+            },
+        });
         },
     });
-    const handleButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
-        const buttonId = event.currentTarget.id;
-        // You can now use the buttonId as needed
-        switch (buttonId) {
-            case "passwordChange":
-                console.log("1");
-                break;
-            case "signOut":
-                console.log("2");
-                break;
-            case "validate":
-                setProfile(uuid)
-                console.log("bueno");
-                
-                break;
-            default:
-                break;
-        }
-        return buttonId;
-    };
-    function onsubmit(e: React.FormEvent<HTMLInputElement>){
-
-        e.preventDefault();
-        const buttonId = e.currentTarget;
-        console.log(buttonId);
-        
+    const handlePassword =() =>{
+        console.log("1");
     }
+    const handleSignOut =() =>{
+        console.log("2");
+    }
+
     
-    const { data, isLoading, isError } = useQuery({ queryKey: ['artDetails', uuid], queryFn: () => getProfile(uuid) });
+    const { data, isLoading, isError } = useQuery({ queryKey: ['getProfile', uuid], queryFn: () => getProfile(uuid) });
     
     if (isLoading) return <div>Loading...</div>;
     if (isError) return <div>Error fetching data</div>;
@@ -84,7 +73,7 @@ const ProfilModif : React.FC = () => {
     return (
         <>
             <StyledDiv className='profil'>
-                <form className="form" onSubmit={onsubmit} method="post">
+                <form className="form" action="{{ path('techevent_reservation') }}" onSubmit={formik.handleSubmit} method="post">
                     <StyledDiv className='subDiv grid' >
                         <StyledDiv className = 'conteneur'>
                             <h4>First Name</h4>
@@ -143,7 +132,7 @@ const ProfilModif : React.FC = () => {
                             />
                         </StyledDiv>    
                         
-                        <p className='ligneBouton'>Changer le mot de passe : <StyledButton className="modifier" type={"submit"} id = "passwordChange" onClick={handleButtonClick}>Modifier</StyledButton></p> 
+                        <p className='ligneBouton'>Changer le mot de passe : <StyledButton className="modifier" id = "passwordChange" onClick={() =>handlePassword}>Modifier</StyledButton></p> 
                     </StyledDiv>
                     <StyledDiv className='subDiv artDiv'>
                         <h4>Oeuvres</h4>
@@ -152,8 +141,8 @@ const ProfilModif : React.FC = () => {
                         </ul>
                     </StyledDiv>
                     <StyledFooter>
-                        <StyledSignOut className = "Deconnexion" type={"submit"} id="signOut" onClick={handleButtonClick}>Sign Out</StyledSignOut>
-                        <StyledValidate className = "Valider" type={"submit"} id="validate" onClick={handleButtonClick}>Effectuer les changements</StyledValidate>
+                        <StyledSignOut className = "Deconnexion" id="signOut" onClick={() => handleSignOut}>Sign Out</StyledSignOut>
+                        <StyledValidate className = "Valider" id="validate" type="submit" value="Effectuer les changements"/>
                     </StyledFooter>
                 </form>
             </StyledDiv>
@@ -237,7 +226,7 @@ const StyledSignOut = styled.button`
         background-color : pink;
     }
 `
-const StyledValidate = styled.button`
+const StyledValidate = styled.input`
     width:12rem;
     height:2.5rem;
     font-weight: bold;
