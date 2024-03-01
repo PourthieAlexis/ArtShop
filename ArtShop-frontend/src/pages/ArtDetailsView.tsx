@@ -11,9 +11,10 @@ import ArtworksByArtist from '../components/ArtworksByArtist';
 import { addToCart } from '../api/backend/cart';
 import { selectToken } from '../reducers/authenticationSlice';
 import { useSelector } from 'react-redux';
-import { Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import AddToCartInitialValues from '../formik/initialValues/AddToCartInitialValues';
 import AddToCartYup from '../formik/yup/AddToCartYup';
+import { toast } from 'react-toastify';
 
 const ArtDetailsView: React.FC = () => {
     const { uuid } = useParams<{ uuid: string }>();
@@ -24,10 +25,14 @@ const ArtDetailsView: React.FC = () => {
     const { mutate } = useMutation({
         mutationFn: (values: any) => addToCart(values, token),
         onSuccess: (data) => {
-            console.log("Art added successfully", data.data);
+            toast.success("L'oeuvre a été ajouté à votre panier !", {
+                position: "bottom-right"
+            });
         },
         onError: (error) => {
-            console.error(error.message);
+            toast.error("Une erreur est survenu !", {
+                position: "bottom-right"
+            });
         },
     });
 

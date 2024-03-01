@@ -20,6 +20,7 @@ ArtShop est une application web basée sur Symfony et React, créée pour la ven
 3. Copiez le fichier `.env` en `.env.local` et configurez les paramètres.
 4. Lancez Docker Compose : `docker-compose up -d`
 5. Allez dans le conteneur pour exécuter les migrations `docker exec -it app-backend-dev /bin/bash`
+4. `php bin/console lexik:jwt:generate-keypair`
 5. `php bin/console make:migration`
 6. `php bin/console d:m:m`
 7. `php bin/console d:f:l`

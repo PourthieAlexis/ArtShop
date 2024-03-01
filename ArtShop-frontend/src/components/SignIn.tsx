@@ -8,11 +8,14 @@ import { useDispatch } from "react-redux";
 import { signIn } from "../reducers/authenticationSlice";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { URL_HOME } from "../constants/urls/urlFrontend";
+import PrimaryInput from "./PrimaryInput";
+import SecondaryInput from "./SecondaryInput";
 
 const SignUp: React.FC = () => {
     const [errorLog, setErrorLog] = useState<string | null>(null);
     const dispatch = useDispatch();
-    const { mutate } = useMutation({ mutationFn: authenticate });
+    const { mutate, isPending } = useMutation({ mutationFn: authenticate });
     const navigate = useNavigate();
 
     const formik = useFormik({
@@ -22,7 +25,7 @@ const SignUp: React.FC = () => {
             mutate(values, {
                 onSuccess(data) {
                     dispatch(signIn(data.data.token));
-                    console.log(data.data.token);
+                    navigate(URL_HOME)
                 },
                 onError(error) {
                     setErrorLog(error.message);
@@ -39,7 +42,7 @@ const SignUp: React.FC = () => {
             </TitleContainer>
             {errorLog && <ErrorText>{errorLog}</ErrorText>}
             <Form onSubmit={formik.handleSubmit}>
-                <p className='form-p'>Mail* </p>
+                <label className='form-p'>Mail* </label>
                 <StyledInput
                     type={"email"}
                     name="email"
@@ -48,7 +51,7 @@ const SignUp: React.FC = () => {
                 />
                 {formik.touched.email && formik.errors.email && <ErrorText>{formik.errors.email}</ErrorText>}
 
-                <p className='form-p'>Mot de passe* </p>
+                <label className='form-p'>Mot de passe* </label>
                 <StyledInput
                     type={"password"}
                     name="password"
@@ -57,11 +60,8 @@ const SignUp: React.FC = () => {
                 />
                 {formik.touched.password && formik.errors.password && <ErrorText>{formik.errors.password}</ErrorText>}
 
-                <Button type={"submit"} value="Se connecter" />
-                <ButtonGoogle type={"submit"}>
-                    <img className="logoGoogle" src="./src/assets/googleIcon.png" alt="Google Icon" />
-                    Se connecter avec Google
-                </ButtonGoogle>
+                <PrimaryInput type='submit' value="Se connecter" isLoading={isPending} />
+                <SecondaryInput type={"submit"} value={"Se connecter avec Google"} />
             </Form>
         </>
     );
@@ -98,23 +98,10 @@ const Form = styled.form`
     width: 100%;
     display: flex;
     flex-direction: column;
-`;
-
-const Button = styled.input`
-    background-color: #000000;
-    color: white;
-    height: 3rem;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    cursor: pointer;
-`;
-
-const ButtonGoogle = styled.button`
-    height: 3rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+    gap:1rem;
+    p{
+        margin: 0;
+    }
 `;
 
 export default SignUp;

@@ -10,6 +10,7 @@ import CommentYup from "../formik/yup/CommentYup";
 import { useState } from "react";
 import profilePicturePlacehodler from "/images/profilePicturePlaceholder.png"
 import { Comment } from "react-loader-spinner";
+import { toast } from "react-toastify";
 
 interface Comment {
     id: number;
@@ -34,12 +35,14 @@ const CommentSection: React.FC<CommentSectionProps> = ({ comments: initialCommen
     const { mutate, isPending } = useMutation({
         mutationFn: (values: any) => AddComment(values, token),
         onSuccess: (data) => {
-            console.log("Comment added successfully", data.data);
             const newComment = data.data;
             setComments((prevComments) => [...prevComments, newComment]);
         },
         onError: (error) => {
             setErrorLog(error.message);
+            toast.error("Une erreur est survenu !", {
+                position: "bottom-right"
+            });
         },
     });
 
@@ -80,7 +83,6 @@ const CommentSection: React.FC<CommentSectionProps> = ({ comments: initialCommen
                         resetForm()
                     }}
                 >
-
                     <StyledForm>
                         <Field as={InputComment} type='text' name="message" />
                         {errorLog && <ErrorText>{errorLog}</ErrorText>}

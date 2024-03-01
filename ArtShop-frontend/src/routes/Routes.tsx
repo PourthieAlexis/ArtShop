@@ -12,8 +12,8 @@ const Routes: React.FC = () => {
     return (
         <RoutesContainer>
             <Route path={URL.URL_HOME} element={<HomeView />} />
-            <Route path={URL.URL_LOGIN} element={<AuthView page={"Login"} />} />
-            <Route path={URL.URL_REGISTER} element={<AuthView page={"Register"} />} />
+            <Route path={URL.URL_LOGIN} element={<AuthView page={"login"} />} />
+            <Route path={URL.URL_REGISTER} element={<AuthView page={"register"} />} />
             <Route path={URL.URL_DETAILS_ART} element={<ArtDetails />} />
             <Route path={URL.URL_CART} element={<CartView />} />
         </RoutesContainer>

@@ -5,10 +5,16 @@ import UserInitialValues from "../formik/initialValues/UserInitialValues";
 import RegisterYup from "../formik/yup/SignUpYup";
 import { register } from "../api/backend/account";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import { URL_LOGIN } from "../constants/urls/urlFrontend";
+import PrimaryInput from "./PrimaryInput";
+import SecondaryInput from "./SecondaryInput";
+import { toast } from "react-toastify";
 
 const SignUp: React.FC = () => {
     const [errorLog, setErrorLog] = useState<string | null>(null);
-    const { mutate } = useMutation({ mutationFn: register });
+    const { mutate, isPending } = useMutation({ mutationFn: register });
+    const navigate = useNavigate()
 
     const formik = useFormik({
         initialValues: UserInitialValues,
@@ -16,7 +22,10 @@ const SignUp: React.FC = () => {
         onSubmit: (values) => {
             mutate(values, {
                 onSuccess(data) {
-                    console.log("Inscription réussie", data.data);
+                    navigate(URL_LOGIN)
+                    toast.success("Votre inscription est réussi ! \n Maintenant vous devez vous connecter", {
+                        position: "bottom-right"
+                    });
                 },
                 onError(error) {
                     setErrorLog(error.message);
@@ -33,7 +42,7 @@ const SignUp: React.FC = () => {
             </TitleContainer>
             {errorLog && <ErrorText>{errorLog}</ErrorText>}
             <Form onSubmit={formik.handleSubmit}>
-                <p className='form-p'>Name* </p>
+                <label className='form-p'>Name* </label>
                 <StyledInput
                     type={"text"}
                     name="name"
@@ -42,7 +51,7 @@ const SignUp: React.FC = () => {
                 />
                 {formik.touched.name && formik.errors.name && <ErrorText>{formik.errors.name}</ErrorText>}
 
-                <p className='form-p'>Mail* </p>
+                <label className='form-p'>Mail* </label>
                 <StyledInput
                     type={"email"}
                     name="email"
@@ -51,7 +60,7 @@ const SignUp: React.FC = () => {
                 />
                 {formik.touched.email && formik.errors.email && <ErrorText>{formik.errors.email}</ErrorText>}
 
-                <p className='form-p'>Mot de passe* </p>
+                <label className='form-p'>Mot de passe* </label>
                 <StyledInput
                     type={"password"}
                     name="password"
@@ -59,12 +68,8 @@ const SignUp: React.FC = () => {
                     value={formik.values.password}
                 />
                 {formik.touched.password && formik.errors.password && <ErrorText>{formik.errors.password}</ErrorText>}
-
-                <Button type={"submit"} value="Se connecter" />
-                <ButtonGoogle type={"submit"}>
-                    <img src="./src/assets/googleIcon.png" alt="Google Icon" />
-                    Se connecter avec Google
-                </ButtonGoogle>
+                <PrimaryInput type='submit' value="S'inscrire" isLoading={isPending} />
+                <SecondaryInput type={"submit"} value={"Se connecter avec Google"} />
             </Form>
         </>
     );
@@ -100,23 +105,11 @@ const Form = styled.form`
     width: 100%;
     display: flex;
     flex-direction: column;
+    gap: 1rem;
+    p{
+        margin: 0;
+    }
 `;
 
-const Button = styled.input`
-    background-color: #000000;
-    color: white;
-    height: 3rem;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    cursor: pointer;
-`;
-
-const ButtonGoogle = styled.button`
-    height: 3rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-`;
 
 export default SignUp;
