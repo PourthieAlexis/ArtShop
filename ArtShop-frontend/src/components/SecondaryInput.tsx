@@ -5,17 +5,17 @@ interface InputProps {
     type?: string;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     value?: string;
-    className?: string;
+    style?: object;
     placeholder?: string;
 }
 
-const SecondaryInput: React.FC<InputProps> = ({ type = "text", onChange, value, className, placeholder }) => {
+const SecondaryInput: React.FC<InputProps> = ({ type = "text", onChange, value, style, placeholder }) => {
     return (
         <StyledInput
             type={type}
             onChange={onChange}
             value={value}
-            className={className}
+            style={style}
             placeholder={placeholder}
         />
     );
