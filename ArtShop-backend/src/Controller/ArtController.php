@@ -3,21 +3,17 @@
 namespace App\Controller;
 
 use App\Repository\ArtsRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class ArtController extends AbstractController
 {
-    #[Route('/art', name: 'app_art')]
-    public function index(): JsonResponse
-    {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/ArtController.php',
-        ]);
-    }
 
     /**
      * Retrieve the details of an artwork.
@@ -33,7 +29,7 @@ class ArtController extends AbstractController
         $art = $artsRepo->findOneBy(['id' => $uuid]);
 
         if (!$art) {
-            return $this->json(['error' => 'Art not found'], JsonResponse::HTTP_NOT_FOUND);
+            return $this->json(['error' => 'Art not found'], Response::HTTP_NOT_FOUND);
         }
 
         $serializedArt = $serializer->serialize($art, 'json', ['groups' => ['art']]);
@@ -49,7 +45,43 @@ class ArtController extends AbstractController
             'user_arts' => json_decode($serializedUserArts, true)
         ];
 
-        return new JsonResponse($responseData, JsonResponse::HTTP_OK);
+        return new JsonResponse($responseData, Response::HTTP_OK);
+    }
+
+
+    #[Route('/api/get-art', name: 'api_search_art', methods: ['GET'])]
+    public function searchArt(Request $request, ArtsRepository $artRepository, PaginatorInterface $paginator, NormalizerInterface $normalizer): JsonResponse
+    {
+        $searchTerm = $request->query->get('searchTerm');
+        $page = $request->query->getInt('page', 1);
+        $limit = 10;
+
+        $pagination = $paginator->paginate(
+            $artRepository->findBySearchTerm($searchTerm),
+            $page,
+            $limit
+        );
+        $totalItems = $pagination->getTotalItemCount();
+        $artData = $normalizer->normalize($pagination->getItems(), null, ['groups' => 'art']);
+
+        $response = [
+            'art' => $artData,
+            'pagination' => [
+                'totalItems' => $totalItems,
+                'itemsPerPage' => $pagination->count(),
+                'currentPage' => $page,
+                'nextPage' => $page < ceil($totalItems / $limit) ? $page + 1 : null,
+                'totalPages' => ceil($totalItems / $limit)
+            ]
+        ];
+
+        if ($totalItems === 0) {
+            $response['art'] = 'No artwork found.';
+        }
+
+        return new JsonResponse($response, Response::HTTP_OK);
     }
 
 }
+
+
