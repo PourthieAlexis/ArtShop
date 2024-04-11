@@ -12,8 +12,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
+#[UniqueEntity('email', "L'email est déjà utilisé")]
 class Users implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -30,7 +32,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     #[Assert\NotBlank(message: "L'email est obligatoire")]
     #[Assert\Regex(
-        pattern: '/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g',
+        pattern: "/^[\w\-]+@([\w\-]+\.)+[\w\-]{2,4}$/",
         message: "L'email n'est pas valide",
     )]
     #[Groups(["art"])]
@@ -43,10 +45,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Assert\Length(
-        min: 12,
-        minMessage: "Le mot de passe doit contenir au moins {{ limit }} caractères.",
-    )]
     #[Assert\NotBlank(message: "Le mot de passe est obligatoire")]
     #[Assert\Regex(
         pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/',
