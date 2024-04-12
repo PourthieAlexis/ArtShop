@@ -58,6 +58,7 @@ const LoadingIndicator = styled.div`
 `;
 
 const StyledInput = styled.input`
+    position: relative;
     height: 3.5rem;
     background-color: #F5C754;
     width: 100%;

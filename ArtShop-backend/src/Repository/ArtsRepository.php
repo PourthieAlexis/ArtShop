@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Arts;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,7 +22,19 @@ class ArtsRepository extends ServiceEntityRepository
         parent::__construct($registry, Arts::class);
     }
 
-//    /**
+
+    public function findBySearchTerm(string $searchTerm)
+    {
+        $queryBuilder = $this->createQueryBuilder('a')
+            ->leftJoin('a.categories', 'c', Join::WITH, 'c.name LIKE :searchTerm')
+            ->orWhere('a.title LIKE :searchTerm')
+            ->setParameter('searchTerm', '%' . $searchTerm . '%')
+            ->getQuery();
+
+        return $queryBuilder->getResult();
+    }
+
+    //    /**
 //     * @return Arts[] Returns an array of Arts objects
 //     */
 //    public function findByExampleField($value): array
@@ -36,7 +49,7 @@ class ArtsRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Arts
+    //    public function findOneBySomeField($value): ?Arts
 //    {
 //        return $this->createQueryBuilder('a')
 //            ->andWhere('a.exampleField = :val')
