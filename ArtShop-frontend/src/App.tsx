@@ -9,15 +9,23 @@ import { getToken, isTokenValid } from "./services/tokenServices";
 import { signIn } from "./reducers/authenticationSlice";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Epilogue from '../public/fonts/Epilogue-VariableFont_wght.ttf'
 
 const GlobalStyle = createGlobalStyle`
+@font-face {
+  font-family: 'Epilogue';
+  src: url(${Epilogue}) format('truetype');
+
+}
+
   body {  
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: sans-serif;
+    font-family: 'Epilogue-VariableFont_wght', sans-serif;
   }
 `;
+
 
 const queryClient = new QueryClient()
 

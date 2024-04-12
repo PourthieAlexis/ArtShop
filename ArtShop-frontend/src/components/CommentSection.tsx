@@ -8,8 +8,8 @@ import { useMutation } from "@tanstack/react-query";
 import { AddComment } from "../api/backend/comment";
 import CommentYup from "../formik/yup/CommentYup";
 import { useState } from "react";
-import profilePicturePlacehodler from "/images/profilePicturePlaceholder.png"
-import { Comment } from "react-loader-spinner";
+import profilePicturePlacehodler from "/images/profilePicturePlaceholder.webp"
+import { Comment as LoadingComment } from "react-loader-spinner";
 import { toast } from "react-toastify";
 
 interface Comment {
@@ -62,7 +62,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ comments: initialCommen
             }
 
             {isPending &&
-                <Comment
+                <LoadingComment
                     visible={true}
                     height="80"
                     width="80"

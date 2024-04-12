@@ -6,3 +6,5 @@ export const URL_BACK_GET_USER_ARTWORKS_BY_UUID: string = '/user/:uuid/artworks'
 export const URL_BACK_ADD_COMMENT: string = '/add-comment';
 export const URL_BACK_SHOW_CART: string = '/show-cart';
 export const URL_BACK_ADD_TO_CART: string = '/add-to-cart';
+export const URL_BACK_SHOW_ART: string = '/show-arts';
+export const URL_BACK_GET_ART: string = '/get-art';

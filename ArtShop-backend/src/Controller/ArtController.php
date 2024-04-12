@@ -4,26 +4,21 @@ namespace App\Controller;
 
 use App\Repository\ArtsRepository;
 use App\Repository\UsersRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use App\Util\Utils;
 
 class ArtController extends AbstractController
 {
-    #[Route('/art', name: 'app_art')]
-    public function index(): JsonResponse
-    {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/ArtController.php',
-        ]);
-    }
 
     /**
      * Retrieve the details of an artwork.
@@ -74,6 +69,40 @@ class ArtController extends AbstractController
     }
 
 
+    #[Route('/api/get-art', name: 'api_search_art', methods: ['GET'])]
+    public function searchArt(Request $request, ArtsRepository $artRepository, PaginatorInterface $paginator, NormalizerInterface $normalizer): JsonResponse
+    {
+        $searchTerm = $request->query->get('searchTerm');
+        $page = $request->query->getInt('page', 1);
+        $limit = 10;
+
+        $pagination = $paginator->paginate(
+            $artRepository->findBySearchTerm($searchTerm),
+            $page,
+            $limit
+        );
+        $totalItems = $pagination->getTotalItemCount();
+        $artData = $normalizer->normalize($pagination->getItems(), null, ['groups' => 'art']);
+
+        $response = [
+            'art' => $artData,
+            'pagination' => [
+                'totalItems' => $totalItems,
+                'itemsPerPage' => $pagination->count(),
+                'currentPage' => $page,
+                'nextPage' => $page < ceil($totalItems / $limit) ? $page + 1 : null,
+                'totalPages' => ceil($totalItems / $limit)
+            ]
+        ];
+
+        if ($totalItems === 0) {
+            $response['art'] = 'No artwork found.';
+        }
+
+        return new JsonResponse($response, Response::HTTP_OK);
+    }
+
+
     #[Route('/api/user/{uuid}/artworks', name: 'api_user_artworks_by_uuid', methods: ['GET'])]
     public function getUserArtworksByUuid(string $uuid, ArtsRepository $artsRepo, SerializerInterface $serializer, Security $security, UsersRepository $userRepo): JsonResponse
     {
@@ -94,3 +123,5 @@ class ArtController extends AbstractController
 
 
 }
+
+

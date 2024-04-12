@@ -14,3 +14,9 @@ export function getUserArtWorks(token: string | null): Promise<any> {
 export function getUserArtWorksByUuid(uuid: string): Promise<any> {
     return apiBackEnd.get(URL.URL_BACK_GET_USER_ARTWORKS_BY_UUID.replace(':uuid', uuid))
 }
+
+export async function getArt({ pageParam, searchTerm = '' }: { pageParam: number; searchTerm?: string }): Promise<any> {
+    return apiBackEnd.get(URL.URL_BACK_GET_ART, { params: { searchTerm, page: pageParam } });
+}
+
+

@@ -38,7 +38,6 @@ security:
     - { path: '^/api/user/.*/artworks', roles: 'PUBLIC_ACCESS' }
     - { path: '^/api', roles: 'IS_AUTHENTICATED_FULLY' }
 
-
 when@test:
   security:
     password_hashers:
