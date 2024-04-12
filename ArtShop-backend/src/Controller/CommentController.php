@@ -31,7 +31,7 @@ class CommentController extends AbstractController
     {
         $user = $security->getUser();
         if (!$user) {
-            return $this->json(['error' => 'You need to be authenticated'], JsonResponse::HTTP_BAD_REQUEST);
+            return $this->json(['error' => 'You need to be authenticated'], 400);
         }
 
         $requestData = json_decode($request->getContent(), true);
@@ -41,19 +41,19 @@ class CommentController extends AbstractController
 
         $art = $artRepo->find($requestData['art_id']);
         if (!$art) {
-            return $this->json(['error' => 'Art not found'], JsonResponse::HTTP_BAD_REQUEST);
+            return $this->json(['error' => 'Art not found'], 400);
         }
         $comment->setArts($art);
 
         $errors = $validator->validate($comment);
         if (count($errors) > 0) {
-            return $this->json(['error' => 'Invalid comment data'], JsonResponse::HTTP_BAD_REQUEST);
+            return $this->json(['error' => 'Invalid comment data'], 400);
         }
 
         $entityManager->persist($comment);
         $entityManager->flush();
 
         $serializedComment = $serializer->serialize($comment, 'json', ['groups' => ['comment']]);
-        return new JsonResponse($serializedComment, JsonResponse::HTTP_CREATED, [], true);
+        return new JsonResponse($serializedComment, 201, [], true);
     }
 }

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import CommentSection from '../components/CommentSection';
 import Dropdown from '../components/Dropdown';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { fetchArtDetails } from '../api/backend/art';
+import { fetchArtDetails, getUserArtWorksByUuid } from '../api/backend/art';
 import { useParams } from 'react-router-dom';
 import PrimaryInput from '../components/PrimaryInput';
 import SecondaryInput from '../components/SecondaryInput';
@@ -20,7 +20,10 @@ const ArtDetailsView: React.FC = () => {
     const { uuid } = useParams<{ uuid: string }>();
     const token = useSelector(selectToken);
 
-    const { data, isLoading, isError } = useQuery({ queryKey: ['artDetails', uuid], queryFn: () => fetchArtDetails(uuid) });
+    const { data: art, isLoading, isError } = useQuery({ queryKey: ['artDetails', uuid], queryFn: () => fetchArtDetails(uuid) });
+    const userId = art?.data.users?.id
+
+    const { data: userArtWorks, isLoading: isUserArtWorksLoading } = useQuery({ queryKey: ['userArtWorks'], queryFn: () => getUserArtWorksByUuid(userId), enabled: !!userId })
 
     const { mutate } = useMutation({
         mutationFn: (values: any) => addToCart(values, token),
@@ -38,21 +41,20 @@ const ArtDetailsView: React.FC = () => {
 
     if (isLoading) return <div>Loading...</div>;
     if (isError) return <div>Error fetching data</div>;
-    console.log(data);
     return (
         <PageContainer>
             <DetailsContainer>
                 <ImageContainer>
-                    <Image src={data.data.art.image} alt="placeholder" />
-                    <Dropdown image={data.data.art.image} />
+                    <Image src={art.data.image} alt="placeholder" />
+                    <Dropdown image={art.data.image} />
                 </ImageContainer>
                 <DetailsContent>
                     <Title>
-                        <h1>{data.data.art.title}</h1>
-                        <Price>{data.data.art.price}€</Price>
+                        <h1>{art.data.title}</h1>
+                        <Price>{art.data.price}€</Price>
                     </Title>
                     <RateStar>⭐⭐⭐⭐⭐</RateStar>
-                    <p>{data.data.art.description}</p>
+                    <p>{art.data.description}</p>
                     <label htmlFor="quantity">Quantité</label>
 
                     <Formik
@@ -77,16 +79,16 @@ const ArtDetailsView: React.FC = () => {
                     </Details>
                     <ArtistDetails>
                         <Artist>
-                            <ArtistPicture src={data.data.art.users.profilePicture} alt="Artist profile picture" />
-                            <TitleDetails>{data.data.art.users.name}</TitleDetails>
+                            <ArtistPicture src={art.data.users.profilePicture} alt="Artist profile picture" />
+                            <TitleDetails>{art.data.users.name}</TitleDetails>
                         </Artist>
                     </ArtistDetails>
                 </DetailsContent>
             </DetailsContainer>
 
-            {data.data.user_arts.length !== 0 && <ArtworksByArtist userArt={data.data.user_arts} />}
+            <ArtworksByArtist userArt={userArtWorks?.data} isLoading={isUserArtWorksLoading} />
 
-            <CommentSection comments={data.data.art.comments} art_id={data.data.art.id} />
+            <CommentSection comments={art.data.comments} art_id={art.data.id} />
         </PageContainer>
     );
 }

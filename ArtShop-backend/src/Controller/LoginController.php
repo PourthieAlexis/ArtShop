@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class LoginController extends AbstractController
 {
@@ -24,7 +26,7 @@ class LoginController extends AbstractController
      * @return JsonResponse
      */
     #[Route('/api/register', name: 'app_register', methods: ['POST'])]
-    public function register(Request $request, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager): JsonResponse
+    public function register(Request $request, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager, ValidatorInterface $validator): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
@@ -32,8 +34,20 @@ class LoginController extends AbstractController
         $user->setName($data['name']);
         $user->setEmail($data['email']);
         $user->setAddress($data['address']);
+        $user->setPassword($data['password']);
 
-        $encodedPassword = $passwordEncoder->hashPassword($user, $data['password']);
+        $errors = $validator->validate($user);
+        if (count($errors) > 0) {
+            $errorMessages = [];
+
+            foreach ($errors as $error) {
+                $errorMessages[] = $error->getMessage();
+            }
+
+            throw new BadRequestHttpException(json_encode($errorMessages));
+        }
+
+        $encodedPassword = $passwordEncoder->hashPassword($user, $user->getPassword());
         $user->setPassword($encodedPassword);
 
         $entityManager->persist($user);
