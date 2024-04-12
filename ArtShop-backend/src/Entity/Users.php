@@ -26,10 +26,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     private ?Uuid $id;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Assert\Length(
-        min: 12,
-        minMessage: "L'email doit contenir au moins {{ limit }} caractères.",
-    )]
     #[Assert\NotBlank(message: "L'email est obligatoire")]
     #[Assert\Regex(
         pattern: "/^[\w\-]+@([\w\-]+\.)+[\w\-]{2,4}$/",

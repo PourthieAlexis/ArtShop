@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Repository\ArtsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use App\Util\Utils;
 
 class ArtController extends AbstractController
 {
@@ -30,10 +32,13 @@ class ArtController extends AbstractController
     #[Route('/api/details-art/{uuid}', name: 'api_art_details', methods: ['GET'])]
     public function detailsArt(string $uuid, ArtsRepository $artsRepo, SerializerInterface $serializer): JsonResponse
     {
+        if (!Utils::isUUID($uuid)) {
+            throw new BadRequestHttpException("UUID n'est pas valide");
+        }
         $art = $artsRepo->findOneBy(['id' => $uuid]);
 
         if (!$art) {
-            return $this->json(['error' => 'Art not found'], JsonResponse::HTTP_NOT_FOUND);
+            return new JsonResponse(['error' => 'Art not found'], 404);
         }
 
         $serializedArt = $serializer->serialize($art, 'json', ['groups' => ['art']]);
@@ -49,7 +54,7 @@ class ArtController extends AbstractController
             'user_arts' => json_decode($serializedUserArts, true)
         ];
 
-        return new JsonResponse($responseData, JsonResponse::HTTP_OK);
+        return new JsonResponse($responseData, 200);
     }
 
 }
