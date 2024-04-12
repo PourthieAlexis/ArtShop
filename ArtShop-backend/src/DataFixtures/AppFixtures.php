@@ -43,7 +43,7 @@ class AppFixtures extends Fixture
             $user->setEmail($userData['email']);
             $address = $userData['location']['street']['number'] . ', ' . $userData['location']['city'] . ', ' . $userData['location']['state'] . ', ' . $userData['location']['postcode'];
             $user->setAddress($address);
-            $user->setPassword($this->hashPassword->hashPassword($user, '12345'));
+            $user->setPassword($this->hashPassword->hashPassword($user, '123456789aA!'));
             $user->setProfilePicture($userData['picture']['large']);
             $manager->persist($user);
             $users[] = $user;

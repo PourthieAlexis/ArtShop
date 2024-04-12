@@ -11,30 +11,29 @@ interface Art {
 
 interface ArtworksByArtistProps {
     userArt: Array<Art>
+    isLoading: boolean
 }
 
-const ArtworksByArtist: React.FC<ArtworksByArtistProps> = ({ userArt }) => {
+const ArtworksByArtist: React.FC<ArtworksByArtistProps> = ({ userArt, isLoading }) => {
 
     return (
         <ArtworksByArtistContainer>
-            <hr />
-            <Title>Artwork by this artist</Title>
-            <CardContainer>
-                {userArt && userArt.map((art) => (
-                    <Card key={art.id}>
-                        <MiniImage src={art.image} alt="placeholder" />
-                        <ArtName>{art.title}</ArtName>
-                        <ArtPrice>{art.price}€</ArtPrice>
-                    </Card>
-                ))}
-            </CardContainer>
-            <hr />
+            {!isLoading && <>
+                <hr />
+                <Title>Artwork by this artist</Title>
+                <CardContainer>
+                    {userArt && userArt.map((art) => (
+                        <Card key={art.id}>
+                            <MiniImage src={art.image} alt="placeholder" />
+                            <ArtName>{art.title}</ArtName>
+                            <ArtPrice>{art.price}€</ArtPrice>
+                        </Card>
+                    ))}
+                </CardContainer>
+                <hr /></>}
         </ArtworksByArtistContainer>
     );
 };
-
-
-
 
 const ArtworksByArtistContainer = styled.section`
     width: 100%;
