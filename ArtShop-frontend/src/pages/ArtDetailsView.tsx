@@ -27,12 +27,12 @@ const ArtDetailsView: React.FC = () => {
 
     const { mutate } = useMutation({
         mutationFn: (values: any) => addToCart(values, token),
-        onSuccess: (data) => {
+        onSuccess: () => {
             toast.success("L'oeuvre a été ajouté à votre panier !", {
                 position: "bottom-right"
             });
         },
-        onError: (error) => {
+        onError: () => {
             toast.error("Une erreur est survenu !", {
                 position: "bottom-right"
             });
