@@ -1,8 +1,11 @@
-export function AddToken(token: string | null) {
-    return {
-        headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-        }
+export function AddHeader(token: string | null, contentType: string = 'application/json') {
+    const headers: { [key: string]: string } = {
+        'Content-Type': contentType,
+    };
+
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
     }
+
+    return { headers };
 }

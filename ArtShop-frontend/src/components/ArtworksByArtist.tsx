@@ -24,7 +24,7 @@ const ArtworksByArtist: React.FC<ArtworksByArtistProps> = ({ userArt, isLoading 
                 <CardContainer>
                     {userArt && userArt.map((art) => (
                         <Card key={art.id}>
-                            <MiniImage src={art.image} alt="placeholder" />
+                            <MiniImage src={`http://localhost:8000/uploads/images/${art.image}`} alt="placeholder" />
                             <ArtName>{art.title}</ArtName>
                             <ArtPrice>{art.price}€</ArtPrice>
                         </Card>

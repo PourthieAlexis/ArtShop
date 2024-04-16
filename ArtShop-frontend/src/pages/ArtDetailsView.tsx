@@ -45,8 +45,8 @@ const ArtDetailsView: React.FC = () => {
         <PageContainer>
             <DetailsContainer>
                 <ImageContainer>
-                    <Image src={art.data.image} alt="placeholder" />
-                    <Dropdown image={art.data.image} />
+                    <Image src={`http://localhost:8000/uploads/images/${art.data.image}`} alt="placeholder" />
+                    <Dropdown image={`http://localhost:8000/uploads/images/${art.data.image}`} />
                 </ImageContainer>
                 <DetailsContent>
                     <Title>

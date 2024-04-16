@@ -8,3 +8,4 @@ export const URL_BACK_SHOW_CART: string = '/show-cart';
 export const URL_BACK_ADD_TO_CART: string = '/add-to-cart';
 export const URL_BACK_SHOW_ART: string = '/show-arts';
 export const URL_BACK_GET_ART: string = '/get-art';
+export const URL_BACK_CREATE_ART: string = '/artworks';

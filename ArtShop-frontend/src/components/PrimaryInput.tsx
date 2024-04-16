@@ -43,7 +43,7 @@ const PrimaryInput: React.FC<InputProps> = ({ isLoading, type = "text", onChange
 };
 
 const StyledInputContainer = styled.div`
-  position: relative;    
+  position: relative;
 `;
 
 const LoadingIndicator = styled.div`

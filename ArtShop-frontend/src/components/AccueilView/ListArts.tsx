@@ -68,7 +68,7 @@ export default function ListArts(props: IListArtsProps) {
                                         title={art.title}
                                         category={art.categories.name}
                                         price={art.price}
-                                        image={art.image}
+                                        image={`http://localhost:8000/uploads/images/${art.image}`}
                                         key={art.id}
                                     />
                                 ))}

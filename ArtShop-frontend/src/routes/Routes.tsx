@@ -7,6 +7,8 @@ import ArtDetails from "../pages/ArtDetailsView";
 import { CartView } from "../pages/CartView";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import CreateArtView from "../pages/CreateArtView";
+import { PrivateRoute } from "./PrivateRoute";
 
 
 const Routes: React.FC = () => {
@@ -18,6 +20,7 @@ const Routes: React.FC = () => {
             <Route path={URL.URL_REGISTER} element={<AuthView page={"register"} />} />
             <Route path={URL.URL_DETAILS_ART + ':uuid'} element={<><Header /><ArtDetails /></>} />
             <Route path={URL.URL_CART} element={<><Header /><CartView /><Footer /></>} />
+            <Route path={URL.URL_CREATE_ART} element={<PrivateRoute><Header /><CreateArtView /><Footer /></PrivateRoute>} />
         </RoutesContainer>
     );
 };

@@ -1,18 +1,18 @@
 import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 import { URL_HOME, URL_LOGIN } from '../constants/urls/urlFrontend';
-import { selectHasRole, selectIsLogged } from '../redux-store/authenticationSlice';
+import { selectHasRole, selectIsLogged } from '../reducers/authenticationSlice';
+import { RootState } from '../reducers/store';
 
 interface PrivateRouteProps {
     children: React.ReactNode;
     roles?: string[];
 }
 
-export const PrivateRoute: React.FC<PrivateRouteProps> = ({ children, roles }) => {
+export const PrivateRoute: React.FC<PrivateRouteProps> = ({ children, roles = ['ROLE_USER'] }) => {
     const location = useLocation();
-    const isAuthenticated = useSelector(selectIsLogged);
-    const hasRole = useSelector((state) => selectHasRole(state, roles));
-
+    const isAuthenticated = useSelector((state: RootState) => selectIsLogged(state));
+    const hasRole = useSelector((state: RootState) => selectHasRole(state, roles));
     if (!isAuthenticated)
         return <Navigate replace to={URL_LOGIN} state={{ from: location }} />;
 

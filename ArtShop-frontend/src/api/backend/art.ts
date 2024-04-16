@@ -1,5 +1,5 @@
 import * as URL from "../../constants/urls/urlBackend";
-import { AddToken } from "../apiUtils";
+import { AddHeader } from "../apiUtils";
 import apiBackEnd from "./apiBackend";
 
 export function fetchArtDetails(values: any): Promise<any> {
@@ -7,7 +7,8 @@ export function fetchArtDetails(values: any): Promise<any> {
 }
 
 export function getUserArtWorks(token: string | null): Promise<any> {
-    return apiBackEnd.get(URL.URL_BACK_GET_USER_ARTWORKS, AddToken(token))
+    const headers = AddHeader(token);
+    return apiBackEnd.get(URL.URL_BACK_GET_USER_ARTWORKS, headers);
 }
 
 
@@ -19,4 +20,7 @@ export async function getArt({ pageParam, searchTerm = '' }: { pageParam: number
     return apiBackEnd.get(URL.URL_BACK_GET_ART, { params: { searchTerm, page: pageParam } });
 }
 
-
+export async function createArt(values: any, token: string | null): Promise<any> {
+    const headers = AddHeader(token, 'multipart/form-data');
+    return apiBackEnd.post(URL.URL_BACK_CREATE_ART, values, headers);
+}

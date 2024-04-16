@@ -13,18 +13,28 @@ use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use GuzzleHttp\Client;
 use Faker\Provider\Image;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class AppFixtures extends Fixture
 {
     private $hashPassword;
 
-    public function __construct(UserPasswordHasherInterface $hashPassword)
+    public function __construct(UserPasswordHasherInterface $hashPassword, SluggerInterface $slugger, ParameterBagInterface $params)
     {
         $this->hashPassword = $hashPassword;
+        $this->slugger = $slugger;
+        $this->params = $params;
     }
 
     public function load(ObjectManager $manager): void
     {
+        $filesystem = new Filesystem();
+        $uploadsDir = $this->params->get('kernel.project_dir') . '/public/uploads/images/';
+        $filesystem->remove($uploadsDir);
+        $filesystem->mkdir($uploadsDir);
+
         $faker = Factory::create('fr_FR');
 
         $faker->addProvider(new Image($faker));
@@ -66,7 +76,10 @@ class AppFixtures extends Fixture
             $artwork->setDescription($faker->paragraph(3));
             $artwork->setPrice($faker->randomNumber(5));
             $artwork->setStock($faker->numberBetween(1, 20));
-            $artwork->setImage('https://www.artic.edu/iiif/2/' . $artworkData['image_id'] . '/full/843,/0/default.jpg');
+
+            $imageName = $this->downloadAndSaveImage($artworkData['image_id']);
+            $artwork->setImage($imageName);
+
             $artwork->setUsers($faker->randomElement($users));
             $artwork->setCategories($faker->randomElement($categories));
             $manager->persist($artwork);
@@ -99,5 +112,18 @@ class AppFixtures extends Fixture
         $response = file_get_contents($url);
         $data = json_decode($response, true);
         return $data['results'][0];
+    }
+    private function downloadAndSaveImage(string $imageId): string
+    {
+        $baseUrl = 'https://www.artic.edu/iiif/2/';
+        $imageUrl = $baseUrl . $imageId . '/full/843,/0/default.jpg';
+
+        $imageContent = file_get_contents($imageUrl);
+
+        $imageName = $this->slugger->slug($imageId . '-' . uniqid()) . '.jpg';
+
+        file_put_contents('public/uploads/images/' . $imageName, $imageContent);
+
+        return $imageName;
     }
 }

@@ -13,7 +13,7 @@ export default function CartItem(props: ICartItemProps) {
         <>
             <Cart>
                 <CartDetail>
-                    <CartPicture src={props.image} />
+                    <CartPicture src={`http://localhost:8000/uploads/images/${props.image}`} />
                     <CardContent>
                         <CartDetailsTitle>{props.title}</CartDetailsTitle>
                         <CartDetailsPrice>{props.price} €</CartDetailsPrice>
