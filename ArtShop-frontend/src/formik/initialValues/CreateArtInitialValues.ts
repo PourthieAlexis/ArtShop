@@ -1,17 +1,17 @@
 export interface CreateArt {
     title: string;
-    price: number;
+    price: number | null;
     description: string;
-    image: string;
+    image: File | null;
     stock: number;
     category: string;
 }
 
 const CreateArtInitialValues: CreateArt = {
     title: "",
-    price: 0,
+    price: null,
     description: "",
-    image: "",
+    image: null,
     stock: 1,
     category: "",
 };
