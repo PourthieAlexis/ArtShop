@@ -17,11 +17,11 @@ class Categories
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-    #[Groups(["art"])]
+    #[Groups(["art", 'category'])]
     private ?Uuid $id;
 
     #[ORM\Column(length: 50)]
-    #[Groups(["art"])]
+    #[Groups(["art", 'category'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'categories', targetEntity: Arts::class)]

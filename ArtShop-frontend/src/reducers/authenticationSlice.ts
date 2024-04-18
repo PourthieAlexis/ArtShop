@@ -7,7 +7,7 @@ interface User {
     roles: string[];
 }
 
-interface AuthState {
+export interface AuthState {
     isAuthenticated: boolean;
     token: string | null;
     user: User | null;
