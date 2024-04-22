@@ -70,7 +70,6 @@ const Accueil : React.FC = () => {
   useEffect(() => {
     listArt()
       .then(response => {
-        
         setArt(response.data);
         setArtOriginal(response.data);
       })
