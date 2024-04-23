@@ -9,6 +9,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import CreateArtView from "../pages/CreateArtView";
 import { PrivateRoute } from "./PrivateRoute";
+import ProfilView from "../pages/ProfilView";
 
 
 const Routes: React.FC = () => {
@@ -21,6 +22,7 @@ const Routes: React.FC = () => {
             <Route path={URL.URL_DETAILS_ART + ':uuid'} element={<><Header /><ArtDetails /></>} />
             <Route path={URL.URL_CART} element={<><Header /><CartView /><Footer /></>} />
             <Route path={URL.URL_CREATE_ART} element={<PrivateRoute><Header /><CreateArtView /><Footer /></PrivateRoute>} />
+            <Route path={URL.URL_PROFIL} element={<PrivateRoute><Header /><ProfilView /></PrivateRoute>} />
         </RoutesContainer>
     );
 };

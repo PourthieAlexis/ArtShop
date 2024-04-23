@@ -9,12 +9,13 @@ interface InputProps {
     value?: string;
     className?: string;
     placeholder?: string;
+    style?: object;
     onClick?: (event: React.MouseEvent<HTMLInputElement>) => void;
 }
 
-const PrimaryInput: React.FC<InputProps> = ({ isLoading, type = "text", onChange, value, className, placeholder, onClick }) => {
+const PrimaryInput: React.FC<InputProps> = ({ isLoading, type = "text", onChange, value, className, placeholder, onClick, style }) => {
     return (
-        <StyledInputContainer>
+        <StyledInputContainer style={style}>
             <StyledInput
                 type={type}
                 onChange={onChange}
@@ -61,6 +62,7 @@ const StyledInput = styled.input`
     position: relative;
     height: 3.5rem;
     background-color: #F5C754;
+    min-width: 10rem;
     width: 100%;
     color: #141C24;
     border: none;

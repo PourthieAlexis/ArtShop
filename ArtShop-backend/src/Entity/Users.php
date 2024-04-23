@@ -22,7 +22,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-    #[Groups(["art"])]
+    #[Groups(["user", "art"])]
     private ?Uuid $id;
 
     #[ORM\Column(length: 180, unique: true)]
@@ -31,7 +31,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         pattern: "/^[\w\-]+@([\w\-]+\.)+[\w\-]{2,4}$/",
         message: "L'email n'est pas valide",
     )]
-    #[Groups(["art"])]
+    #[Groups(["user", "art"])]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -48,15 +48,16 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $password = null;
     #[ORM\Column(length: 255)]
-    #[Groups(["art"])]
+    #[Groups(["user", "art"])]
     private ?string $address = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(["art", "comment"])]
-    #[Assert\NotBlank(message: "Le nom est obligatoire")]
+    #[Groups(["user", "art", "comment"])]
+    #[Assert\NotBlank(message: "Le nom est obligatoire", groups: ['edit_profil'])]
     private ?string $name = null;
+
     #[ORM\OneToMany(mappedBy: 'users', targetEntity: Arts::class)]
-    #[Groups(["user_arts"])]
+    #[Groups(["user", "user_arts"])]
     private Collection $arts;
 
     #[ORM\OneToMany(mappedBy: 'users', targetEntity: Comments::class)]
@@ -75,8 +76,18 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     private ?bool $isActive = false;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["art", "comment"])]
+    #[Groups(["user", "art", "comment"])]
     private ?string $profilePicture = null;
+
+    #[ORM\Column(length: 50)]
+    #[Groups(["user"])]
+    #[Assert\NotBlank(message: "Vous devez avoir un nom d'artiste", groups: ['edit_profil'])]
+    private ?string $artistName = "";
+
+    #[ORM\Column(length: 255)]
+    #[Groups(["user"])]
+    #[Assert\NotBlank(message: "Le numéro de téléphone est obligatoire", groups: ['edit_profil'])]
+    private ?string $phone = null;
 
     public function __construct()
     {
@@ -349,6 +360,30 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setProfilePicture(?string $profilePicture): static
     {
         $this->profilePicture = $profilePicture;
+
+        return $this;
+    }
+
+    public function getArtistName(): ?string
+    {
+        return $this->artistName;
+    }
+
+    public function setArtistName(string $artistName): static
+    {
+        $this->artistName = $artistName;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(string $phone): static
+    {
+        $this->phone = $phone;
 
         return $this;
     }

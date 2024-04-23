@@ -22,5 +22,10 @@ export async function getArt({ pageParam, searchTerm = '' }: { pageParam: number
 
 export async function createArt(values: any, token: string | null): Promise<any> {
     const headers = AddHeader(token, 'multipart/form-data');
-    return apiBackEnd.post(URL.URL_BACK_CREATE_ART, values, headers);
+    return apiBackEnd.post(URL.URL_BACK_ARTWORKS_CREATE, values, headers);
+}
+
+export async function deleteArtByUUID(uuid: string, token: string | null): Promise<any> {
+    const headers = AddHeader(token);
+    return apiBackEnd.delete(URL.URL_BACK_ARTWORKS_DELETE + '/' + uuid, headers);
 }

@@ -43,13 +43,14 @@ class AppFixtures extends Fixture
         $response = $client->request('GET', 'https://api.artic.edu/api/v1/artworks?fields=id,title,image_id');
         $data = json_decode($response->getBody()->getContents(), true);
 
-        // Création d'utilisateurs
         $users = [];
         for ($i = 0; $i < 5; $i++) {
             $user = new Users();
             $userData = $this->getRandomUserData();
 
             $user->setName($userData['name']['first'] . ' ' . $userData['name']['last']);
+            $user->setArtistName($userData['login']['username']);
+            $user->setPhone($userData['phone']);
             $user->setEmail($userData['email']);
             $address = $userData['location']['street']['number'] . ', ' . $userData['location']['city'] . ', ' . $userData['location']['state'] . ', ' . $userData['location']['postcode'];
             $user->setAddress($address);
@@ -59,7 +60,6 @@ class AppFixtures extends Fixture
             $users[] = $user;
         }
 
-        // Création de catégories
         $categories = [];
         foreach (['Peinture', 'Sculpture', 'Photographie', 'Art Contemporain', 'Art Numérique'] as $categoryName) {
             $category = new Categories();
@@ -68,7 +68,6 @@ class AppFixtures extends Fixture
             $categories[] = $category;
         }
 
-        // Création d'œuvres d'art
         $artworks = [];
         foreach ($data['data'] as $artworkData) {
             $artwork = new Arts();
@@ -86,7 +85,6 @@ class AppFixtures extends Fixture
             $artworks[] = $artwork;
         }
 
-        // Création de commentaires
         foreach ($artworks as $artwork) {
             for ($j = 0; $j < 3; $j++) {
                 $comment = new Comments();
@@ -108,7 +106,7 @@ class AppFixtures extends Fixture
 
     private function getRandomUserData(): array
     {
-        $url = 'https://randomuser.me/api/';
+        $url = 'https://randomuser.me/api/?nat=fr';
         $response = file_get_contents($url);
         $data = json_decode($response, true);
         return $data['results'][0];
@@ -116,7 +114,7 @@ class AppFixtures extends Fixture
     private function downloadAndSaveImage(string $imageId): string
     {
         $baseUrl = 'https://www.artic.edu/iiif/2/';
-        $imageUrl = $baseUrl . $imageId . '/full/843,/0/default.jpg';
+        $imageUrl = $baseUrl . $imageId . '/full/400,/0/default.jpg';
 
         $imageContent = file_get_contents($imageUrl);
 

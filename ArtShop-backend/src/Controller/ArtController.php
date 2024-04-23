@@ -200,6 +200,32 @@ class ArtController extends AbstractController
     }
 
 
+    #[Route('/api/artworks/{uuid}', name: 'api_delete_artworks_by_uuid', methods: ['DELETE'])]
+    public function deleteArtByUUID(string $uuid, ArtsRepository $artsRepo, SerializerInterface $serializer, Security $security, EntityManagerInterface $entityManager): JsonResponse
+    {
+        if (!Utils::isUUID($uuid)) {
+            throw new BadRequestHttpException("UUID n'est pas valide");
+        }
+
+        $user = $this->getUser();
+
+        if (!$user) {
+            throw new BadRequestHttpException("L'utilisateur n'est pas trouvé");
+        }
+
+        $artwork = $artsRepo->findOneBy(['id' => $uuid]);
+
+        if (!$artwork || $artwork->getUsers() !== $user) {
+            throw new BadRequestHttpException("L'œuvre d'art n'existe pas ou n'appartient pas à cet utilisateur");
+        }
+
+        $entityManager->remove($artwork);
+        $entityManager->flush();
+
+        return new JsonResponse(['message' => 'L\'œuvre d\'art a été supprimée avec succès'], Response::HTTP_OK);
+    }
+
+
 }
 
 
