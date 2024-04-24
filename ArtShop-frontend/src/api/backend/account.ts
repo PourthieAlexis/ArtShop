@@ -1,4 +1,4 @@
-import { URL_BACK_AUTHENTICATE, URL_BACK_REGISTER, URL_BACK_USER, URL_BACK_UPDATE_USER_PROFIL } from "../../constants/urls/urlBackend";
+import { URL_BACK_AUTHENTICATE, URL_BACK_REGISTER, URL_BACK_USER, URL_BACK_UPDATE_USER_PROFIL, URL_BACK_USER_PROFIL_PICTURE } from "../../constants/urls/urlBackend";
 import { AddHeader } from "../apiUtils";
 import apiBackEnd from "./apiBackend";
 
@@ -18,4 +18,9 @@ export function getUser(token: string | null): Promise<any> {
 export function editProfil(values: any, token: string | null): Promise<any> {
     const headers = AddHeader(token);
     return apiBackEnd.patch(URL_BACK_UPDATE_USER_PROFIL, values, headers);
+}
+
+export function changeProfilePicture(values: any, token: string | null): Promise<any> {
+    const headers = AddHeader(token, 'multipart/form-data');
+    return apiBackEnd.post(URL_BACK_USER_PROFIL_PICTURE, values, headers);
 }

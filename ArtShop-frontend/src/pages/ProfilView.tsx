@@ -7,6 +7,7 @@ import { selectToken } from '../reducers/authenticationSlice';
 import { useSelector } from 'react-redux';
 import { getUser } from '../api/backend/account';
 import ChangeProfilePicture from '../components/ChangeProfilPicture';
+import LoadingIndicator from '../components/LoadingIndicator';
 
 export default function ProfilView() {
 
@@ -15,7 +16,7 @@ export default function ProfilView() {
     const { data: user, isLoading, isError } = useQuery({ queryKey: ['UserProfil'], queryFn: () => getUser(token) });
 
     if (isLoading) {
-        return null
+        return <LoadingIndicator isLoading={isLoading} />
     }
     if (isError) {
         return null

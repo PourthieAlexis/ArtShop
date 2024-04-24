@@ -1,28 +1,20 @@
-import React from 'react';
+import React, { forwardRef, Ref } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
 import styled from 'styled-components';
 
-interface InputProps {
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     isLoading?: boolean;
-    type?: string;
-    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    value?: string;
-    className?: string;
-    placeholder?: string;
-    style?: object;
-    onClick?: (event: React.MouseEvent<HTMLInputElement>) => void;
 }
 
-const PrimaryInput: React.FC<InputProps> = ({ isLoading, type = "text", onChange, value, className, placeholder, onClick, style }) => {
+const PrimaryInput = forwardRef((props: InputProps, ref: Ref<HTMLInputElement>) => {
+    const { isLoading, value, ...rest } = props;
+
     return (
-        <StyledInputContainer style={style}>
+        <StyledInputContainer>
             <StyledInput
-                type={type}
-                onChange={onChange}
                 value={isLoading ? '' : value}
-                className={className}
-                placeholder={placeholder}
-                onClick={onClick}
+                {...rest}
+                ref={ref}
             />
             {isLoading && (
                 <LoadingIndicator>
@@ -39,9 +31,8 @@ const PrimaryInput: React.FC<InputProps> = ({ isLoading, type = "text", onChange
                 </LoadingIndicator>
             )}
         </StyledInputContainer>
-
     );
-};
+});
 
 const StyledInputContainer = styled.div`
   position: relative;

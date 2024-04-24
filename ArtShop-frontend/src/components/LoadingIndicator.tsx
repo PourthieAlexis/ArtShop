@@ -1,4 +1,5 @@
 import { ThreeDots } from 'react-loader-spinner';
+import styled from 'styled-components';
 
 interface LoadingIndicatorProps {
     isLoading: boolean;
@@ -6,7 +7,7 @@ interface LoadingIndicatorProps {
 
 const LoadingIndicator = (props: LoadingIndicatorProps) => {
     return (
-        <div>
+        <Loading>
             {props.isLoading && (
                 <ThreeDots
                     visible={true}
@@ -19,8 +20,15 @@ const LoadingIndicator = (props: LoadingIndicatorProps) => {
                     wrapperClass=""
                 />
             )}
-        </div>
+        </Loading>
     );
 };
+
+const Loading = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+`;
 
 export default LoadingIndicator;

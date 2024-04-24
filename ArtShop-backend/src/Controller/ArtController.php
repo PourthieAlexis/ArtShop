@@ -86,6 +86,7 @@ class ArtController extends AbstractController
      * @return JsonResponse
      */
     #[Route('/api/artworks', name: 'api_add_artworks', methods: ['POST'])]
+
     public function addArtWorks(
         ArtsRepository $artsRepo,
         Security $security,

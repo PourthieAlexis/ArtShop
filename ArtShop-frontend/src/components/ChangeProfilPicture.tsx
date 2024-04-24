@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { Formik, Form, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
 import styled from 'styled-components';
+import SecondaryInput from './SecondaryInput';
+import { useMutation } from '@tanstack/react-query';
+import { changeProfilePicture } from '../api/backend/account';
+import { selectToken } from '../reducers/authenticationSlice';
+import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import ChangeProfilePictureInitialValues from '../formik/initialValues/ChangeProfilePictureInitialValues';
+import ChangeProfilePictureYup from '../formik/yup/ChangeProfilePictureYup';
 
 interface ChangeProfilePictureProps {
     currentPictureUrl: string;
@@ -9,50 +16,58 @@ interface ChangeProfilePictureProps {
 
 const ChangeProfilePicture: React.FC<ChangeProfilePictureProps> = ({ currentPictureUrl }) => {
     const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
+    const token = useSelector(selectToken);
+
+    const { mutate } = useMutation({
+        mutationFn: (formData) => changeProfilePicture(formData, token),
+        onSuccess: () => {
+            toast.success('Profil picture changed !', {
+                position: 'bottom-right',
+            });
+        },
+        onError: () => {
+            toast.error('Une erreur est survenue !', {
+                position: 'bottom-right',
+            });
+        },
+    });
 
     return (
         <ProfilePictureContainer>
-            <ProfilePicture src={previewImageUrl || currentPictureUrl} alt="Profile" />
+            <ProfilePicture src={previewImageUrl || `http://localhost:8000/uploads/profile_pictures/${currentPictureUrl}`} alt="Profile" />
             <Formik
-                initialValues={{ image: null }}
-                validationSchema={Yup.object().shape({
-                    image: Yup.mixed().required('Une image est requise')
-                        .test('fileSize', "Le fichier est trop volumineux", (value: any) => {
-                            if (value && 'size' in value) {
-                                return value.size <= 5000000;
-                            }
-                            return true;
-                        })
-                        .test('fileType', "Le fichier doit être une image", (value: any) => {
-                            if (value && 'type' in value) {
-                                return value.type.startsWith('image/');
-                            }
-                            return true;
-                        })
-                })}
-                onSubmit={(values) => {
-                    console.log(values)
+                initialValues={ChangeProfilePictureInitialValues}
+                validationSchema={ChangeProfilePictureYup}
+                onSubmit={(values: any, { setSubmitting }) => {
+                    mutate(values, {
+                        onSettled() {
+                            setSubmitting(false)
+                        },
+                    })
                 }}
             >
-                {({ setFieldValue }) => (
+                {({ setFieldValue, isSubmitting, submitForm }) => (
                     <Form encType="multipart/form-data">
                         <FileInputContainer>
                             <FieldInput
+                                style={{ height: 'auto' }}
                                 type="file"
-                                id="image"
-                                name="image"
+                                id="picture"
+                                name="picture"
                                 accept="image/*"
-                                onChange={(event) => {
+                                onChange={async (event) => {
                                     const files = event.currentTarget.files?.[0];
                                     if (files) {
+                                        setFieldValue("picture", files);
                                         setPreviewImageUrl(URL.createObjectURL(files));
-                                        setFieldValue("image", files);
+                                        await Promise.resolve()
+                                        submitForm()
                                     }
                                 }}
+                                disabled={isSubmitting}
                             />
                         </FileInputContainer>
-                        <ErrorMessage name="image" component="div" />
-                        <ChangeProfilePictureButton htmlFor="image">Changer d'image</ChangeProfilePictureButton>
+                        <ErrorMessage name="picture" component={Error} />
                     </Form>
                 )}
             </Formik>
@@ -66,31 +81,32 @@ const ProfilePictureContainer = styled.div`
 `;
 
 const ProfilePicture = styled.img`
-    width: 100px;
-    height: 100px;
+    width: 8rem;
+    height: 8rem;
     border-radius: 50%;
     margin-right: 20px;
 `;
 
 const FileInputContainer = styled.div`
-    position: relative;
-    margin-bottom: 10px;
+
 `;
 
-const FieldInput = styled.input`
-    width: calc(100% - 1rem);
-    padding: 0.5rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+const Error = styled.div`
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 0.2rem;
 `;
 
-const ChangeProfilePictureButton = styled.label`
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
+const FieldInput = styled(SecondaryInput)`
+    &::file-selector-button {
+        background-color: #F5C754;
+        color: #141C24;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+    }
 `;
 
 export default ChangeProfilePicture;

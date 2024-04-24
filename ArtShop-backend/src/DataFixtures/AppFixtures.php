@@ -31,9 +31,10 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $filesystem = new Filesystem();
-        $uploadsDir = $this->params->get('kernel.project_dir') . '/public/uploads/images/';
-        $filesystem->remove($uploadsDir);
-        $filesystem->mkdir($uploadsDir);
+        $uploadsImageDir = $this->params->get('kernel.project_dir') . '/public/uploads/images/';
+        $uploadsProfilePictureDir = $this->params->get('kernel.project_dir') . '/public/uploads/profile_pictures/';
+        $filesystem->remove([$uploadsImageDir, $uploadsProfilePictureDir]);
+        $filesystem->mkdir([$uploadsImageDir, $uploadsProfilePictureDir]);
 
         $faker = Factory::create('fr_FR');
 
@@ -55,7 +56,8 @@ class AppFixtures extends Fixture
             $address = $userData['location']['street']['number'] . ', ' . $userData['location']['city'] . ', ' . $userData['location']['state'] . ', ' . $userData['location']['postcode'];
             $user->setAddress($address);
             $user->setPassword($this->hashPassword->hashPassword($user, '123456789aA!'));
-            $user->setProfilePicture($userData['picture']['large']);
+            $imageName = $this->downloadAndSaveImage($userData['picture']['large'], $userData['login']['uuid'], 'profile_pictures');
+            $user->setProfilePicture($imageName);
             $manager->persist($user);
             $users[] = $user;
         }
@@ -76,7 +78,9 @@ class AppFixtures extends Fixture
             $artwork->setPrice($faker->randomNumber(5));
             $artwork->setStock($faker->numberBetween(1, 20));
 
-            $imageName = $this->downloadAndSaveImage($artworkData['image_id']);
+            $baseUrl = 'https://www.artic.edu/iiif/2/';
+            $imageUrl = $baseUrl . $artworkData['image_id'] . '/full/400,/0/default.jpg';
+            $imageName = $this->downloadAndSaveImage($imageUrl, $artworkData['image_id'], 'images');
             $artwork->setImage($imageName);
 
             $artwork->setUsers($faker->randomElement($users));
@@ -111,16 +115,14 @@ class AppFixtures extends Fixture
         $data = json_decode($response, true);
         return $data['results'][0];
     }
-    private function downloadAndSaveImage(string $imageId): string
+    private function downloadAndSaveImage(string $imageUrl, string $imageId, string $repoUpload): string
     {
-        $baseUrl = 'https://www.artic.edu/iiif/2/';
-        $imageUrl = $baseUrl . $imageId . '/full/400,/0/default.jpg';
 
         $imageContent = file_get_contents($imageUrl);
 
         $imageName = $this->slugger->slug($imageId . '-' . uniqid()) . '.jpg';
 
-        file_put_contents('public/uploads/images/' . $imageName, $imageContent);
+        file_put_contents('public/uploads/' . $repoUpload . '/' . $imageName, $imageContent);
 
         return $imageName;
     }

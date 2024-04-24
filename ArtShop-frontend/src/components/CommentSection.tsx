@@ -51,7 +51,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ comments: initialCommen
             {
                 comments.map((comment: Comment) =>
                     <CommentCard key={comment.id}>
-                        <ProfilPicture src={comment.users.profilePicture ? comment.users.profilePicture : profilePicturePlacehodler} alt="profilPicture" />
+                        <ProfilPicture src={`http://localhost:8000/uploads/profile_pictures/${comment.users.profilePicture}` ?? profilePicturePlacehodler} alt="profilPicture" />
                         <ContentContainer>
                             <Title>{comment.users.name}</Title>
                             <CommentContent>{comment.message}</CommentContent>
@@ -115,13 +115,15 @@ const CommentCard = styled.div`
     border: 2px solid black;
     padding: 1rem;
     width: 80%;
+    height: 10rem;
 `;
 
 const ProfilPicture = styled.img`
     border-radius: 50%;
     padding: 1rem;
     width:8rem;
-    object-fit: contain;
+    height: 10rem;
+    object-fit: cover;
 `;
 
 const ContentContainer = styled.div`
