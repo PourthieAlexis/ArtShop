@@ -32,13 +32,13 @@ const AuthView: React.FC<AuthProps> = ({ page }) => {
               onClick={() => toggleForm(true)}
               className={isSignUp ? "active" : ""}
             >
-              Sign Up
+              Inscription
             </button>
             <button
               onClick={() => toggleForm(false)}
               className={!isSignUp ? "active" : ""}
             >
-              Sign In
+              Connexion
             </button>
             <Underline className={`underline ${isSignUp ? "active1" : "active2"}`} />
           </ButtonGroup>

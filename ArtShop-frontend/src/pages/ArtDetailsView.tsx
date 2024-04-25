@@ -39,7 +39,7 @@ const ArtDetailsView: React.FC = () => {
         },
     });
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <div>Chargement...</div>;
     if (isError) return <div>Error fetching data</div>;
     return (
         <PageContainer>

@@ -78,7 +78,7 @@ export default function ListArts(props: IListArtsProps) {
                     {props.hasNextPage &&
                         <SecondaryInput
                             type="button"
-                            value="Show More"
+                            value="Montrer plus"
                             style={{
                                 width: '8rem',
                                 height: '3rem',

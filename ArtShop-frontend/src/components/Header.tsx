@@ -29,7 +29,7 @@ export default function Header(props: IHeaderProps) {
         ) : (
           <SecondaryInput
             type="button"
-            value="Login"
+            value="Connexion"
             style={{ width: "7rem", height: "3rem" }}
           />
         )}

@@ -13,7 +13,7 @@ export default function ProfilInfo(props: IProfilInfoProps) {
                 {props.email}
             </Group>
             <Group>
-                <label htmlFor="password">Password :</label>
+                <label htmlFor="password">Mot de passe :</label>
                 <PrimaryInput value="Modify Password" type="button" />
             </Group>
         </Container>

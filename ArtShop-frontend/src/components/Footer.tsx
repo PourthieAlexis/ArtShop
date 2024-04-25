@@ -32,7 +32,7 @@ export default function Footer(props: IFooterProps) {
       <FooterRight>
         <FooterRightContent>
           <p>2023 Relume. All right reserved.</p>
-          <p>Cookies Settings</p>
+          <p>Paramètres des cookies</p>
         </FooterRightContent>
       </FooterRight>
     </FooterContainer>

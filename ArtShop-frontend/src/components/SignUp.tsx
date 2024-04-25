@@ -37,12 +37,12 @@ const SignUp: React.FC = () => {
     return (
         <>
             <TitleContainer>
-                <Title>Sign Up</Title>
-                <Text>Lorem ipsum dolor sit amet</Text>
+                <Title>S'inscrire</Title>
+                <Text>Créer un nouveau compte</Text>
             </TitleContainer>
             {errorLog && <ErrorText>{errorLog}</ErrorText>}
             <Form onSubmit={formik.handleSubmit}>
-                <label className='form-p'>Name* </label>
+                <label className='form-p'>Nom de compte* </label>
                 <StyledInput
                     type={"text"}
                     name="name"

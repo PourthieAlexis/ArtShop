@@ -73,7 +73,7 @@ export default function UserArtworks(props: UserArtworksProps) {
                     </NoArtworkMessage>
                 </NoArtworkContainer>
                 : <Container>
-                    <Title>User Artworks</Title>
+                    <Title>Oeuvres d'arts de l'artiste</Title>
                     <ArtworkList>
                         {props.artworks.map((artwork) => (
                             <ArtworkItem key={artwork.id}>

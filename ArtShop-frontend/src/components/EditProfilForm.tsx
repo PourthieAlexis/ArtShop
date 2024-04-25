@@ -68,7 +68,7 @@ export default function EditProfilForm(props: IEditProfilFormProps) {
                     <Form>
                         <Container>
                             <Group>
-                                <label htmlFor="name">Full Name:</label>
+                                <label htmlFor="name">Nom complet:</label>
                                 <Field
                                     as={FieldInput}
                                     type="text"
@@ -78,7 +78,7 @@ export default function EditProfilForm(props: IEditProfilFormProps) {
                                 <ErrorMessage component={Error} name="name" />
                             </Group>
                             <Group>
-                                <label htmlFor="artistName">Artist Name:</label>
+                                <label htmlFor="artistName">Nom d'artiste:</label>
                                 <Field
                                     as={FieldInput}
                                     type="text"
@@ -88,7 +88,7 @@ export default function EditProfilForm(props: IEditProfilFormProps) {
                                 <ErrorMessage component={Error} name="artistName" />
                             </Group>
                             <Group>
-                                <label htmlFor="phone">Phone:</label>
+                                <label htmlFor="phone">Téléphone:</label>
                                 <Field
                                     as={FieldInput}
                                     type="text"
@@ -98,7 +98,7 @@ export default function EditProfilForm(props: IEditProfilFormProps) {
                                 <ErrorMessage component={Error} name="phone" />
                             </Group>
                             <Group>
-                                <label htmlFor="address">Address:</label>
+                                <label htmlFor="address">Adresse:</label>
                                 <Field
                                     as={FieldInput}
                                     type="text"
@@ -117,19 +117,19 @@ export default function EditProfilForm(props: IEditProfilFormProps) {
                 <>
                     <Container>
                         <Group>
-                            <label htmlFor="name">Full Name:</label>
+                            <label htmlFor="name">Nom complet:</label>
                             {userData.name}
                         </Group>
                         <Group>
-                            <label htmlFor="artistName">Artist Name:</label>
+                            <label htmlFor="artistName">Nom d'artiste:</label>
                             {userData.artistName}
                         </Group>
                         <Group>
-                            <label htmlFor="phone">Phone:</label>
+                            <label htmlFor="phone">Téléphone:</label>
                             {userData.phone}
                         </Group>
                         <Group>
-                            <label htmlFor="address">Address:</label>
+                            <label htmlFor="address">Adresse:</label>
                             {userData.address}
                         </Group>
                     </Container>

@@ -21,7 +21,7 @@ const ChangeProfilePicture: React.FC<ChangeProfilePictureProps> = ({ currentPict
     const { mutate } = useMutation({
         mutationFn: (formData) => changeProfilePicture(formData, token),
         onSuccess: () => {
-            toast.success('Profil picture changed !', {
+            toast.success('Photo de profil changé avec succès !', {
                 position: 'bottom-right',
             });
         },

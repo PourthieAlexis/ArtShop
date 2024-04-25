@@ -15,7 +15,7 @@ export function CartView() {
     const { data, isLoading, isError } = useQuery({ queryKey: ['showCart'], queryFn: () => showCart(token) });
 
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <div>Chargement...</div>;
     if (isError) return <div>Error fetching data</div>;
     console.log(data)
     return (

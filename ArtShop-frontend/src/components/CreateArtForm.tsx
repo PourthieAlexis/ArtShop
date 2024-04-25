@@ -27,7 +27,7 @@ export default function CreateArtForm(props: ICreateArtFormProps) {
             {({ values, setFieldValue }) => (
                 <Form encType="multipart/form-data">
                     <FormGroup>
-                        <label htmlFor="title">Title :</label>
+                        <label htmlFor="title">Titre :</label>
                         <Field
                             as={FieldInput}
                             type="text"
@@ -38,7 +38,7 @@ export default function CreateArtForm(props: ICreateArtFormProps) {
                         <ErrorMessage name="title" component={Error} />
                     </FormGroup>
                     <FormGroup>
-                        <label htmlFor="category">Category :</label>
+                        <label htmlFor="category">Catégorie :</label>
                         <Field
                             as={FieldSelect}
                             id="category"
@@ -49,11 +49,11 @@ export default function CreateArtForm(props: ICreateArtFormProps) {
                                 setFieldValue('category', selectedCategory);
                             }}
                         >
-                            <option value="">Select a category</option>
+                            <option value="">Sélectionner une catégorie</option>
                             {isLoading ? (
-                                <option value="">Loading...</option>
+                                <option value="">Chargement...</option>
                             ) : isError ? (
-                                <option value="">Error loading categories</option>
+                                <option value="">Erreur lors du chargement des catégories</option>
                             ) : (category &&
                                 category.data.map((category: any) => (
                                     <option key={category.id} value={category.name}>
@@ -112,7 +112,7 @@ export default function CreateArtForm(props: ICreateArtFormProps) {
                         <ErrorMessage name="description" component={Error} />
                     </FormGroup>
                     <FormGroup>
-                        <label htmlFor="price">Price :</label>
+                        <label htmlFor="price">Prix :</label>
                         <Field
                             as={FieldInput}
                             type="text"

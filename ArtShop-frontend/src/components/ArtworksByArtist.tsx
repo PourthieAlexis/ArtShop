@@ -20,7 +20,7 @@ const ArtworksByArtist: React.FC<ArtworksByArtistProps> = ({ userArt, isLoading 
         <ArtworksByArtistContainer>
             {!isLoading && <>
                 <hr />
-                <Title>Artwork by this artist</Title>
+                <Title>Oeuvres de cette artiste</Title>
                 <CardContainer>
                     {userArt && userArt.map((art) => (
                         <Card key={art.id}>

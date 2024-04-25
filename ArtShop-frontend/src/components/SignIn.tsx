@@ -37,8 +37,8 @@ const SignUp: React.FC = () => {
     return (
         <>
             <TitleContainer>
-                <Title>Sign In</Title>
-                <Text>Lorem, ipsum dolor sit</Text>
+                <Title>Se connecter</Title>
+                <Text>Veuillez entrer vos informations</Text>
             </TitleContainer>
             {errorLog && <ErrorText>{errorLog}</ErrorText>}
             <Form onSubmit={formik.handleSubmit}>

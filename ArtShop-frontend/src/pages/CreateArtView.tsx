@@ -35,7 +35,7 @@ const CreateArtView = () => {
 
     return (
         <CreateArtContainer>
-            <Title>Add ArtWorks</Title>
+            <Title>Ajouter une Oeuvre</Title>
             <CreateArtForm onSubmit={onSubmit} isPending={isPending} />
         </CreateArtContainer>
     );

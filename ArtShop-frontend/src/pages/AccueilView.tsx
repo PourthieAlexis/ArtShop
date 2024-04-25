@@ -30,10 +30,10 @@ export default function AccueilView() {
                 <SearchBar onSearch={handleSearch} />
             </BannerContainer>
             <AccueilContent $isScrolled={isScrolled}>
-                <ProductTitle>Products</ProductTitle>
-                <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
+                <ProductTitle>Produits</ProductTitle>
+                <Text>Liste de toutes les oeuvres disponibles.</Text>
                 <ShowMoreContainer>
-                    <Text>Showing {totalItems} of {lastPageTotalItems}</Text>
+                    <Text>Montre {totalItems} sur {lastPageTotalItems} oeuvres</Text>
                 </ShowMoreContainer>
                 <ListArts
                     pages={data?.pages}
