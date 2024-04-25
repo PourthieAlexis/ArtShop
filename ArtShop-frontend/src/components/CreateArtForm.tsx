@@ -33,7 +33,7 @@ export default function CreateArtForm(props: ICreateArtFormProps) {
                             type="text"
                             id="title"
                             name="title"
-                            placeholder="Enter the title"
+                            placeholder="Entrez le titre"
                         />
                         <ErrorMessage name="title" component={Error} />
                     </FormGroup>
@@ -43,7 +43,7 @@ export default function CreateArtForm(props: ICreateArtFormProps) {
                             as={FieldSelect}
                             id="category"
                             name="category"
-                            placeholder="Select the category"
+                            placeholder="Sélectionnez la catégorie"
                             onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
                                 const selectedCategory = event.target.value;
                                 setFieldValue('category', selectedCategory);

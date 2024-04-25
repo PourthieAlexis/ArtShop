@@ -26,8 +26,8 @@ export function CartView() {
             <Checkout>
                 <TotalPrice>100 €</TotalPrice>
                 <ButtonCheckout>
-                    <PrimaryInput type='button' value="Continue Shopping" />
-                    <SecondaryInput type='button' value='Proceed to Checkout' />
+                    <PrimaryInput type='button' value="Continuer ses achats" />
+                    <SecondaryInput type='button' value='Valider et payer' />
                 </ButtonCheckout>
             </Checkout>
         </CartContainer>

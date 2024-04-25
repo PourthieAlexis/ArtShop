@@ -14,7 +14,7 @@ export default function ProfilInfo(props: IProfilInfoProps) {
             </Group>
             <Group>
                 <label htmlFor="password">Mot de passe :</label>
-                <PrimaryInput value="Modify Password" type="button" />
+                <PrimaryInput value="Modifier le mot de passe" type="button" />
             </Group>
         </Container>
     );

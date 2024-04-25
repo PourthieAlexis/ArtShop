@@ -67,8 +67,8 @@ const ArtDetailsView: React.FC = () => {
                         }}
                     >
                         <AddCartForm>
-                            <NumberInput id="quantity" name="quantity" />
-                            <PrimaryInput type='submit' value='Add To Cart' />
+                            <NumberInput id="quantity" name="Quantité" />
+                            <PrimaryInput type='submit' value='Ajouter au panier' />
                         </AddCartForm>
                     </Formik>
 
