@@ -6,7 +6,7 @@ import SearchBar from "../components/AccueilView/SearchBar";
 import { useState } from "react";
 import { useScrollDetection } from "../components/AccueilView/useScrollDetection";
 import { calculateTotalItems } from "../utils/fnUtils";
-
+import Footer from "../components/Footer"
 export default function AccueilView() {
     const [searchTerm, setSearchTerm] = useState<string>("");
 
@@ -43,6 +43,7 @@ export default function AccueilView() {
                     isFetchingNextPage={isFetchingNextPage}
                 />
             </AccueilContent>
+            <Footer/>
         </AccueilContainer>
     );
 }
