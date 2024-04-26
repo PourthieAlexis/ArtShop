@@ -1,11 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import CardArtWork from '../accueil/CardArtWork';
 
 
 interface Art {
-    id: number;
+    id: string;
     image: string;
     title: string;
+    categories: {
+        id: string;
+        name: string
+    };
     price: number;
 }
 
@@ -23,21 +28,25 @@ const ArtworksByArtist: React.FC<ArtworksByArtistProps> = ({ userArt, isLoading 
                 <Title>Artwork by this artist</Title>
                 <CardContainer>
                     {userArt && userArt.map((art) => (
-                        <Card key={art.id}>
-                            <MiniImage src={`http://localhost:8000/uploads/images/${art.image}`} alt="placeholder" />
-                            <ArtName>{art.title}</ArtName>
-                            <ArtPrice>{art.price}€</ArtPrice>
-                        </Card>
+                        <CardArtWork
+                            id={art.id}
+                            title={art.title}
+                            category={art.categories.name}
+                            price={art.price}
+                            image={`http://localhost:8000/uploads/images/${art.image}`}
+                            key={art.id}
+                        />
                     ))}
                 </CardContainer>
-                <hr /></>}
+                <hr />
+            </>}
         </ArtworksByArtistContainer>
     );
 };
 
 const ArtworksByArtistContainer = styled.section`
     width: 100%;
-    margin: 5rem 0;
+    margin-top: 5rem;
 `
 
 const Title = styled.h2`
@@ -50,29 +59,7 @@ const CardContainer = styled.div`
     justify-content: space-around;
     margin: 3rem 0;
     width: 100%;
-`
-const Card = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin: 0 1rem;
-    padding: 1rem;
-    background-color: #d7e9f8;
-    border-radius: 4px;
-`
-const MiniImage = styled.img`
-    width: 100%;
-    height: 20rem;
-    object-fit: contain;
-`;
-
-const ArtName = styled.p`
-    font-size: 1rem;
-    font-weight: 600;
-`
-
-const ArtPrice = styled.p`
-    font-size: 1rem;
-    font-weight: 600;
+    flex-wrap: wrap;
 `
 
 export default ArtworksByArtist;

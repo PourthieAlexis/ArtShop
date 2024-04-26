@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { Formik, Form, Field } from "formik";
-import SecondaryInput from "./SecondaryInput";
-import { selectIsLogged, selectToken } from "../reducers/authenticationSlice";
+import SecondaryInput from "../shared/SecondaryInput";
+import { selectIsLogged, selectToken } from "../../reducers/authenticationSlice";
 import { useSelector } from "react-redux";
-import CommentInitialValues from "../formik/initialValues/CommentInitialValues";
+import CommentInitialValues from "../../formik/initialValues/CommentInitialValues";
 import { useMutation } from "@tanstack/react-query";
-import { AddComment } from "../api/backend/comment";
-import CommentYup from "../formik/yup/CommentYup";
+import { AddComment } from "../../api/backend/comment";
+import CommentYup from "../../formik/yup/CommentYup";
 import { useState } from "react";
 import profilePicturePlacehodler from "/images/profilePicturePlaceholder.webp"
 import { Comment as LoadingComment } from "react-loader-spinner";
@@ -48,12 +48,13 @@ const CommentSection: React.FC<CommentSectionProps> = ({ comments: initialCommen
 
     return (
         <StyledCommentContainer>
+            <Title>Comments</Title>
             {
                 comments.map((comment: Comment) =>
                     <CommentCard key={comment.id}>
                         <ProfilPicture src={`http://localhost:8000/uploads/profile_pictures/${comment.users.profilePicture}` ?? profilePicturePlacehodler} alt="profilPicture" />
                         <ContentContainer>
-                            <Title>{comment.users.name}</Title>
+                            <CommentTitle>{comment.users.name}</CommentTitle>
                             <CommentContent>{comment.message}</CommentContent>
                             <Time>5 minutes</Time>
                         </ContentContainer>
@@ -102,12 +103,17 @@ const StyledCommentContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items:center;
-    margin-top: 2rem;
+    margin: 1rem 0;
     gap: 1rem;
 `;
 
 const ErrorText = styled.p`
     color: red;
+`;
+
+const Title = styled.p`
+    font-size: 1.5rem;
+    font-weight: 700;
 `;
 
 const CommentCard = styled.div`
@@ -122,7 +128,7 @@ const ProfilPicture = styled.img`
     border-radius: 50%;
     padding: 1rem;
     width:8rem;
-    height: 10rem;
+    height: 8rem;
     object-fit: cover;
 `;
 
@@ -133,7 +139,7 @@ const ContentContainer = styled.div`
     height: 100%;
 `;
 
-const Title = styled.p`
+const CommentTitle = styled.p`
     width: 80%;
     margin: 0;
     margin-bottom: 2rem;

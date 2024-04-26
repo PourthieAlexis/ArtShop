@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import PrimaryInput from "./PrimaryInput";
+import PrimaryInput from "../shared/PrimaryInput";
 
 export interface IProfilInfoProps {
     email: string,

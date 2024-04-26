@@ -1,13 +1,13 @@
 import styled from 'styled-components';
-import EditProfilForm from '../components/EditProfilForm';
-import ProfilInfo from '../components/ProfilInfo';
-import UserArtworks from '../components/UserArtWorks';
+import EditProfilForm from '../components/profile/EditProfilForm';
+import ProfilInfo from '../components/profile/ProfilInfo';
+import UserArtworks from '../components/profile/UserArtWorks';
 import { useQuery } from '@tanstack/react-query';
 import { selectToken } from '../reducers/authenticationSlice';
 import { useSelector } from 'react-redux';
 import { getUser } from '../api/backend/account';
-import ChangeProfilePicture from '../components/ChangeProfilPicture';
-import LoadingIndicator from '../components/LoadingIndicator';
+import ChangeProfilePicture from '../components/profile/ChangeProfilPicture';
+import LoadingIndicator from '../components/shared/LoadingIndicator';
 
 export default function ProfilView() {
 
@@ -38,5 +38,5 @@ export default function ProfilView() {
 
 const ProfileContainer = styled.section`
     max-width: 60%;
-    margin: 0 auto;
+    margin: 1rem auto;
 `;

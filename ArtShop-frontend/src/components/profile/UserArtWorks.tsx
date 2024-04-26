@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { BiTrash } from "react-icons/bi";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteArtByUUID } from "../api/backend/art";
+import { deleteArtByUUID } from "../../api/backend/art";
 import { toast } from "react-toastify";
-import { selectToken } from "../reducers/authenticationSlice";
+import { selectToken } from "../../reducers/authenticationSlice";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import ConfirmationModal from "./ConfirmationModal";
+import ConfirmationModal from "../shared/ConfirmationModal";
 
 interface Artwork {
     id: string;

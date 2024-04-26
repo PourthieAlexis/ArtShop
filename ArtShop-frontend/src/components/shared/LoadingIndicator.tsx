@@ -25,10 +25,10 @@ const LoadingIndicator = (props: LoadingIndicatorProps) => {
 };
 
 const Loading = styled.div`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    height: calc(100vh - 5rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 
 export default LoadingIndicator;

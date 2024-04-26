@@ -1,13 +1,13 @@
 import { Formik, Form, Field, ErrorMessage, FormikValues, } from 'formik';
-import PrimaryInput from '../components/PrimaryInput';
-import CreateArtYup from '../formik/yup/CreateArtYup';
-import CreateArtInitialValues from '../formik/initialValues/CreateArtInitialValues';
+import PrimaryInput from '../shared/PrimaryInput';
+import CreateArtYup from '../../formik/yup/CreateArtYup';
+import CreateArtInitialValues from '../../formik/initialValues/CreateArtInitialValues';
 import { BiTrash } from 'react-icons/bi';
 import styled from 'styled-components';
-import { getCategory } from '../api/backend/category';
+import { getCategory } from '../../api/backend/category';
 import { useQuery } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
-import { selectToken } from '../reducers/authenticationSlice';
+import { selectToken } from '../../reducers/authenticationSlice';
 
 export interface ICreateArtFormProps {
     onSubmit: (values: FormikValues) => void;

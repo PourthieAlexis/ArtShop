@@ -6,7 +6,6 @@ use App\Entity\Comments;
 use App\Repository\ArtsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,19 +16,18 @@ class CommentController extends AbstractController
 {
 
     /**
-     * Add a comment a return the comment added
+     * Add a comment and return the added comment
      *
      * @param Request $request
-     * @param Security $security
      * @param EntityManagerInterface $entityManager
      * @param ArtsRepository $artsRepo
      * @param SerializerInterface $serializer
      * @return JsonResponse
      */
-    #[Route('/api/add-comment', name: 'add-comment', methods: 'POST')]
-    public function addComment(Request $request, Security $security, EntityManagerInterface $entityManager, ArtsRepository $artRepo, SerializerInterface $serializer, ValidatorInterface $validator): JsonResponse
+    #[Route('/api/comment', name: 'add-comment', methods: 'POST')]
+    public function addComment(Request $request, EntityManagerInterface $entityManager, ArtsRepository $artRepo, SerializerInterface $serializer, ValidatorInterface $validator): JsonResponse
     {
-        $user = $security->getUser();
+        $user = $this->getUser();
         if (!$user) {
             return $this->json(['error' => 'You need to be authenticated'], 400);
         }

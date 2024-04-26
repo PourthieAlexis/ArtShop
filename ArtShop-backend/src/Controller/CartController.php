@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -26,7 +27,7 @@ class CartController extends AbstractController
      * @param Security $security
      * @return JsonResponse
      */
-    #[Route('/api/add-to-cart', name: 'add_to_cart', methods: ['POST'])]
+    #[Route('/api/cart', name: 'add_to_cart', methods: ['POST'])]
     public function addToCart(Request $request, ArtsRepository $artsRepository, CartsRepository $cartsRepository, EntityManagerInterface $entityManager, Security $security): JsonResponse
     {
         $requestData = json_decode($request->getContent(), true);
@@ -34,7 +35,7 @@ class CartController extends AbstractController
         $art = $artsRepository->find($requestData['art_id']);
 
         if (!$art) {
-            return new JsonResponse(['error' => 'Art not found'], JsonResponse::HTTP_NOT_FOUND);
+            return new JsonResponse(['error' => 'Art not found'], Response::HTTP_NOT_FOUND);
         }
 
         $user = $security->getUser();
@@ -60,7 +61,7 @@ class CartController extends AbstractController
 
         $entityManager->flush();
 
-        return new JsonResponse(['message' => 'Art added to cart'], JsonResponse::HTTP_CREATED);
+        return new JsonResponse(['message' => 'Art added to cart'], Response::HTTP_CREATED);
     }
 
     /**
@@ -71,7 +72,7 @@ class CartController extends AbstractController
      * @param Security $security
      * @return JsonResponse
      */
-    #[Route('/api/show-cart', name: 'show_cart', methods: ['GET'])]
+    #[Route('/api/cart', name: 'show_cart', methods: ['GET'])]
     public function showCart(CartsRepository $cartsRepository, SerializerInterface $serializer, Security $security): JsonResponse
     {
         $user = $security->getUser();
@@ -79,13 +80,13 @@ class CartController extends AbstractController
         $cart = $cartsRepository->findOneBy(['users' => $user]);
 
         if (!$cart) {
-            return new JsonResponse(['message' => 'Cart is empty'], JsonResponse::HTTP_OK);
+            return new JsonResponse(['message' => 'Cart is empty'], Response::HTTP_OK);
         }
 
         $cartItems = $cart->getCartItems();
 
         $cartData = $serializer->serialize($cartItems, 'json', ['groups' => ['cart_items']]);
 
-        return new JsonResponse($cartData, JsonResponse::HTTP_OK, [], true);
+        return new JsonResponse($cartData, Response::HTTP_OK, [], true);
     }
 }

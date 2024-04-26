@@ -16,6 +16,12 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UserController extends AbstractController
 {
+    /**
+     * Get the current user
+     *
+     * @param SerializerInterface $serializer
+     * @return JsonResponse
+     */
     #[Route('/api/user', name: 'get_current_user', methods: ['GET'])]
     public function user(SerializerInterface $serializer): JsonResponse
     {
@@ -28,6 +34,15 @@ class UserController extends AbstractController
         return new JsonResponse($serializedUser, Response::HTTP_OK, [], true);
     }
 
+    /**
+     * Edit the user's profile
+     *
+     * @param Request $request
+     * @param SerializerInterface $serializer
+     * @param EntityManagerInterface $entityManager
+     * @param ValidatorInterface $validator
+     * @return JsonResponse
+     */
     #[Route('/api/user/profil', name: 'edit_user_profile', methods: ['PATCH'])]
     public function editUser(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager, ValidatorInterface $validator): JsonResponse
     {
@@ -59,6 +74,15 @@ class UserController extends AbstractController
         return new JsonResponse(['message' => 'Le profil a été modifié'], Response::HTTP_OK);
     }
 
+    /**
+     * Change the user's profile picture and delete the previous one
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param Filesystem $filesystem
+     * @param SluggerInterface $slugger
+     * @return Response
+     */
     #[Route('/api/user/profil/picture', name: 'change_profile_picture', methods: ['POST'])]
     public function changeProfilePicture(Request $request, EntityManagerInterface $entityManager, Filesystem $filesystem, SluggerInterface $slugger): Response
     {

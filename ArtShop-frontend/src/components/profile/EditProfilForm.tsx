@@ -1,11 +1,11 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useState } from "react";
 import styled from "styled-components";
-import EditProfilYup from "../formik/yup/EditProfilYup";
-import PrimaryInput from "./PrimaryInput";
+import EditProfilYup from "../../formik/yup/EditProfilYup";
+import PrimaryInput from "../shared/PrimaryInput";
 import { useMutation } from "@tanstack/react-query";
-import { editProfil } from "../api/backend/account";
-import { selectToken } from "../reducers/authenticationSlice";
+import { editProfil } from "../../api/backend/account";
+import { selectToken } from "../../reducers/authenticationSlice";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -109,7 +109,7 @@ export default function EditProfilForm(props: IEditProfilFormProps) {
                             </Group>
                         </Container>
                         <ButtonContainer>
-                            <PrimaryInput value="Submit" type="submit" isLoading={isPending} />
+                            <PrimaryInput value="Submit" type="submit" isLoading={isPending} style={{ width: '8rem' }} />
                         </ButtonContainer>
                     </Form>
                 </Formik>
@@ -134,7 +134,7 @@ export default function EditProfilForm(props: IEditProfilFormProps) {
                         </Group>
                     </Container>
                     <ButtonContainer>
-                        <PrimaryInput value="Edit" type="button" onClick={() => setIsEditing(true)} />
+                        <PrimaryInput value="Edit" type="button" onClick={() => setIsEditing(true)} style={{ width: '8rem' }} />
                     </ButtonContainer>
                 </>
 
@@ -144,7 +144,7 @@ export default function EditProfilForm(props: IEditProfilFormProps) {
 }
 
 const Container = styled.div`
-    margin-top: 2rem;
+    margin-top: 1rem;
     display: flex;
     flex-wrap: wrap;
     width: 100%;

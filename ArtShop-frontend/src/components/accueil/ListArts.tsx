@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import CardArtWork from '../CardArtWork';
+import CardArtWork from './CardArtWork';
 import { ThreeDots } from 'react-loader-spinner';
-import SecondaryInput from '../SecondaryInput';
+import SecondaryInput from '../shared/SecondaryInput';
 import React from 'react';
 
 interface Artwork {

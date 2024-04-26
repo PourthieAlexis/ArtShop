@@ -35,7 +35,7 @@ security:
     - { path: ^/api/login, roles: 'PUBLIC_ACCESS' }
     - { path: ^/api/register, roles: 'PUBLIC_ACCESS' }
     - { path: ^/api/details-art/, roles: 'PUBLIC_ACCESS' }
-    - { path: ^/api/get-art, roles: 'PUBLIC_ACCESS' }
+    - { path: ^/api/artworks, roles: 'PUBLIC_ACCESS' }
     - { path: ^/api/category, roles: 'PUBLIC_ACCESS' }
     - { path: ^/api/user/.*/artworks, roles: 'PUBLIC_ACCESS' }
     - { path: ^/api, roles: 'IS_AUTHENTICATED_FULLY' }

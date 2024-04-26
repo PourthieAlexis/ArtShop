@@ -38,12 +38,12 @@ class ArtController extends AbstractController
     public function detailsArt(string $uuid, ArtsRepository $artsRepo, SerializerInterface $serializer): JsonResponse
     {
         if (!Utils::isUUID($uuid)) {
-            throw new BadRequestHttpException("UUID n'est pas valide");
+            throw new BadRequestHttpException("UUID is not valid");
         }
         $art = $artsRepo->findOneBy(['id' => $uuid]);
 
         if (!$art) {
-            throw new NotFoundHttpException("Aucune œuvre d'art trouvée");
+            throw new NotFoundHttpException("No artwork found");
         }
 
         $serializedArt = $serializer->serialize($art, 'json', ['groups' => ['art']]);
@@ -65,7 +65,7 @@ class ArtController extends AbstractController
 
         $user = $security->getUser();
         if (!$user) {
-            throw new BadRequestHttpException("L'utilisateur n'est pas connecté");
+            throw new BadRequestHttpException("User is not logged in");
         }
         $art = $artsRepo->findBy(['users' => $user]);
 
@@ -99,7 +99,7 @@ class ArtController extends AbstractController
 
         $user = $security->getUser();
         if (!$user) {
-            throw new BadRequestHttpException("L'utilisateur n'est pas connecté");
+            throw new BadRequestHttpException("User is not logged in");
         }
         $category = $categoriesRepo->findOneBy(['name' => $request->request->get('category')]);
 
@@ -123,7 +123,7 @@ class ArtController extends AbstractController
                     $newFilename
                 );
             } catch (FileException $e) {
-                throw new BadRequestHttpException('Une erreur s\'est produite lors de l\'enregistrement de l\'image');
+                throw new BadRequestHttpException('An error occurred while saving the image');
             }
 
             $art->setImage($newFilename);
@@ -147,8 +147,16 @@ class ArtController extends AbstractController
         return new JsonResponse(['message' => 'Art registered successfully'], Response::HTTP_CREATED);
     }
 
-
-    #[Route('/api/get-art', name: 'api_search_art', methods: ['GET'])]
+    /**
+     * Get artworks
+     *
+     * @param Request $request
+     * @param ArtsRepository $artRepository
+     * @param PaginatorInterface $paginator
+     * @param NormalizerInterface $normalizer
+     * @return JsonResponse
+     */
+    #[Route('/api/artworks', name: 'api_search_art', methods: ['GET'])]
     public function searchArt(Request $request, ArtsRepository $artRepository, PaginatorInterface $paginator, NormalizerInterface $normalizer): JsonResponse
     {
         $searchTerm = $request->query->get('searchTerm');
@@ -182,16 +190,26 @@ class ArtController extends AbstractController
     }
 
 
+    /**
+     * Get user artworks by uuid
+     *
+     * @param string $uuid
+     * @param ArtsRepository $artsRepo
+     * @param SerializerInterface $serializer
+     * @param Security $security
+     * @param UsersRepository $userRepo
+     * @return JsonResponse
+     */
     #[Route('/api/user/{uuid}/artworks', name: 'api_user_artworks_by_uuid', methods: ['GET'])]
     public function getUserArtworksByUuid(string $uuid, ArtsRepository $artsRepo, SerializerInterface $serializer, Security $security, UsersRepository $userRepo): JsonResponse
     {
         if (!Utils::isUUID($uuid)) {
-            throw new BadRequestHttpException("UUID n'est pas valide");
+            throw new BadRequestHttpException("UUID is not valid");
         }
         $user = $userRepo->find($uuid);
 
         if (!$user) {
-            throw new BadRequestHttpException("L'utilisateur n'est pas trouvé");
+            throw new BadRequestHttpException("User not found");
         }
         $art = $artsRepo->findBy(['users' => $user]);
 
@@ -201,29 +219,39 @@ class ArtController extends AbstractController
     }
 
 
+    /**
+     * Delete artworks by uuid
+     *
+     * @param string $uuid
+     * @param ArtsRepository $artsRepo
+     * @param SerializerInterface $serializer
+     * @param Security $security
+     * @param EntityManagerInterface $entityManager
+     * @return JsonResponse
+     */
     #[Route('/api/artworks/{uuid}', name: 'api_delete_artworks_by_uuid', methods: ['DELETE'])]
     public function deleteArtByUUID(string $uuid, ArtsRepository $artsRepo, SerializerInterface $serializer, Security $security, EntityManagerInterface $entityManager): JsonResponse
     {
         if (!Utils::isUUID($uuid)) {
-            throw new BadRequestHttpException("UUID n'est pas valide");
+            throw new BadRequestHttpException("UUID is not valid");
         }
 
         $user = $this->getUser();
 
         if (!$user) {
-            throw new BadRequestHttpException("L'utilisateur n'est pas trouvé");
+            throw new BadRequestHttpException("User not found");
         }
 
         $artwork = $artsRepo->findOneBy(['id' => $uuid]);
 
         if (!$artwork || $artwork->getUsers() !== $user) {
-            throw new BadRequestHttpException("L'œuvre d'art n'existe pas ou n'appartient pas à cet utilisateur");
+            throw new BadRequestHttpException("Artwork does not exist or does not belong to this user");
         }
 
         $entityManager->remove($artwork);
         $entityManager->flush();
 
-        return new JsonResponse(['message' => 'L\'œuvre d\'art a été supprimée avec succès'], Response::HTTP_OK);
+        return new JsonResponse(['message' => "Artwork has been deleted successfully"], Response::HTTP_OK);
     }
 
 

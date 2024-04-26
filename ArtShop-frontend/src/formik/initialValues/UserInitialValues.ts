@@ -3,6 +3,8 @@ export interface User {
     email: string;
     password: string;
     address: string;
+    phone: string;
+    artistName: string;
 }
 
 const UserInitialValues: User = {
@@ -10,6 +12,8 @@ const UserInitialValues: User = {
     email: "",
     password: "",
     address: "",
+    phone: "",
+    artistName: "",
 };
 
 export default UserInitialValues;

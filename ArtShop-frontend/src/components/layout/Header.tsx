@@ -1,36 +1,41 @@
 import styled from "styled-components";
-import SecondaryInput from "./SecondaryInput";
+import SecondaryInput from "../shared/SecondaryInput";
 import { useSelector } from "react-redux";
-import { selectIsLogged } from "../reducers/authenticationSlice";
+import { selectIsLogged } from "../../reducers/authenticationSlice";
 import { BiMessage, BiShoppingBag, BiUser } from "react-icons/bi";
-export interface IHeaderProps {}
+import { Link, useNavigate } from "react-router-dom";
 
-export default function Header(props: IHeaderProps) {
+export default function Header() {
+  const navigate = useNavigate();
   const isAuthenticated = useSelector(selectIsLogged);
+
   return (
     <HeaderContainer>
       <ListLink>
-        <Link>Art WorkShop</Link>
+        <Li>
+          <StyledNavLink to="/">Art WorkShop</StyledNavLink>
+        </Li>
       </ListLink>
       <LogoImage>ArtShop</LogoImage>
       <GroupButton>
         {isAuthenticated ? (
           <>
-            <StyledButton>
+            <StyledLink to="/cart">
               <CartButton />
-            </StyledButton>
-            <StyledButton>
+            </StyledLink>
+            <StyledLink to="/messages">
               <MessageButton />
-            </StyledButton>
-            <StyledButton>
+            </StyledLink>
+            <StyledLink to="/profil">
               <ProfilButton />
-            </StyledButton>
+            </StyledLink>
           </>
         ) : (
           <SecondaryInput
             type="button"
             value="Login"
-            style={{ width: "7rem", height: "3rem" }}
+            style={{ width: "7rem", padding: '0' }}
+            onClick={() => navigate('/login')}
           />
         )}
       </GroupButton>
@@ -43,35 +48,46 @@ const HeaderContainer = styled.header`
   justify-content: space-between;
   padding: 0 2rem;
   height: 5rem;
+  border-bottom: 1px solid black;
 `;
 
 const ListLink = styled.ul`
   display: flex;
   align-items: center;
   padding: 0;
+  flex: 1;
 `;
 
-const Link = styled.li`
+const Li = styled.li`
   list-style: none;
 `;
 
 const LogoImage = styled.div`
   display: flex;
   align-items: center;
+  flex: 1;
+  justify-content: center;
 `;
 
 const GroupButton = styled.div`
   display: flex;
   align-items: center;
+  justify-content: end;
   gap: 1rem;
+  flex: 1;
 `;
 
-const StyledButton = styled.button`
+const StyledNavLink = styled(Link)`
+  text-decoration: none;
+  color: black
+`;
+
+const StyledLink = styled(Link)`
   display: flex;
   align-items: center;
+  background-color: #E3E8F2;
   cursor: pointer;
   padding: 0.7rem;
-  background-color: #e3e8f2;
   color: #141c24;
   border: none;
   border-radius: 4px;
