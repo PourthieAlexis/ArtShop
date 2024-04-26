@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { selectToken } from '../reducers/authenticationSlice';
 import { useNavigate } from 'react-router-dom';
 import { URL_HOME } from '../constants/urls/urlFrontend';
-import CreateArtForm from '../components/CreateArtForm';
+import CreateArtForm from '../components/create-art/CreateArtForm';
 
 const CreateArtView = () => {
     const token = useSelector(selectToken);

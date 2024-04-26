@@ -22,7 +22,7 @@ class Arts
     private ?Uuid $id;
 
     #[ORM\Column(length: 255)]
-    #[Groups("user", ["art", "user_arts", "cart_items"])]
+    #[Groups(["user", "art", "user_arts", "cart_items"])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]

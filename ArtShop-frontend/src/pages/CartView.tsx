@@ -1,33 +1,35 @@
 import styled from 'styled-components';
-import PrimaryInput from '../components/PrimaryInput';
-import SecondaryInput from '../components/SecondaryInput';
+import PrimaryInput from '../components/shared/PrimaryInput';
+import SecondaryInput from '../components/shared/SecondaryInput';
 import { useSelector } from 'react-redux';
-import { selectIsLogged, selectToken } from '../reducers/authenticationSlice';
-import CartItem from '../components/CartItem';
+import { selectToken } from '../reducers/authenticationSlice';
 import { useQuery } from '@tanstack/react-query';
 import { showCart } from '../api/backend/cart';
+import LoadingIndicator from '../components/shared/LoadingIndicator';
+import CartList from '../components/cart/CartList';
+import { useNavigate } from 'react-router-dom';
 
 export function CartView() {
 
     const token = useSelector(selectToken);
-    const isAuthenticated = useSelector(selectIsLogged);
+    const navigate = useNavigate();
 
-    const { data, isLoading, isError } = useQuery({ queryKey: ['showCart'], queryFn: () => showCart(token) });
+    const { data: cart, isLoading, isError } = useQuery({ queryKey: ['showCart'], queryFn: () => showCart(token) });
 
+    const totalPrice = cart?.data.reduce((total: number, item: any) => total + item.art.price, 0);
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <LoadingIndicator isLoading={isLoading} />
+
     if (isError) return <div>Error fetching data</div>;
-    console.log(data)
+
     return (
         <CartContainer>
-            {data?.data.map((cartItem: any) =>
-                <CartItem key={cartItem.art.id} title={cartItem.art.title} image={cartItem.art.image} price={cartItem.art.price} quantity={cartItem.quantity} />
-            )}
+            <CartList cartList={cart} />
             <Checkout>
-                <TotalPrice>100 €</TotalPrice>
+                <TotalPrice>{totalPrice} €</TotalPrice>
                 <ButtonCheckout>
-                    <PrimaryInput type='button' value="Continue Shopping" />
-                    <SecondaryInput type='button' value='Proceed to Checkout' />
+                    <PrimaryInput type='button' value="Continue Shopping" onClick={() => navigate('/')} />
+                    <SecondaryInput type='button' value='Proceed to Checkout' onClick={() => navigate('/')} />
                 </ButtonCheckout>
             </Checkout>
         </CartContainer>
@@ -39,14 +41,14 @@ const CartContainer = styled.section`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     height: 100%;
-    gap: 2rem;
 `
 const Checkout = styled.div`
     width: 70%;
+    margin-top: 1rem;
     display: flex;
     justify-content: space-between;
+    align-self: center;
 `
 const TotalPrice = styled.h3`
 `

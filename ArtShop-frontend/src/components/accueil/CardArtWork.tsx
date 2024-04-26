@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
-import { URL_DETAILS_ART } from '../constants/urls/urlFrontend';
+import { URL_DETAILS_ART } from '../../constants/urls/urlFrontend';
 
 export interface ICardArtWorkProps {
-    id: number,
+    id: string,
     title: string,
     category: string,
     price: number,

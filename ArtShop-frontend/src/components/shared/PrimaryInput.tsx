@@ -6,11 +6,11 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     isLoading?: boolean;
 }
 
-const SecondaryInput = forwardRef((props: InputProps, ref: Ref<HTMLInputElement>) => {
-    const { isLoading, value, style, ...rest } = props;
+const PrimaryInput = forwardRef((props: InputProps, ref: Ref<HTMLInputElement>) => {
+    const { isLoading, value, ...rest } = props;
 
     return (
-        <StyledInputContainer style={style}>
+        <StyledInputContainer>
             <StyledInput
                 value={isLoading ? '' : value}
                 {...rest}
@@ -33,6 +33,7 @@ const SecondaryInput = forwardRef((props: InputProps, ref: Ref<HTMLInputElement>
         </StyledInputContainer>
     );
 });
+
 const StyledInputContainer = styled.div`
   position: relative;
   height: 3.5rem;
@@ -51,19 +52,20 @@ const LoadingIndicator = styled.div`
 `;
 
 const StyledInput = styled.input`
+    padding: 1rem;
     height: 100%;
     width: 100%;
-    background-color: #E3E8F2;
     color: #141C24;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
     font-size: 16px;
+    border-radius: 4px;
+    border: none;
     cursor: pointer;
-
+    background-color: #F5C754;
     ::placeholder {
         color: #9CA3AF;
     }
 `;
 
-export default SecondaryInput;
+
+
+export default PrimaryInput;

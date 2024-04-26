@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import SignIn from "../components/SignIn";
-import SignUp from "../components/SignUp";
+import SignIn from "../components/auth/SignIn";
+import SignUp from "../components/auth/SignUp";
 import { useNavigate } from "react-router-dom";
 import { URL_LOGIN, URL_REGISTER } from "../constants/urls/urlFrontend";
 
@@ -51,7 +51,6 @@ const AuthView: React.FC<AuthProps> = ({ page }) => {
 
 const AuthSection = styled.section`
   width: 100%;
-  height: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -72,6 +71,7 @@ const FormAuth = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 30rem;
 `;
 
 const ButtonGroup = styled.div`

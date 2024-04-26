@@ -7,9 +7,7 @@ import {
 } from "react-icons/bs";
 import styled from "styled-components";
 
-export interface IFooterProps {}
-
-export default function Footer(props: IFooterProps) {
+export default function Footer() {
   return (
     <FooterContainer>
       <FooterContent>

@@ -12,7 +12,14 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class CategoryController extends AbstractController
 {
-    #[Route('/api/category', name: 'app_category')]
+    /**
+     * Get all the categories
+     *
+     * @param CategoriesRepository $categoriesRepo
+     * @param SerializerInterface $serializer
+     * @return JsonResponse
+     */
+    #[Route('/api/category', name: 'app_category', methods: ['GET'])]
     public function getCategory(CategoriesRepository $categoriesRepo, SerializerInterface $serializer): JsonResponse
     {
 

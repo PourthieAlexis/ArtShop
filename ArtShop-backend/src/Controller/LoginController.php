@@ -34,6 +34,8 @@ class LoginController extends AbstractController
         $user->setName($data['name']);
         $user->setEmail($data['email']);
         $user->setAddress($data['address']);
+        $user->setPhone($data['phone']);
+        $user->setArtistName($data['artistName']);
         $user->setPassword($data['password']);
 
         $errors = $validator->validate($user);

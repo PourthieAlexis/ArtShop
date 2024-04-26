@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getArt } from "../api/backend/art";
-import ListArts from "../components/AccueilView/ListArts";
-import SearchBar from "../components/AccueilView/SearchBar";
+import ListArts from "../components/accueil/ListArts";
+import SearchBar from "../components/accueil/SearchBar";
 import { useState } from "react";
-import { useScrollDetection } from "../components/AccueilView/useScrollDetection";
+import { useScrollDetection } from "../components/accueil/useScrollDetection";
 import { calculateTotalItems } from "../utils/fnUtils";
 
 export default function AccueilView() {
@@ -47,7 +47,7 @@ export default function AccueilView() {
     );
 }
 const AccueilContainer = styled.section`
-    height: 100%;
+    height: auto;
     position: relative;
 `;
 

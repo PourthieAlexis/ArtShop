@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Formik, Form, ErrorMessage } from 'formik';
 import styled from 'styled-components';
-import SecondaryInput from './SecondaryInput';
+import SecondaryInput from '../shared/SecondaryInput';
 import { useMutation } from '@tanstack/react-query';
-import { changeProfilePicture } from '../api/backend/account';
-import { selectToken } from '../reducers/authenticationSlice';
+import { changeProfilePicture } from '../../api/backend/account';
+import { selectToken } from '../../reducers/authenticationSlice';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import ChangeProfilePictureInitialValues from '../formik/initialValues/ChangeProfilePictureInitialValues';
-import ChangeProfilePictureYup from '../formik/yup/ChangeProfilePictureYup';
+import ChangeProfilePictureInitialValues from '../../formik/initialValues/ChangeProfilePictureInitialValues';
+import ChangeProfilePictureYup from '../../formik/yup/ChangeProfilePictureYup';
 
 interface ChangeProfilePictureProps {
     currentPictureUrl: string;

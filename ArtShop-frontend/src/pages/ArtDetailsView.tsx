@@ -1,13 +1,13 @@
 import styled from 'styled-components';
-import CommentSection from '../components/CommentSection';
-import Dropdown from '../components/Dropdown';
+import CommentSection from '../components/art-detail/CommentSection';
+import Dropdown from '../components/art-detail/Dropdown';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { fetchArtDetails, getUserArtWorksByUuid } from '../api/backend/art';
 import { useParams } from 'react-router-dom';
-import PrimaryInput from '../components/PrimaryInput';
-import SecondaryInput from '../components/SecondaryInput';
-import NumberInput from '../components/NumberInput';
-import ArtworksByArtist from '../components/ArtworksByArtist';
+import PrimaryInput from '../components/shared/PrimaryInput';
+import SecondaryInput from '../components/shared/SecondaryInput';
+import NumberInput from '../components/shared/NumberInput';
+import ArtworksByArtist from '../components/art-detail/ArtworksByArtist';
 import { addToCart } from '../api/backend/cart';
 import { selectToken } from '../reducers/authenticationSlice';
 import { useSelector } from 'react-redux';
@@ -15,6 +15,7 @@ import { Form, Formik } from 'formik';
 import AddToCartInitialValues from '../formik/initialValues/AddToCartInitialValues';
 import AddToCartYup from '../formik/yup/AddToCartYup';
 import { toast } from 'react-toastify';
+import LoadingIndicator from '../components/shared/LoadingIndicator';
 
 const ArtDetailsView: React.FC = () => {
     const { uuid } = useParams<{ uuid: string }>();
@@ -39,8 +40,9 @@ const ArtDetailsView: React.FC = () => {
         },
     });
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <LoadingIndicator isLoading={isLoading} />
     if (isError) return <div>Error fetching data</div>;
+
     return (
         <PageContainer>
             <DetailsContainer>
@@ -56,7 +58,6 @@ const ArtDetailsView: React.FC = () => {
                     <RateStar>⭐⭐⭐⭐⭐</RateStar>
                     <p>{art.data.description}</p>
                     <label htmlFor="quantity">Quantité</label>
-
                     <Formik
                         initialValues={AddToCartInitialValues}
                         validationSchema={AddToCartYup}
@@ -79,7 +80,7 @@ const ArtDetailsView: React.FC = () => {
                     </Details>
                     <ArtistDetails>
                         <Artist>
-                            <ArtistPicture src={art.data.users.profilePicture} alt="Artist profile picture" />
+                            <ArtistPicture src={`http://localhost:8000/uploads/profile_pictures/${art.data.users.profilePicture}`} alt="Artist profile picture" />
                             <TitleDetails>{art.data.users.name}</TitleDetails>
                         </Artist>
                     </ArtistDetails>
@@ -97,6 +98,8 @@ const PageContainer = styled.section`
     padding: 4rem;
     min-height: 100vh;
     height: 100%;
+    display: flex;
+    flex-direction: column;
 `;
 
 const ImageContainer = styled.div`
@@ -110,9 +113,9 @@ const ImageContainer = styled.div`
 `;
 
 const Image = styled.img`
-    height:33rem;
-    width:100%;
-    object-fit:contain;
+    height: 33rem;
+    width: 100%;
+    object-fit: contain;
 `;
 
 const DetailsContainer = styled.div`
@@ -135,7 +138,7 @@ const Title = styled.div`
 const AddCartForm = styled(Form)`
     display: flex;
     flex-direction: column;
-    gap:1rem
+    gap:1rem;
 `;
 
 const Price = styled.div`
