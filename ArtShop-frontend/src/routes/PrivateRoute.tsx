@@ -8,7 +8,7 @@ interface PrivateRouteProps {
     children: React.ReactNode;
     roles?: string[];
 }
-
+// Vérification pour les routes nécessitant une connexion, si le résultat ne correspont pas à celui attendu, il sera redirigé.
 export const PrivateRoute: React.FC<PrivateRouteProps> = ({ children, roles = ['ROLE_USER'] }) => {
     const location = useLocation();
     const isAuthenticated = useSelector((state: RootState) => selectIsLogged(state));

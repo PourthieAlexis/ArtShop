@@ -18,11 +18,12 @@ const initialState: AuthState = {
     token: null,
     user: null,
 };
-
+//Responsable pour la gestion du token
 export const authenticationSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
+        //Connexion, génère le token avec les paramètres ci-dessous
         signIn: (state, action: PayloadAction<string>) => {
             const token = action.payload;
             state.token = token;
@@ -35,6 +36,7 @@ export const authenticationSlice = createSlice({
             state.isAuthenticated = isTokenValid(token);
             setToken(action.payload);
         },
+        //Deconnexion, met fin et efface la session lorsque reçu
         signOut: (state) => {
             localStorage.clear();
             sessionStorage.clear();

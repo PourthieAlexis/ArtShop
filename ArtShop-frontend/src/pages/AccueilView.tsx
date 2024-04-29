@@ -9,7 +9,7 @@ import { calculateTotalItems } from "../utils/fnUtils";
 import Footer from "../components/Footer"
 export default function AccueilView() {
     const [searchTerm, setSearchTerm] = useState<string>("");
-
+    //Gère le rendu des oeuvres suivantes lors du clic sur le bouton de la page d'accueil
     const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } = useInfiniteQuery({
         queryKey: ['arts', { searchTerm }],
         initialPageParam: 1,

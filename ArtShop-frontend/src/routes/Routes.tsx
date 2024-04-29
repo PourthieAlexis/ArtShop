@@ -11,7 +11,11 @@ import CreateArtView from "../pages/CreateArtView";
 import { PrivateRoute } from "./PrivateRoute";
 import ProfilView from "../pages/ProfilView";
 
-
+/*
+    - Cette constante contient toutes les routes correspondants aux pages.
+    - Chaques pages se composent de 1 ou plusieurs composants.
+    - La route login et register correspondent à la même page mais avec un composant différent appelé.
+*/
 const Routes: React.FC = () => {
 
     return (

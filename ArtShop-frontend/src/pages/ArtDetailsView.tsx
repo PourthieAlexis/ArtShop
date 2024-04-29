@@ -85,9 +85,9 @@ const ArtDetailsView: React.FC = () => {
                     </ArtistDetails>
                 </DetailsContent>
             </DetailsContainer>
-
+            {/* Affiche les oeuvres d'arts d'un même artiste, importé depuis le composant tsx du même nom*/}
             <ArtworksByArtist userArt={userArtWorks?.data} isLoading={isUserArtWorksLoading} />
-
+            {/* Affiche les commentaires assignés à une oeuvre, importé depuis le composant tsx du même nom*/}
             <CommentSection comments={art.data.comments} art_id={art.data.id} />
         </PageContainer>
     );
