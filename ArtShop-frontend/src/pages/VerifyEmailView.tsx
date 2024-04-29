@@ -3,16 +3,12 @@ import styled from "styled-components";
 import LoadingIndicator from "../components/shared/LoadingIndicator";
 import { useQuery } from "@tanstack/react-query";
 import { verifyEmail } from "../api/backend/account";
-import { selectToken } from "../reducers/authenticationSlice";
-import { useSelector } from "react-redux";
 
 export default function VerifyEmail() {
-    const JWTtoken = useSelector(selectToken);
-
     const { token } = useParams<{ token: string }>();
     const { isSuccess, isLoading } = useQuery({
         queryKey: ['verifyEmail'],
-        queryFn: () => verifyEmail(JWTtoken, token || ''),
+        queryFn: () => verifyEmail(token || ''),
         retry: false,
     });
 

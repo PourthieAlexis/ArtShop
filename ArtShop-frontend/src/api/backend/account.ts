@@ -25,7 +25,6 @@ export function changeProfilePicture(values: any, token: string | null): Promise
     return apiBackEnd.post(URL_BACK_USER_PROFIL_PICTURE, values, headers);
 }
 
-export function verifyEmail(JWTtoken: string | null, token: string): Promise<any> {
-    const headers = AddHeader(JWTtoken);
-    return apiBackEnd.post(URL_BACK_VERIFY_EMAIL, { token }, headers);
+export function verifyEmail(token: string): Promise<any> {
+    return apiBackEnd.post(URL_BACK_VERIFY_EMAIL, { token });
 }
