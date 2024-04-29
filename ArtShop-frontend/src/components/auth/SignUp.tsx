@@ -15,7 +15,7 @@ const SignUp: React.FC = () => {
     const { mutate, isPending, } = useMutation({ mutationFn: register });
     const navigate = useNavigate()
     const [errorLog, setErrorLog] = useState<Array<string> | null>(null);
-    console.log(errorLog)
+
     return (
         <>
             <TitleContainer>

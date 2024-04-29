@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UsersRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -88,6 +89,9 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(["user"])]
     #[Assert\NotBlank(message: "Le numéro de téléphone est obligatoire", groups: ['edit_profil'])]
     private ?string $phone = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $token = null;
 
     public function __construct()
     {
@@ -384,6 +388,18 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPhone(string $phone): static
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): static
+    {
+        $this->token = $token;
 
         return $this;
     }

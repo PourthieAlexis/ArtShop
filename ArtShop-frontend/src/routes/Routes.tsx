@@ -10,6 +10,7 @@ import Footer from "../components/layout/Footer";
 import CreateArtView from "../pages/CreateArtView";
 import { PrivateRoute } from "./PrivateRoute";
 import ProfilView from "../pages/ProfilView";
+import VerifyEmail from "../pages/VerifyEmailView";
 
 
 const Routes: React.FC = () => {
@@ -23,6 +24,7 @@ const Routes: React.FC = () => {
             <Route path={URL.URL_CART} element={<PrivateRoute><Header /><CartView /><Footer /></PrivateRoute>} />
             <Route path={URL.URL_CREATE_ART} element={<PrivateRoute><Header /><CreateArtView /><Footer /></PrivateRoute>} />
             <Route path={URL.URL_PROFIL} element={<PrivateRoute><Header /><ProfilView /></PrivateRoute>} />
+            <Route path={URL.URL_VERIFY_EMAIL + ':token'} element={<><Header /><VerifyEmail /></>} />
         </RoutesContainer>
     );
 };
