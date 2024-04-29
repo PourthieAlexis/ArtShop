@@ -13,3 +13,4 @@ export const URL_BACK_USER: string = '/user';
 export const URL_BACK_UPDATE_USER_PROFIL: string = '/user/profil';
 export const URL_BACK_ARTWORKS_DELETE: string = '/artworks';
 export const URL_BACK_USER_PROFIL_PICTURE: string = '/user/profil/picture';
+export const URL_BACK_VERIFY_EMAIL: string = '/verifyEmail';
