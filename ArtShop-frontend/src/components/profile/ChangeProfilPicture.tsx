@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import ChangeProfilePictureInitialValues from '../../formik/initialValues/ChangeProfilePictureInitialValues';
 import ChangeProfilePictureYup from '../../formik/yup/ChangeProfilePictureYup';
+import profilePicturePlacehodler from "/images/profilePicturePlaceholder.webp"
 
 interface ChangeProfilePictureProps {
     currentPictureUrl: string;
@@ -34,7 +35,10 @@ const ChangeProfilePicture: React.FC<ChangeProfilePictureProps> = ({ currentPict
 
     return (
         <ProfilePictureContainer>
-            <ProfilePicture src={previewImageUrl || `http://localhost:8000/uploads/profile_pictures/${currentPictureUrl}`} alt="Profile" />
+            <ProfilePicture
+                src={previewImageUrl || (currentPictureUrl ? `http://localhost:8000/uploads/profile_pictures/${currentPictureUrl}` : profilePicturePlacehodler)}
+                alt="Profile"
+            />
             <Formik
                 initialValues={ChangeProfilePictureInitialValues}
                 validationSchema={ChangeProfilePictureYup}
