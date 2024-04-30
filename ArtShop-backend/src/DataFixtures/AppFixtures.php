@@ -79,7 +79,7 @@ class AppFixtures extends Fixture
             $artwork->setStock($faker->numberBetween(1, 20));
 
             $baseUrl = 'https://www.artic.edu/iiif/2/';
-            $imageUrl = $baseUrl . $artworkData['image_id'] . '/full/400,/0/default.jpg';
+            $imageUrl = $baseUrl . $artworkData['image_id'] . '/full/843,/0/default.jpg';
             $imageName = $this->downloadAndSaveImage($imageUrl, $artworkData['image_id'], 'images');
             $artwork->setImage($imageName);
 
@@ -117,8 +117,16 @@ class AppFixtures extends Fixture
     }
     private function downloadAndSaveImage(string $imageUrl, string $imageId, string $repoUpload): string
     {
+        $ch = curl_init();
 
-        $imageContent = file_get_contents($imageUrl);
+        curl_setopt($ch, CURLOPT_URL, $imageUrl);
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
+
+        $imageContent = curl_exec($ch);
+
+        curl_close($ch);
 
         $imageName = $this->slugger->slug($imageId . '-' . uniqid()) . '.jpg';
 
