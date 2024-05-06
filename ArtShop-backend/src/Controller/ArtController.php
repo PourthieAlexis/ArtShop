@@ -218,6 +218,57 @@ class ArtController extends AbstractController
         return new JsonResponse($serializedArt, Response::HTTP_OK, [], true);
     }
 
+    /**
+     * Edit user artworks
+     *
+     * @param string $uuid
+     * @param ArtsRepository $artsRepo
+     * @param Request $request
+     * @param SerializerInterface $serializer
+     * @param EntityManagerInterface $entityManager
+     * @param ValidatorInterface $validator
+     * @return JsonResponse
+     */
+    #[Route('/api/user/artworks/{uuid}', name: 'edit_user_artworks', methods: ['PATCH'])]
+    public function editArtworks(string $uuid, ArtsRepository $artsRepo, Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager, ValidatorInterface $validator): JsonResponse
+    {
+        if (!Utils::isUUID($uuid)) {
+            throw new BadRequestHttpException("UUID is not valid");
+        }
+
+        $user = $this->getUser();
+        if (!$user) {
+            throw new BadRequestHttpException("User not found");
+        }
+
+        $requestData = json_decode($request->getContent(), true);
+
+        $artwork = $artsRepo->findOneBy(['id' => $uuid]);
+        if (!$artwork || $artwork->getUsers() !== $user) {
+            throw new BadRequestHttpException("Artwork does not exist or does not belong to this user");
+        }
+
+        $artwork->setTitle($requestData['title'] ?? $artwork->getTitle());
+        $artwork->setDescription($requestData['description'] ?? $artwork->getDescription());
+        $artwork->setPrice($requestData['price'] ?? $artwork->getPrice());
+        $artwork->setImage($requestData['image'] ?? $artwork->getImage());
+        $artwork->setStock($requestData['stock'] ?? $artwork->getStock());
+        $artwork->setCategories($requestData['category'] ?? $artwork->getCategories());
+
+        $errors = $validator->validate($user, null, ['edit_user_artwork']);
+        if (count($errors) > 0) {
+            $errorMessages = [];
+
+            foreach ($errors as $error) {
+                $errorMessages[] = $error->getMessage();
+            }
+
+            throw new BadRequestHttpException(json_encode($errorMessages));
+        }
+        $entityManager->flush();
+        return new JsonResponse(['message' => "Art has been updated"], Response::HTTP_OK);
+    }
+
 
     /**
      * Delete artworks by uuid
